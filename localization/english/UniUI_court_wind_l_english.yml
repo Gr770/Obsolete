@@ -1,0 +1,3 @@
+﻿l_english:
+ COURT_WIND_UNIUI_PHYSICIAN_NAME: "[Character.GetFullName]"
+ COURT_WIND_UNIUI_COURTIER_NAME: "[Character.GetShortUINameNoTooltip]"

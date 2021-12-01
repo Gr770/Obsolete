@@ -4,3 +4,146 @@
         exists = global_var:KoH_is_loaded
     }
 }
+KoH_is_load_can_see_investure = {
+    scope = character
+    is_shown = {
+        exists = global_var:KoH_is_loaded
+		has_faith = faith:catholic
+    }
+}
+KoH_is_load_qualifies_for_governorships = {
+    scope = character
+    is_shown = {
+        exists = global_var:KoH_is_loaded
+		exists = primary_title
+		is_independent_ruler = yes
+		holds_valid_merchant_republic = yes
+    }
+}
+KoH_is_load_has_republic_government = {
+    scope = character
+    is_shown = {
+        exists = global_var:KoH_is_loaded
+		OR = {
+			holds_valid_merchant_republic = yes
+			liege = {
+				holds_valid_merchant_republic = yes
+			}
+		}
+    }
+}
+KoH_is_load_has_republic_elected_ruler_government = {
+    scope = character
+    is_shown = {
+        exists = global_var:KoH_is_loaded
+		OR = {
+			AND = {
+				holds_valid_merchant_republic = yes
+				republic_has_elected_ruler_form = yes
+			}
+			liege = {
+				AND = {
+					holds_valid_merchant_republic = yes
+					republic_has_elected_ruler_form = yes
+				}
+			}
+		}
+    }
+}
+KoH_is_load_has_republic_senate_government = {
+    scope = character
+    is_shown = {
+        exists = global_var:KoH_is_loaded
+		OR = {
+			AND = {
+				holds_valid_merchant_republic = yes
+				republic_has_senate_form = yes
+			}
+			liege = {
+				AND = {
+					holds_valid_merchant_republic = yes
+					republic_has_senate_form = yes
+				}
+			}
+		}
+    }
+}
+KoH_is_load_has_republic_council_government = {
+    scope = character
+    is_shown = {
+        exists = global_var:KoH_is_loaded
+		OR = {
+			AND = {
+				holds_valid_merchant_republic = yes
+				republic_has_council_form = yes
+			}
+			liege = {
+				AND = {
+					holds_valid_merchant_republic = yes
+					republic_has_council_form = yes
+				}
+			}
+		}
+    }
+}
+KoH_is_load_has_republic_bicameral_government = {
+    scope = character
+    is_shown = {
+        exists = global_var:KoH_is_loaded
+		OR = {
+			AND = {
+				holds_valid_merchant_republic = yes
+				republic_has_bicameral_form = yes
+			}
+			liege = {
+				AND = {
+					holds_valid_merchant_republic = yes
+					republic_has_bicameral_form = yes
+				}
+			}
+		}
+    }
+}
+KoH_is_load_personally_has_republic_government = {
+    scope = character
+    is_shown = {
+        exists = global_var:KoH_is_loaded
+		NOT = {
+            holds_valid_merchant_republic = yes
+        }
+    }
+}
+CTI_is_loaded_sgui = {
+    scope = character
+    is_shown = {
+        exists = global_var:CTI_is_loaded
+    }
+}
+CTI_is_loaded_sgui_core_title_text_line = {
+    scope = character
+    is_shown = {
+        exists = global_var:CTI_is_loaded
+        has_core_titles = yes
+    }
+}
+CTI_is_loaded_sgui_designate_core_button = {
+    scope = character
+    is_shown = {
+        exists = global_var:CTI_is_loaded
+        is_title_core = no
+        tier >= tier_county
+    }
+}
+CTI_is_loaded_sgui_de_designate_core_button = {
+    scope = character
+    is_shown = {
+        exists = global_var:CTI_is_loaded
+        is_title_core = yes
+    }
+}
+StA_is_loaded_sgui = {
+    scope = character
+    is_shown = {
+        exists = global_var:StA_is_loaded
+    } 
+}

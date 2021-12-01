@@ -1,0 +1,1798 @@
+window = {
+	name = "modify_vassal_contract_interaction_window"
+	datacontext = "[ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow]"
+	datacontext = "[ModifyVassalContractInteractionWindow.GetContractPreview]"
+	datacontext = "[CharacterInteractionConfirmationWindow.GetRecipient]"
+	parentanchor = center
+	widgetanchor = top|hcenter
+	position = { 270 -400 }
+	size = { 600 700 } # Doesn't do much cause of the set_parent_size_to_minimum below
+	layer = middle
+
+	using = Window_Background
+	using = Window_Decoration
+
+	state = {
+		name = _show
+		using = Animation_FadeIn_Quick
+		using = Sound_WindowShow_Standard
+		on_start = "[GetScriptedGui('initiate_contract_negotiation').Execute(GuiScope.SetRoot( ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).End)]"
+	}
+
+	state = {
+		name = _hide
+		using = Animation_FadeOut_Quick
+		using = Sound_WindowHide_Standard
+		on_start = "[GetScriptedGui('end_contract_negotiation').Execute(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).End)]"
+	}
+
+	vbox = {
+		name = "window_content"
+		layoutpolicy_vertical = expanding
+		set_parent_size_to_minimum = yes
+		minimumsize = { 0 770 }
+
+		using = Window_Margins
+
+		header_pattern_interaction = {
+			layoutpolicy_horizontal = expanding
+
+			blockoverride "header_text"
+			{
+				text = "FEUDAL_CONTRACT"
+			}
+
+			blockoverride "button_close"
+			{
+				onclick = "[ModifyVassalContractInteractionWindow.Close]"
+			}
+		}
+
+		hbox = {
+			visible = "[GetPlayer.MakeScope.Var('gui_contract_negotiation').IsSet]"
+			layoutpolicy_vertical = expanding
+			margin_bottom = 10
+			margin_top = -5
+
+			background = {
+				texture = "gfx/interface/illustrations/event_scenes/study.dds"
+				alpha = 0.7
+
+				fittype = end
+
+				modify_texture = {
+					texture = "gfx/interface/component_masks/mask_fade_vertical_up.dds"
+					blend_mode = alphamultiply
+				}
+			}
+
+			vbox = {
+				name = "obligation_level_negotiation"
+				layoutpolicy_horizontal = expanding
+				layoutpolicy_vertical = expanding
+				spacing = 10
+
+				vbox = {
+					name = "paper_contract"
+					layoutpolicy_horizontal = expanding
+					layoutpolicy_vertical = expanding
+					using = Background_Letter
+					margin = { 20 20 }
+					spacing = 5
+
+					vbox = {
+						name = "major_line_tree_levels"
+						layoutpolicy_horizontal = expanding
+						spacing = 10
+						datamodel = "[ModifyVassalContractInteractionWindow.AccessObligationLevelLineTrees]"
+						item = {
+							vbox = {
+								layoutpolicy_vertical = expanding
+								layoutpolicy_horizontal = expanding
+								datacontext = "[ObligationLevelLineTree.GetContainerData]"
+								visible = "[ObligationContainerData.ShouldShow( ModifyVassalContractInteractionWindow.GetContractPreview )]"
+								spacing = 10
+								text_single = {
+									text = "[ObligationContainerData.GetName] [ObligationContainerData.GetIcon]"
+									using = Font_Size_Medium
+									default_format = "#light_background"
+								}
+								container = {
+									layoutpolicy_vertical = expanding
+									name = "obligation_level_item_line_area" # Name used in code do not change
+									datamodel = "[ObligationLevelLineTree.AccessItems]"
+									# [TCMA]
+									allow_outside = yes
+									# [/TCMA]
+									item = {
+										widget = {
+											# [TCMA]
+											allow_outside = yes
+											# [/TCMA]
+											size = { 120 83 }
+											position = { -275 0 }
+
+											widget = {
+												datacontext = "[ObligationLevelLineItem.AccessItem]"
+												size = { 120 83 }
+												position = "[ObligationLevelLineTree.GetItemPosition( ModifyVassalContractInteractionWindowObligationLevelOption.Self )]"
+
+												container = {
+													parentanchor = center
+
+													widget = {
+														name = "top_pin"
+														visible = "[ObligationLevelLineItem.SetupTopWidget( PdxGuiWidget.Self )]"
+													}
+
+													widget = {
+														name = "bottom_pin"
+														visible = "[ObligationLevelLineItem.SetupBottomWidget( PdxGuiWidget.Self )]"
+													}
+												}
+												# [TCMA]
+												TCMA_contract_tree_button = {
+													blockoverride "Visible"
+													{
+														visible = "[And(EqualTo_string(ObligationContainerData.GetName, GetVassalContractType( 'feudal_government_taxes' ).GetName), EqualTo_string(ModifyVassalContractInteractionWindowObligationLevelOption.GetName,GetVassalContractType( 'feudal_government_taxes' ).GetObligationNameShortNoTooltip('feudal_tax_exempt' )))]"
+													}
+													blockoverride "OnClick"
+													{
+														onclick = "[GetScriptedGui('update_contract_acceptance').Execute(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_taxes' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)0')).End)]"
+														enabled = "[GetScriptedGui('agreed_upon_obligations').IsValid(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_taxes' )).End)]"
+														down = "[GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_taxes' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)0')).End)]"
+														background = {
+															using = Background_Area_Dark
+															visible = "[GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_taxes' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)0')).End)]"
+														}
+													}
+												}
+												TCMA_contract_tree_button = {
+													blockoverride "Visible"
+													{
+														visible = "[And(EqualTo_string(ObligationContainerData.GetName, GetVassalContractType( 'feudal_government_taxes' ).GetName), EqualTo_string(ModifyVassalContractInteractionWindowObligationLevelOption.GetName,GetVassalContractType( 'feudal_government_taxes' ).GetObligationNameShortNoTooltip('feudal_tax_low' )))]"
+													}
+													blockoverride "OnClick"
+													{
+														onclick = "[GetScriptedGui('update_contract_acceptance').Execute(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_taxes' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)1')).End)]"
+														enabled = "[GetScriptedGui('agreed_upon_obligations').IsValid(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_taxes' )).End)]"
+														down = "[GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_taxes' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)1')).End)]"
+														background = {
+															using = Background_Area_Dark
+															visible = "[GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_taxes' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)1')).End)]"
+														}
+													}
+												}
+												TCMA_contract_tree_button = {
+													blockoverride "Visible"
+													{
+														visible = "[And(EqualTo_string(ObligationContainerData.GetName, GetVassalContractType( 'feudal_government_taxes' ).GetName), EqualTo_string(ModifyVassalContractInteractionWindowObligationLevelOption.GetName,GetVassalContractType( 'feudal_government_taxes' ).GetObligationNameShortNoTooltip('feudal_tax_normal' )))]"
+													}
+													blockoverride "OnClick"
+													{
+														onclick = "[GetScriptedGui('update_contract_acceptance').Execute(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_taxes' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)2')).End)]"
+														enabled = "[GetScriptedGui('agreed_upon_obligations').IsValid(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_taxes' )).End)]"
+														down = "[GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_taxes' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)2')).End)]"
+														background = {
+															using = Background_Area_Dark
+															visible = "[GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_taxes' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)2')).End)]"
+														}
+													}
+												}
+												TCMA_contract_tree_button = {
+													blockoverride "Visible"
+													{
+														visible = "[And(EqualTo_string(ObligationContainerData.GetName, GetVassalContractType( 'feudal_government_taxes' ).GetName), EqualTo_string(ModifyVassalContractInteractionWindowObligationLevelOption.GetName,GetVassalContractType( 'feudal_government_taxes' ).GetObligationNameShortNoTooltip('feudal_tax_high' )))]"
+													}
+													blockoverride "OnClick"
+													{
+														onclick = "[GetScriptedGui('update_contract_acceptance').Execute(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_taxes' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)3')).End)]"
+														enabled = "[GetScriptedGui('agreed_upon_obligations').IsValid(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_taxes' )).End)]"
+														down = "[GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_taxes' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)3')).End)]"
+														background = {
+															using = Background_Area_Dark
+															visible = "[GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_taxes' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)3')).End)]"
+														}
+													}
+												}
+												TCMA_contract_tree_button = {
+													blockoverride "Visible"
+													{
+														visible = "[And(EqualTo_string(ObligationContainerData.GetName, GetVassalContractType( 'feudal_government_taxes' ).GetName), EqualTo_string(ModifyVassalContractInteractionWindowObligationLevelOption.GetName,GetVassalContractType( 'feudal_government_taxes' ).GetObligationNameShortNoTooltip('feudal_tax_extortionate' )))]"
+													}
+													blockoverride "OnClick"
+													{
+														onclick = "[GetScriptedGui('update_contract_acceptance').Execute(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_taxes' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)4')).End)]"
+														enabled = "[GetScriptedGui('agreed_upon_obligations').IsValid(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_taxes' )).End)]"
+														down = "[GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_taxes' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)4')).End)]"
+														background = {
+															using = Background_Area_Dark
+															visible = "[GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_taxes' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)4')).End)]"
+														}
+													}
+												}
+												TCMA_contract_tree_button = {
+													blockoverride "Visible"
+													{
+														visible = "[And(EqualTo_string(ObligationContainerData.GetName, GetVassalContractType( 'feudal_government_levies' ).GetName), EqualTo_string(ModifyVassalContractInteractionWindowObligationLevelOption.GetName,GetVassalContractType( 'feudal_government_levies' ).GetObligationNameShortNoTooltip('feudal_levies_exempt' )))]"
+													}
+													blockoverride "OnClick"
+													{
+														onclick = "[GetScriptedGui('update_contract_acceptance').Execute(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_levies' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)0')).End)]"
+														enabled = "[GetScriptedGui('agreed_upon_obligations').IsValid(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_levies' )).End)]"
+														down = "[GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_levies' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)0')).End)]"
+														background = {
+															using = Background_Area_Dark
+															visible = "[GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_levies' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)0')).End)]"
+														}
+													}
+												}
+												TCMA_contract_tree_button = {
+													blockoverride "Visible"
+													{
+														visible = "[And(EqualTo_string(ObligationContainerData.GetName, GetVassalContractType( 'feudal_government_levies' ).GetName), EqualTo_string(ModifyVassalContractInteractionWindowObligationLevelOption.GetName,GetVassalContractType( 'feudal_government_levies' ).GetObligationNameShortNoTooltip('feudal_levies_low' )))]"
+													}
+													blockoverride "OnClick"
+													{
+														onclick = "[GetScriptedGui('update_contract_acceptance').Execute(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_levies' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)1')).End)]"
+														enabled = "[GetScriptedGui('agreed_upon_obligations').IsValid(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_levies' )).End)]"
+														down = "[GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_levies' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)1')).End)]"
+														background = {
+															using = Background_Area_Dark
+															visible = "[GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_levies' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)1')).End)]"
+														}
+													}
+												}
+												TCMA_contract_tree_button = {
+													blockoverride "Visible"
+													{
+														visible = "[And(EqualTo_string(ObligationContainerData.GetName, GetVassalContractType( 'feudal_government_levies' ).GetName), EqualTo_string(ModifyVassalContractInteractionWindowObligationLevelOption.GetName,GetVassalContractType( 'feudal_government_levies' ).GetObligationNameShortNoTooltip('feudal_levies_normal' )))]"
+													}
+													blockoverride "OnClick"
+													{
+														onclick = "[GetScriptedGui('update_contract_acceptance').Execute(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_levies' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)2')).End)]"
+														enabled = "[GetScriptedGui('agreed_upon_obligations').IsValid(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_levies' )).End)]"
+														down = "[GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_levies' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)2')).End)]"
+														background = {
+															using = Background_Area_Dark
+															visible = "[GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_levies' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)2')).End)]"
+														}
+													}
+												}
+												TCMA_contract_tree_button = {
+													blockoverride "Visible"
+													{
+														visible = "[And(EqualTo_string(ObligationContainerData.GetName, GetVassalContractType( 'feudal_government_levies' ).GetName), EqualTo_string(ModifyVassalContractInteractionWindowObligationLevelOption.GetName,GetVassalContractType( 'feudal_government_levies' ).GetObligationNameShortNoTooltip('feudal_levies_high' )))]"
+													}
+													blockoverride "OnClick"
+													{
+														onclick = "[GetScriptedGui('update_contract_acceptance').Execute(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_levies' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)3')).End)]"
+														enabled = "[GetScriptedGui('agreed_upon_obligations').IsValid(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_levies' )).End)]"
+														down = "[GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_levies' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)3')).End)]"
+														background = {
+															using = Background_Area_Dark
+															visible = "[GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_levies' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)3')).End)]"
+														}
+													}
+												}
+												TCMA_contract_tree_button = {
+													blockoverride "Visible"
+													{
+														visible = "[And(EqualTo_string(ObligationContainerData.GetName, GetVassalContractType( 'feudal_government_levies' ).GetName), EqualTo_string(ModifyVassalContractInteractionWindowObligationLevelOption.GetName,GetVassalContractType( 'feudal_government_levies' ).GetObligationNameShortNoTooltip('feudal_levies_extortionate' )))]"
+													}
+													blockoverride "OnClick"
+													{
+														onclick = "[GetScriptedGui('update_contract_acceptance').Execute(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_levies' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)4')).End)]"
+														enabled = "[GetScriptedGui('agreed_upon_obligations').IsValid(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_levies' )).End)]"
+														down = "[GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_levies' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)4')).End)]"
+														background = {
+															using = Background_Area_Dark
+															visible = "[GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('feudal_government_levies' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)4')).End)]"
+														}
+													}
+												}
+												# [/TCMA]
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+
+					vbox = {
+						name = "minor_list_levels_radio_buttons"
+						datamodel = "[ModifyVassalContractInteractionWindow.AccessObligationLevelRadioButtons]"
+
+						background = {
+							using = Background_Area_With_Header
+							alpha = 0.75
+							margin_left = 20
+							margin_right = 20
+							margin_bottom = 0
+							margin_top = 2
+						}
+
+						item = {
+							vbox = {
+								datacontext = "[ObligationLevelRadioButtons.GetContainerData]"
+
+								visible = "[ObligationContainerData.ShouldShow( ModifyVassalContractInteractionWindow.GetContractPreview )]"
+
+								text_single = {
+									text = "[ObligationContainerData.GetName]"
+									using = Font_Size_Medium
+									default_format = "#light_background"
+								}
+
+								hbox = {
+									datamodel = "[ObligationLevelRadioButtons.Access]"
+									spacing = 20
+									margin = { 10 12 }
+									item = {
+
+										hbox = {
+
+											TCMA_contract_radio_button = {
+												blockoverride "OnClick"
+												{
+													visible = "[And(EqualTo_string(ObligationContainerData.GetName, GetVassalContractType( 'special_contract' ).GetName), EqualTo_string(ModifyVassalContractInteractionWindowObligationLevelOption.GetName,GetVassalContractType( 'special_contract' ).GetObligationNameShortNoTooltip('special_contract_none' )))]"
+													onclick = "[GetScriptedGui('update_contract_acceptance').Execute(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('special_contract' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)0')).End)]"
+													enabled = "[And(ModifyVassalContractInteractionWindowObligationLevelOption.IsEnabled,GetScriptedGui('agreed_upon_obligations').IsValid(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('special_contract' )).End))]"
+													down = "[GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('special_contract' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)0')).End)]"
+												}
+											}
+											TCMA_contract_radio_button = {
+												blockoverride "OnClick"
+												{
+													visible = "[And(EqualTo_string(ObligationContainerData.GetName, GetVassalContractType( 'special_contract' ).GetName), EqualTo_string(ModifyVassalContractInteractionWindowObligationLevelOption.GetName,GetVassalContractType( 'special_contract' ).GetObligationNameShortNoTooltip('special_contract_scutage' )))]"
+													onclick = "[GetScriptedGui('update_contract_acceptance').Execute(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('special_contract' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)1')).End)]"
+													enabled = "[And(ModifyVassalContractInteractionWindowObligationLevelOption.IsEnabled,GetScriptedGui('agreed_upon_obligations').IsValid(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('special_contract' )).End))]"
+													down = "[GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('special_contract' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)1')).End)]"
+												}
+											}
+											TCMA_contract_radio_button = {
+												blockoverride "OnClick"
+												{
+													visible = "[And(EqualTo_string(ObligationContainerData.GetName, GetVassalContractType( 'special_contract' ).GetName), EqualTo_string(ModifyVassalContractInteractionWindowObligationLevelOption.GetName,GetVassalContractType( 'special_contract' ).GetObligationNameShortNoTooltip('special_contract_march' )))]"
+													onclick = "[GetScriptedGui('update_contract_acceptance').Execute(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('special_contract' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)2')).End)]"
+													enabled = "[And(ModifyVassalContractInteractionWindowObligationLevelOption.IsEnabled,GetScriptedGui('agreed_upon_obligations').IsValid(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('special_contract' )).End))]"
+													down = "[GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('special_contract' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)2')).End)]"
+												}
+											}
+											TCMA_contract_radio_button = {
+												blockoverride "OnClick"
+												{
+													visible = "[And(EqualTo_string(ObligationContainerData.GetName, GetVassalContractType( 'special_contract' ).GetName), EqualTo_string(ModifyVassalContractInteractionWindowObligationLevelOption.GetName,GetVassalContractType( 'special_contract' ).GetObligationNameShortNoTooltip('special_contract_palatinate' )))]"
+													onclick = "[GetScriptedGui('update_contract_acceptance').Execute(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('special_contract' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)3')).End)]"
+													enabled = "[And(ModifyVassalContractInteractionWindowObligationLevelOption.IsEnabled,GetScriptedGui('agreed_upon_obligations').IsValid(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('special_contract' )).End))]"
+													down = "[GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('special_contract' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)3')).End)]"
+												}
+											}
+
+											expand = {}
+										}
+									}
+								}
+							}
+						}
+					}
+
+					dynamicgridbox = {
+						name = "minor_list_levels_checkboxes"
+						flipdirection = yes
+						datamodel_wrap = 3
+
+						datamodel = "[ModifyVassalContractInteractionWindow.AccessObligationLevelCheckboxes]"
+
+						item = {
+							widget = {
+								datacontext = "[ObligationLevelCheckbox.GetContainerData]"
+
+								background = {
+									using = Background_Area_With_Header
+									alpha = 0.75
+								}
+
+								visible = "[ObligationContainerData.ShouldShow( ModifyVassalContractInteractionWindow.GetContractPreview )]"
+
+								size = { 200 65 }
+
+								vbox = {
+									margin_left = 10
+									spacing = 2
+
+									text_single = {
+										layoutpolicy_horizontal = expanding
+										minimumsize = { 0 33 }
+										text = "[ObligationContainerData.GetName]"
+										using = Font_Size_Medium
+										default_format = "#light_background"
+									}
+
+									hbox = {
+										allow_outside = yes
+										layoutpolicy_horizontal = expanding
+										alwaystransparent = no
+										spacing = 5
+
+										datacontext = "[ObligationLevelCheckbox.GetLevel( '(int32)1' )]" # First one is always no effect/disabled option
+
+										widget = {
+											allow_outside = yes
+											visible = "[And(EqualTo_string(ObligationContainerData.GetName, GetVassalContractType( 'religious_rights' ).GetName),GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('religious_rights' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)0')).End))]"
+											button_checkbox_label = {
+													onclick = "[ObligationLevelCheckbox.AccessLevel( '(int32)1' ).Select]"
+													# onclick = "[ObligationLevelCheckbox.ToggleSelection]"	
+													onclick = "[GetScriptedGui('update_contract_acceptance').Execute(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('religious_rights' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)1')).End)]"
+
+												blockoverride "checkbox"
+												{
+													enabled = "[And(ModifyVassalContractInteractionWindowObligationLevelOption.IsEnabled,GetScriptedGui('agreed_upon_obligations').IsValid(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('religious_rights' )).End))]"
+													checked = no
+												}
+												blockoverride "text"
+												{
+													text = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetName]"
+													default_format = "#light_background"
+												}
+											}
+										}
+										widget = {
+											allow_outside = yes
+											visible = "[And(EqualTo_string(ObligationContainerData.GetName, GetVassalContractType( 'religious_rights' ).GetName),GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('religious_rights' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)1')).End))]"
+											button_checkbox_label = {
+													onclick = "[ObligationLevelCheckbox.AccessLevel( '(int32)0' ).Select]"
+													# onclick = "[ObligationLevelCheckbox.ToggleSelection]"	
+													onclick = "[GetScriptedGui('update_contract_acceptance').Execute(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('religious_rights' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)0')).End)]"
+
+												blockoverride "checkbox"
+												{
+													enabled = "[And(ModifyVassalContractInteractionWindowObligationLevelOption.IsEnabled,GetScriptedGui('agreed_upon_obligations').IsValid(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('religious_rights' )).End))]"
+													checked = yes
+												}
+												blockoverride "text"
+												{
+													text = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetName]"
+													default_format = "#light_background"
+												}
+											}
+										}
+										widget = {
+											allow_outside = yes
+											visible = "[And(EqualTo_string(ObligationContainerData.GetName, GetVassalContractType( 'fortification_rights' ).GetName),GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('fortification_rights' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)0')).End))]"
+											button_checkbox_label = {
+													onclick = "[ObligationLevelCheckbox.AccessLevel( '(int32)1' ).Select]"
+													# onclick = "[ObligationLevelCheckbox.ToggleSelection]"	
+													onclick = "[GetScriptedGui('update_contract_acceptance').Execute(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('fortification_rights' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)1')).End)]"
+
+												blockoverride "checkbox"
+												{
+													enabled = "[And(ModifyVassalContractInteractionWindowObligationLevelOption.IsEnabled,GetScriptedGui('agreed_upon_obligations').IsValid(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('fortification_rights' )).End))]"
+													checked = no
+												}
+												blockoverride "text"
+												{
+													text = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetName]"
+													default_format = "#light_background"
+												}
+											}
+										}
+										widget = {
+											allow_outside = yes
+											visible = "[And(EqualTo_string(ObligationContainerData.GetName, GetVassalContractType( 'fortification_rights' ).GetName),GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('fortification_rights' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)1')).End))]"
+											button_checkbox_label = {
+													onclick = "[ObligationLevelCheckbox.AccessLevel( '(int32)0' ).Select]"
+													# onclick = "[ObligationLevelCheckbox.ToggleSelection]"	
+													onclick = "[GetScriptedGui('update_contract_acceptance').Execute(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('fortification_rights' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)0')).End)]"
+
+												blockoverride "checkbox"
+												{
+													enabled = "[And(ModifyVassalContractInteractionWindowObligationLevelOption.IsEnabled,GetScriptedGui('agreed_upon_obligations').IsValid(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('fortification_rights' )).End))]"
+													checked = yes
+												}
+												blockoverride "text"
+												{
+													text = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetName]"
+													default_format = "#light_background"
+												}
+											}
+										}
+										widget = {
+											allow_outside = yes
+											visible = "[And(EqualTo_string(ObligationContainerData.GetName, GetVassalContractType( 'coinage_rights' ).GetName),GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('coinage_rights' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)0')).End))]"
+											button_checkbox_label = {
+													onclick = "[ObligationLevelCheckbox.AccessLevel( '(int32)1' ).Select]"
+													# onclick = "[ObligationLevelCheckbox.ToggleSelection]"	
+													onclick = "[GetScriptedGui('update_contract_acceptance').Execute(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('coinage_rights' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)1')).End)]"
+
+												blockoverride "checkbox"
+												{
+													enabled = "[And(ModifyVassalContractInteractionWindowObligationLevelOption.IsEnabled,GetScriptedGui('agreed_upon_obligations').IsValid(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('coinage_rights' )).End))]"
+													checked = no
+												}
+												blockoverride "text"
+												{
+													text = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetName]"
+													default_format = "#light_background"
+												}
+											}
+										}
+										widget = {
+											allow_outside = yes
+											visible = "[And(EqualTo_string(ObligationContainerData.GetName, GetVassalContractType( 'coinage_rights' ).GetName),GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('coinage_rights' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)1')).End))]"
+											button_checkbox_label = {
+													onclick = "[ObligationLevelCheckbox.AccessLevel( '(int32)0' ).Select]"
+													# onclick = "[ObligationLevelCheckbox.ToggleSelection]"	
+													onclick = "[GetScriptedGui('update_contract_acceptance').Execute(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('coinage_rights' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)0')).End)]"
+
+												blockoverride "checkbox"
+												{
+													enabled = "[And(ModifyVassalContractInteractionWindowObligationLevelOption.IsEnabled,GetScriptedGui('agreed_upon_obligations').IsValid(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('coinage_rights' )).End))]"
+													checked = yes
+												}
+												blockoverride "text"
+												{
+													text = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetName]"
+													default_format = "#light_background"
+												}
+											}
+										}
+										widget = {
+											allow_outside = yes
+											visible = "[And(EqualTo_string(ObligationContainerData.GetName, GetVassalContractType( 'succession_rights' ).GetName),GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('succession_rights' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)0')).End))]"
+											button_checkbox_label = {
+													onclick = "[ObligationLevelCheckbox.AccessLevel( '(int32)1' ).Select]"
+													# onclick = "[ObligationLevelCheckbox.ToggleSelection]"	
+													onclick = "[GetScriptedGui('update_contract_acceptance').Execute(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('succession_rights' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)1')).End)]"
+
+												blockoverride "checkbox"
+												{
+													enabled = "[And(ModifyVassalContractInteractionWindowObligationLevelOption.IsEnabled,GetScriptedGui('agreed_upon_obligations').IsValid(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('succession_rights' )).End))]"
+													checked = no
+												}
+												blockoverride "text"
+												{
+													text = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetName]"
+													default_format = "#light_background"
+												}
+											}
+										}
+										widget = {
+											allow_outside = yes
+											visible = "[And(EqualTo_string(ObligationContainerData.GetName, GetVassalContractType( 'succession_rights' ).GetName),GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('succession_rights' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)1')).End))]"
+											button_checkbox_label = {
+													onclick = "[ObligationLevelCheckbox.AccessLevel( '(int32)0' ).Select]"
+													# onclick = "[ObligationLevelCheckbox.ToggleSelection]"	
+													onclick = "[GetScriptedGui('update_contract_acceptance').Execute(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('succession_rights' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)0')).End)]"
+
+												blockoverride "checkbox"
+												{
+													enabled = "[And(ModifyVassalContractInteractionWindowObligationLevelOption.IsEnabled,GetScriptedGui('agreed_upon_obligations').IsValid(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('succession_rights' )).End))]"
+													checked = yes
+												}
+												blockoverride "text"
+												{
+													text = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetName]"
+													default_format = "#light_background"
+												}
+											}
+										}
+										widget = {
+											allow_outside = yes
+											visible = "[And(EqualTo_string(ObligationContainerData.GetName, GetVassalContractType( 'war_declaration_rights' ).GetName),GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('war_declaration_rights' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)0')).End))]"
+											button_checkbox_label = {
+													onclick = "[ObligationLevelCheckbox.AccessLevel( '(int32)1' ).Select]"
+													# onclick = "[ObligationLevelCheckbox.ToggleSelection]"	
+													onclick = "[GetScriptedGui('update_contract_acceptance').Execute(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('war_declaration_rights' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)1')).End)]"
+
+												blockoverride "checkbox"
+												{
+													enabled = "[And(ModifyVassalContractInteractionWindowObligationLevelOption.IsEnabled,GetScriptedGui('agreed_upon_obligations').IsValid(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('war_declaration_rights' )).End))]"
+													checked = no
+												}
+												blockoverride "text"
+												{
+													text = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetName]"
+													default_format = "#light_background"
+												}
+											}
+										}
+										widget = {
+											allow_outside = yes
+											visible = "[And(EqualTo_string(ObligationContainerData.GetName, GetVassalContractType( 'war_declaration_rights' ).GetName),GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('war_declaration_rights' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)1')).End))]"
+											button_checkbox_label = {
+													onclick = "[ObligationLevelCheckbox.AccessLevel( '(int32)0' ).Select]"
+													# onclick = "[ObligationLevelCheckbox.ToggleSelection]"	
+													onclick = "[GetScriptedGui('update_contract_acceptance').Execute(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('war_declaration_rights' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)0')).End)]"
+
+												blockoverride "checkbox"
+												{
+													enabled = "[And(ModifyVassalContractInteractionWindowObligationLevelOption.IsEnabled,GetScriptedGui('agreed_upon_obligations').IsValid(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('war_declaration_rights' )).End))]"
+													checked = yes
+												}
+												blockoverride "text"
+												{
+													text = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetName]"
+													default_format = "#light_background"
+												}
+											}
+										}
+										widget = {
+											allow_outside = yes
+											visible = "[And(EqualTo_string(ObligationContainerData.GetName, GetVassalContractType( 'council_rights' ).GetName),GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('council_rights' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)0')).End))]"
+											button_checkbox_label = {
+													onclick = "[ObligationLevelCheckbox.AccessLevel( '(int32)1' ).Select]"
+													# onclick = "[ObligationLevelCheckbox.ToggleSelection]"	
+													onclick = "[GetScriptedGui('update_contract_acceptance').Execute(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('council_rights' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)1')).End)]"
+
+												blockoverride "checkbox"
+												{
+													enabled = "[And(ModifyVassalContractInteractionWindowObligationLevelOption.IsEnabled,GetScriptedGui('agreed_upon_obligations').IsValid(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('council_rights' )).End))]"
+													checked = no
+												}
+												blockoverride "text"
+												{
+													text = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetName]"
+													default_format = "#light_background"
+												}
+											}
+										}
+										widget = {
+											allow_outside = yes
+											visible = "[And(EqualTo_string(ObligationContainerData.GetName, GetVassalContractType( 'council_rights' ).GetName),GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('council_rights' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)1')).End))]"
+											button_checkbox_label = {
+													onclick = "[ObligationLevelCheckbox.AccessLevel( '(int32)0' ).Select]"
+													# onclick = "[ObligationLevelCheckbox.ToggleSelection]"	
+													onclick = "[GetScriptedGui('update_contract_acceptance').Execute(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('council_rights' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)0')).End)]"
+
+												blockoverride "checkbox"
+												{
+													enabled = "[And(ModifyVassalContractInteractionWindowObligationLevelOption.IsEnabled,GetScriptedGui('agreed_upon_obligations').IsValid(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('council_rights' )).End))]"
+													checked = yes
+												}
+												blockoverride "text"
+												{
+													text = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetName]"
+													default_format = "#light_background"
+												}
+											}
+										}
+										widget = {
+											allow_outside = yes
+											visible = "[And(EqualTo_string(ObligationContainerData.GetName, GetVassalContractType( 'title_revocation_rights' ).GetName),GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('title_revocation_rights' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)0')).End))]"
+											button_checkbox_label = {
+													onclick = "[ObligationLevelCheckbox.AccessLevel( '(int32)1' ).Select]"
+													# onclick = "[ObligationLevelCheckbox.ToggleSelection]"	
+													onclick = "[GetScriptedGui('update_contract_acceptance').Execute(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('title_revocation_rights' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)1')).End)]"
+
+												blockoverride "checkbox"
+												{
+													enabled = "[And(ModifyVassalContractInteractionWindowObligationLevelOption.IsEnabled,GetScriptedGui('agreed_upon_obligations').IsValid(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('title_revocation_rights' )).End))]"
+													checked = no
+												}
+												blockoverride "text"
+												{
+													text = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetName]"
+													default_format = "#light_background"
+												}
+											}
+										}
+										widget = {
+											allow_outside = yes
+											visible = "[And(EqualTo_string(ObligationContainerData.GetName, GetVassalContractType( 'title_revocation_rights' ).GetName),GetScriptedGui('agreed_upon_obligations').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('title_revocation_rights' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)1')).End))]"
+											button_checkbox_label = {
+													onclick = "[ObligationLevelCheckbox.AccessLevel( '(int32)0' ).Select]"
+													# onclick = "[ObligationLevelCheckbox.ToggleSelection]"	
+													onclick = "[GetScriptedGui('update_contract_acceptance').Execute(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('title_revocation_rights' )).AddScope( 'level', MakeScopeValue('(CFixedPoint)0')).End)]"
+
+												blockoverride "checkbox"
+												{
+													enabled = "[And(ModifyVassalContractInteractionWindowObligationLevelOption.IsEnabled,GetScriptedGui('agreed_upon_obligations').IsValid(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).AddScope( 'obligation', MakeScopeFlag('title_revocation_rights' )).End))]"
+													checked = yes
+												}
+												blockoverride "text"
+												{
+													text = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetName]"
+													default_format = "#light_background"
+												}
+											}
+										}
+
+										expand = {}
+
+										tooltip = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetTooltip]"
+									}
+
+									expand = {}
+								}
+							}
+						}
+					}
+
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						spacing = 5
+
+						widget = {
+							datacontext = "[VassalContract.GetLiege]"
+
+							size = { 80 80 }
+
+							icon = {
+								name = "sigil_bg"
+								size = { 80 80 }
+								texture = "gfx/interface/window_event/sigil_bg.dds"
+								alwaystransparent = yes
+								parentanchor = center
+							}
+
+							icon = {
+								name = "sigil"
+								visible = "[Character.HasSealCoA]"
+								size = { 56 56 }
+								gfxtype = coatofarmsgfx
+								shaderfile = "gfx/FX/gui_coatofarms.shader"
+								effectname = PdxGuiSeal
+								alwaystransparent = yes
+								datacontext = "[Character.GetSealCoA]"
+								coat_of_arms_slot = "[CoatOfArms.GetSlot('(int32)88','(int32)88')]"
+								coat_of_arms = "[CoatOfArms.GetTexture('(int32)88','(int32)88')]"
+								coat_of_arms_mask = "gfx/interface/window_event/sigil_center.dds"
+								parentanchor = center
+							}
+
+							icon = {
+								name = "sigil_lowborn"
+								visible = "[Not( Character.HasSealCoA )]"
+								size = { 34 34 }
+								texture = "gfx/interface/window_event/sigil_center_lowborn.dds"
+								alwaystransparent = yes
+								parentanchor = center
+							}
+
+						}
+
+						expand = {}
+
+						text_single = {
+							name = "liege_signature"
+							max_width = 430
+							align = left
+							layoutpolicy_horizontal = expanding
+							default_format = "#light_background"
+
+							text = "CONTRACT_LIEGE_SIGNATURE"
+							using = Font_Type_Flavor
+							using = Font_Size_Medium
+							format_override = { high light_background }
+						}
+
+						widget = {
+							datacontext = "[VassalContract.GetVassal]"
+
+							size = { 80 80 }
+
+							icon = {
+								name = "sigil_bg"
+								size = { 80 80 }
+								texture = "gfx/interface/window_event/sigil_bg.dds"
+								alwaystransparent = yes
+								parentanchor = center
+							}
+
+							icon = {
+								name = "sigil"
+								visible = "[Character.HasSealCoA]"
+								size = { 56 56 }
+								gfxtype = coatofarmsgfx
+								shaderfile = "gfx/FX/gui_coatofarms.shader"
+								effectname = PdxGuiSeal
+								alwaystransparent = yes
+								datacontext = "[Character.GetSealCoA]"
+								coat_of_arms_slot = "[CoatOfArms.GetSlot('(int32)88','(int32)88')]"
+								coat_of_arms = "[CoatOfArms.GetTexture('(int32)88','(int32)88')]"
+								coat_of_arms_mask = "gfx/interface/window_event/sigil_center.dds"
+								parentanchor = center
+							}
+
+							icon = {
+								name = "sigil_lowborn"
+								visible = "[Not( Character.HasSealCoA )]"
+								size = { 34 34 }
+								texture = "gfx/interface/window_event/sigil_center_lowborn.dds"
+								alwaystransparent = yes
+								parentanchor = center
+							}
+
+						}
+
+						expand = {}
+
+						text_single = {
+							name = "vassal_signature"
+							max_width = 430
+							align = left
+							layoutpolicy_horizontal = expanding
+							default_format = "#light_background"
+
+							text = "CONTRACT_VASSAL_SIGNATURE"
+							using = Font_Type_Flavor
+							using = Font_Size_Medium
+							format_override = { high light_background }
+						}
+					}
+				}
+
+				button_standard = {
+					name = "reset_button"
+					onclick = "[ModifyVassalContractInteractionWindow.ResetToCurrent]"
+					onclick = "[GetScriptedGui('reset_contract').Execute(GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+					enabled = "[Not( ModifyVassalContractInteractionWindow.IsPreviewSameAsCurrent )]"
+					text = "RESET_CONTRACT_CHANGES"
+					using = tooltip_above
+				}
+			}
+
+			vbox = {
+				spacing = 10
+				layoutpolicy_vertical = expanding
+				margin = { 10 0 }
+				margin_top = 5
+
+				hbox = {
+					margin_right = 10
+					layoutpolicy_horizontal = expanding
+					datacontext = "[VassalContract.GetVassal]"
+					background = {
+						using = Background_Area
+					}
+
+					portrait_head = {
+						blockoverride "opinion_box" {}
+					}
+
+					expand = {}
+
+					text_multi = {
+						text = "VASSAL_CONTRACT_VASSAL_TITLE"
+						using = Font_Size_Medium
+						using = Font_Type_Flavor
+						align = center
+						autoresize = yes
+						maximumsize = { 300 -1 }
+					}
+
+					expand = {}
+
+					coa_realm_medium_crown = {}
+				}
+
+				hbox = {
+					visible = "[CharacterInteractionConfirmationWindow.GetEffectsDescription.HasAnyAcceptEffect]"
+					layoutpolicy_horizontal = expanding
+					margin = { 10 0 }
+					
+					text_label_left = {
+						text = CONTRACT_EFFECTS_HEADER
+					}
+					expand = {}
+				}
+
+				vbox_character_interaction_effects_simple = {
+					# [TCMA]
+					visible = "[CharacterInteractionConfirmationWindow.GetEffectsDescription.HasAnyAcceptEffect]"
+					layoutpolicy_horizontal = expanding
+					layoutpolicy_vertical = expanding
+					datacontext = "[CharacterInteractionConfirmationWindow.GetEffectsDescription]"
+					# [/TCMA]
+				}
+
+				vbox = {
+					visible = "[Not( CharacterInteractionConfirmationWindow.GetEffectsDescription.HasAnyAcceptEffect )]"
+					layoutpolicy_horizontal = expanding
+					layoutpolicy_vertical = expanding
+					
+					text_single = {
+						visible = "[Not( CharacterInteractionConfirmationWindow.GetEffectsDescription.HasAnyAcceptEffect )]"
+						text = "VASSAL_CONTRACT_OBLIGATION_NO_EFFECT"
+						using = Font_Size_Medium
+					}
+				}
+
+				vbox = {
+					spacing = 10
+					
+					vbox = {
+						name = "tax_levy_opinion_info"
+						layoutpolicy_horizontal = expanding
+						spacing = 15
+						margin_top = 10
+						
+
+
+						hbox = {
+							layoutpolicy_horizontal = expanding
+							spacing = 40
+							
+							vbox = {
+								spacing = 5
+
+								text_label_center = {
+									text = "VASSAL_CONTRACT_OBLIGATIONS_TITLE"
+								}
+
+								hbox = {
+									layoutpolicy_horizontal = expanding
+									spacing = 5
+
+									highlight_icon = {
+										size = { 25 25 }
+										texture = "gfx/interface/icons/icon_gold.dds"
+									}
+
+									progressbar_standard = {
+										size = { 90 25 }
+										value = "[FixedPointToProgressbarValue(VassalContract.GetTaxRatioForLiege)]"
+
+										text_single = {
+											parentanchor = center
+											position = { 0 -2 }
+											text = "[ModifyVassalContractInteractionWindow.GetContractPreviewCachedTax|=1]"
+											default_format = "#high"
+										}
+
+										tooltipwidget = {
+											my_realm_window_contribution_tooltip = {
+												datacontext = "[ModifyVassalContractInteractionWindow.GetContractPreviewTaxBreakdown]"
+												blockoverride "levy_info_visible"
+												{
+													visible = no
+												}
+												blockoverride "contribution_tooltip_header"
+												{
+													text = "[SelectLocalization(VassalContract.GetVassal.IsLocalPlayer, 'MRW_TT_TAXES_TO_MY_LIEGE', 'MRW_TT_TAXES_TO_ME')]"
+												}
+											}
+										}
+										using = tooltip_ws
+									}
+
+									expand = {}
+
+								}
+							}
+
+							expand = {}
+							
+
+							vbox = {
+								spacing = 5
+
+								text_label_center = {
+									text = "VASSAL_CONTRACT_OBLIGATIONS_TITLE_LEVIES"
+								}
+
+								hbox = {
+									layoutpolicy_horizontal = expanding
+									spacing = 5
+
+									expand = {}
+
+									highlight_icon = {
+										size = { 25 25 }
+										texture = "gfx/interface/icons/icon_soldier.dds"
+									}
+
+									progressbar_standard = {
+										size = { 90 25 }
+										value = "[FixedPointToProgressbarValue(VassalContract.GetLevyRatioForLiege)]"
+
+										text_single = {
+											parentanchor = center
+											position = { 0 -2 }
+											text = "[ModifyVassalContractInteractionWindow.GetContractPreviewCachedLeviesFormatted]"
+											default_format = "#high"
+										}
+
+										tooltipwidget = {
+											my_realm_window_contribution_tooltip = {
+												datacontext = "[ModifyVassalContractInteractionWindow.GetContractPreviewLeviesBreakdown]"
+												blockoverride "tax_info_visible"
+												{
+													visible = no
+												}
+												blockoverride "contribution_tooltip_header"
+												{
+													text = "[SelectLocalization(VassalContract.GetVassal.IsLocalPlayer, 'MRW_TT_LEVIES_TO_MY_LIEGE', 'MRW_TT_LEVIES_TO_ME')]"
+												}
+											}
+										}
+										using = tooltip_ws
+									}
+								}
+							}
+						}
+
+						widget = {
+							visible = "[And(GetPlayer.MakeScope.Var('contract_negotiation').IsSet,Not(ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.IsOtherPlayer))]"
+							progressbar_green = {
+								visible = "[GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('contract_negotiation_acceptance'),'(CFixedPoint)0')]"
+								position = { 0 0 }	
+								size = { 350 30 }
+								min = -50000
+								max = 50000
+								value = "[FixedPointToProgressbarValue(GetPlayer.MakeScope.ScriptValue('contract_negotiation_acceptance'))]"
+							}
+							progressbar_red = {
+								visible = "[LessThanOrEqualTo_CFixedPoint(GetPlayer.MakeScope.ScriptValue('contract_negotiation_acceptance'),'(CFixedPoint)0')]"
+								position = { 0 0 }	
+								size = { 350 30 }
+								min = -50000
+								max = 50000
+								value = "[FixedPointToProgressbarValue(GetPlayer.MakeScope.ScriptValue('contract_negotiation_acceptance'))]"
+							}
+							icon = {
+								position = { 175 0 }
+								parentanchor = top
+								alwaystransparent = yes
+								texture = "gfx/interface/window_factions/faction_progress_threshold.dds"
+							}
+						}						
+					}
+				}
+
+				expand = {}
+					spacer = {
+						size = { 30 10 }
+					}
+
+				vbox = {
+					layoutpolicy_horizontal = expanding
+
+					# [StA]
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						text_single = {
+							datacontext = "[ModifyVassalContractInteractionWindow.GetContractPreviewOpinionBreakdown]"
+
+							visible = "[Not(VassalContract.GetVassal.IsLocalPlayer)]"
+							text = "VASSAL_CONTRACT_OPINION_MODIFICATION"
+							using = Font_Size_Medium
+
+							tooltip_enabled = "[ValueBreakdown.HasTooltip]"
+
+							tooltipwidget = {
+								widget_value_breakdown_tooltip = {}
+							}
+						}
+					}
+					expand = {}
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						text_label_center = {
+							visible = "[GetScriptedGui('sgui_StA_active').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+							text = "SUBMISSION_IMPACT"
+							using = Font_Size_Medium
+							
+							tooltip_enabled = "[ValueBreakdown.HasTooltip]"
+							
+							tooltipwidget = {
+								widget_value_breakdown_tooltip = {}
+							}
+						}
+					}
+					# [/StA]
+
+					## Options
+					vbox_interaction_options_TCMA = {
+						name = "tutorial_highlight_modify_contract_hook_button"
+						visible = "[CharacterInteractionConfirmationWindow.HasOptions]"
+						blockoverride checkbox_onclick
+						{
+							onclick = "[GetScriptedGui('contract_negotiation_use_hook').Execute(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).End)]"
+						}
+					}
+
+					hbox = {
+						name = "change_only_once_text"
+						visible = "[ObjectsEqual( GetPlayer, VassalContract.GetLiege )]"
+
+						text_single = {
+							text = "VASSAL_CONTRACT_OBLIGATION_ONLY_ONCE"
+						}
+					}
+				}
+
+				hbox = {
+					visible = "[And(GetPlayer.MakeScope.Var('gui_contract_negotiation').IsSet,Not(ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.IsOtherPlayer))]"
+					button_primary = {
+						name = "send_offer_button"
+						size = { 350 45 }
+
+						text = "[CharacterInteractionConfirmationWindow.GetSendName]"
+						default_format = "#high"
+						enabled = "[CharacterInteractionConfirmationWindow.CanSend]"
+						onclick = "[ModifyVassalContractInteractionWindow.Send]"
+						onclick = "[ModifyVassalContractInteractionWindow.Close]"
+						tooltip = "[CharacterInteractionConfirmationWindow.GetCanSendDescription]"
+						clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_advance"
+					}
+				}
+
+				hbox = {
+					layoutpolicy_horizontal = expanding
+					visible = "[And(GetPlayer.MakeScope.Var('gui_contract_negotiation').IsSet,ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.IsOtherPlayer)]"
+					button_primary = {
+						name = "send_proposal_button"
+						size = { 150 45 }
+
+						text = "SEND_PROPOSAL"
+						default_format = "#high"
+						enabled = "[GetScriptedGui('send_proposal').IsValid(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).End)]"
+						onclick = "[GetScriptedGui('send_proposal').Execute(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).End)]"
+						onclick = "[ModifyVassalContractInteractionWindow.Close]"
+						tooltip = "[CharacterInteractionConfirmationWindow.GetCanSendDescription]"
+						clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_advance"
+					}
+					expand = {}
+					button_primary = {
+						name = "accept_proposal_button"
+						size = { 150 45 }
+
+						text = "ACCEPT_PROPOSAL"
+						default_format = "#high"
+						enabled = "[CharacterInteractionConfirmationWindow.CanSend]"
+						onclick = "[ModifyVassalContractInteractionWindow.Send]"
+						onclick = "[ModifyVassalContractInteractionWindow.Close]"
+						tooltip = "[CharacterInteractionConfirmationWindow.GetCanSendDescription]"
+						clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_advance"
+					}
+					expand = {}
+					button_primary = {
+						name = "reject_proposal_button"
+						size = { 150 45 }
+
+						text = "REJECT_PROPOSAL"
+						default_format = "#high"
+						enabled = "[CharacterInteractionConfirmationWindow.CanSend]"
+						onclick = "[GetScriptedGui('reject_proposal').Execute(GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('actor',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetActor.MakeScope).AddScope('recipient',ModifyVassalContractInteractionWindow.GetCharacterInteractionConfirmationWindow.GetRecipient.MakeScope).End)]"
+						onclick = "[ModifyVassalContractInteractionWindow.Close]"
+						tooltip = "[CharacterInteractionConfirmationWindow.GetCanSendDescription]"
+						clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_advance"
+					}
+				}
+			}
+		}
+
+		hbox = {
+			visible = "[Not(GetPlayer.MakeScope.Var('gui_contract_negotiation').IsSet)]"
+			layoutpolicy_vertical = expanding
+			margin_bottom = 10
+			margin_top = -5
+
+			background = {
+				texture = "gfx/interface/illustrations/event_scenes/study.dds"
+				alpha = 0.7
+
+				fittype = end
+
+				modify_texture = {
+					texture = "gfx/interface/component_masks/mask_fade_vertical_up.dds"
+					blend_mode = alphamultiply
+				}
+			}
+
+			vbox = {
+				name = "obligation_level_negotiation"
+				layoutpolicy_horizontal = expanding
+				layoutpolicy_vertical = expanding
+				spacing = 10
+
+				vbox = {
+					name = "paper_contract"
+					layoutpolicy_horizontal = expanding
+					layoutpolicy_vertical = expanding
+					using = Background_Letter
+					margin = { 20 20 }
+					spacing = 5
+
+					vbox = {
+						name = "major_line_tree_levels"
+						layoutpolicy_horizontal = expanding
+
+						spacing = 10
+
+						datamodel = "[ModifyVassalContractInteractionWindow.AccessObligationLevelLineTrees]"
+
+						item = {
+							vbox = {
+								layoutpolicy_vertical = expanding
+								layoutpolicy_horizontal = expanding
+
+								datacontext = "[ObligationLevelLineTree.GetContainerData]"
+
+								visible = "[ObligationContainerData.ShouldShow( ModifyVassalContractInteractionWindow.GetContractPreview )]"
+
+								spacing = 10
+
+								text_single = {
+									text = "[ObligationContainerData.GetName] [ObligationContainerData.GetIcon]"
+									using = Font_Size_Medium
+									default_format = "#light_background"
+								}
+
+								container = {
+									layoutpolicy_vertical = expanding
+
+									name = "obligation_level_item_line_area" # Name used in code do not change
+
+									datamodel = "[ObligationLevelLineTree.AccessItems]"
+
+									item = {
+										widget = {
+											datacontext = "[ObligationLevelLineItem.AccessItem]"
+											size = { 120 83 }
+											position = "[ObligationLevelLineTree.GetItemPosition( ModifyVassalContractInteractionWindowObligationLevelOption.Self )]"
+
+											container = {
+												parentanchor = center
+
+												widget = {
+													name = "top_pin"
+													visible = "[ObligationLevelLineItem.SetupTopWidget( PdxGuiWidget.Self )]"
+												}
+
+												widget = {
+													name = "bottom_pin"
+													visible = "[ObligationLevelLineItem.SetupBottomWidget( PdxGuiWidget.Self )]"
+												}
+											}
+
+											button_letter = {
+												size = { 100 80 }
+
+												text_single = {
+													text = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetName]"
+													visible = "[Not(ModifyVassalContractInteractionWindowObligationLevelOption.IsSelected)]"
+													default_format = "#light_background"
+													parentanchor = center
+													position = {0 -3 }
+												}
+
+												text_single = {
+													text = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetName]"
+													visible = "[ModifyVassalContractInteractionWindowObligationLevelOption.IsSelected]"
+													default_format = "#high"
+													parentanchor = center
+													position = {0 -3 }
+												}
+
+												tooltip = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetTooltip]"
+
+												onclick = "[ModifyVassalContractInteractionWindowObligationLevelOption.Select]"
+												down = "[ModifyVassalContractInteractionWindowObligationLevelOption.IsSelected]"
+												enabled = "[ModifyVassalContractInteractionWindowObligationLevelOption.IsEnabled]"
+												using = tooltip_above
+
+												background = {
+													using = Background_Area_Dark
+													visible = "[ModifyVassalContractInteractionWindowObligationLevelOption.IsSelected]"
+												}
+
+												icon = {
+													parentanchor = top|hcenter
+													position = { 0 -5 }
+													texture = "gfx/interface/buttons/button_tree_expand.dds"
+													framesize = { 36 36 }
+													size = { 24 24 }
+													frame = 2
+													tintcolor = { 0.4 0.4 0.5 0.7 }
+													visible = "[ModifyVassalContractInteractionWindowObligationLevelOption.IsCurrent]"
+
+													using = Mask_Rough_Edges
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+
+					vbox = {
+						name = "minor_list_levels_radio_buttons"
+						datamodel = "[ModifyVassalContractInteractionWindow.AccessObligationLevelRadioButtons]"
+
+						background = {
+							using = Background_Area_With_Header
+							alpha = 0.75
+							margin_left = 20
+							margin_right = 20
+							margin_bottom = 0
+							margin_top = 2
+						}
+
+						item = {
+							vbox = {
+								datacontext = "[ObligationLevelRadioButtons.GetContainerData]"
+
+								visible = "[ObligationContainerData.ShouldShow( ModifyVassalContractInteractionWindow.GetContractPreview )]"
+
+								text_single = {
+									text = "[ObligationContainerData.GetName]"
+									using = Font_Size_Medium
+									default_format = "#light_background"
+								}
+
+								hbox = {
+									datamodel = "[ObligationLevelRadioButtons.Access]"
+									spacing = 20
+									margin = { 10 12 }
+									item = {
+
+										hbox = {
+
+											button_radio_label = {
+												onclick = "[ModifyVassalContractInteractionWindowObligationLevelOption.Select]"
+												enabled = "[ModifyVassalContractInteractionWindowObligationLevelOption.IsEnabled]"
+
+												blockoverride "radio" 
+												{ 
+												    frame = "[BoolTo1And2( ModifyVassalContractInteractionWindowObligationLevelOption.IsSelected )]"
+												}
+												blockoverride "text"
+												{
+												    text = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetName]"
+												    default_format = "#light_background"
+												}
+
+												tooltip = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetTooltip]"
+											}
+
+											expand = {}
+										}
+									}
+								}
+							}
+						}
+					}
+
+					dynamicgridbox = {
+						name = "minor_list_levels_checkboxes"
+						flipdirection = yes
+						datamodel_wrap = 3
+
+						datamodel = "[ModifyVassalContractInteractionWindow.AccessObligationLevelCheckboxes]"
+
+						item = {
+							widget = {
+								datacontext = "[ObligationLevelCheckbox.GetContainerData]"
+
+								background = {
+									using = Background_Area_With_Header
+									alpha = 0.75
+								}
+
+								visible = "[ObligationContainerData.ShouldShow( ModifyVassalContractInteractionWindow.GetContractPreview )]"
+
+								size = { 200 65 }
+
+								vbox = {
+									margin_left = 10
+									spacing = 2
+
+									text_single = {
+										layoutpolicy_horizontal = expanding
+										minimumsize = { 0 33 }
+										text = "[ObligationContainerData.GetName]"
+										using = Font_Size_Medium
+										default_format = "#light_background"
+									}
+
+									hbox = {
+										layoutpolicy_horizontal = expanding
+										alwaystransparent = no
+										spacing = 5
+
+										datacontext = "[ObligationLevelCheckbox.GetLevel( '(int32)1' )]" # First one is always no effect/disabled option
+
+										button_checkbox_label = {
+											# Order dependent, first select the unselected level then set it as the new selected one
+											onclick = "[ObligationLevelCheckbox.AccessLevel( ObligationLevelCheckbox.GetUnselectedLevelIndex ).Select]"
+											onclick = "[ObligationLevelCheckbox.ToggleSelection]"
+
+											blockoverride "checkbox"
+											{
+												checked = "[ModifyVassalContractInteractionWindowObligationLevelOption.IsSelected]"
+												enabled = "[ModifyVassalContractInteractionWindowObligationLevelOption.IsEnabled]" 
+											}
+
+											blockoverride "text"
+											{
+												text = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetName]"
+												default_format = "#light_background"
+											}
+										}
+
+										expand = {}
+
+										tooltip = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetTooltip]"
+									}
+
+									expand = {}
+								}
+							}
+						}
+					}
+
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						spacing = 5
+
+						widget = {
+							datacontext = "[VassalContract.GetLiege]"
+
+							size = { 80 80 }
+
+							icon = {
+								name = "sigil_bg"
+								size = { 80 80 }
+								texture = "gfx/interface/window_event/sigil_bg.dds"
+								alwaystransparent = yes
+								parentanchor = center
+							}
+
+							icon = {
+								name = "sigil"
+								visible = "[Character.HasSealCoA]"
+								size = { 56 56 }
+								gfxtype = coatofarmsgfx
+								shaderfile = "gfx/FX/gui_coatofarms.shader"
+								effectname = PdxGuiSeal
+								alwaystransparent = yes
+								datacontext = "[Character.GetSealCoA]"
+								coat_of_arms_slot = "[CoatOfArms.GetSlot('(int32)88','(int32)88')]"
+								coat_of_arms = "[CoatOfArms.GetTexture('(int32)88','(int32)88')]"
+								coat_of_arms_mask = "gfx/interface/window_event/sigil_center.dds"
+								parentanchor = center
+							}
+
+							icon = {
+								name = "sigil_lowborn"
+								visible = "[Not( Character.HasSealCoA )]"
+								size = { 34 34 }
+								texture = "gfx/interface/window_event/sigil_center_lowborn.dds"
+								alwaystransparent = yes
+								parentanchor = center
+							}
+
+						}
+
+						expand = {}
+
+						text_single = {
+							name = "liege_signature"
+							max_width = 430
+							align = left
+							layoutpolicy_horizontal = expanding
+							default_format = "#light_background"
+
+							text = "CONTRACT_LIEGE_SIGNATURE"
+							using = Font_Type_Flavor
+							using = Font_Size_Medium
+							format_override = { high light_background }
+						}
+
+						widget = {
+							datacontext = "[VassalContract.GetVassal]"
+
+							size = { 80 80 }
+
+							icon = {
+								name = "sigil_bg"
+								size = { 80 80 }
+								texture = "gfx/interface/window_event/sigil_bg.dds"
+								alwaystransparent = yes
+								parentanchor = center
+							}
+
+							icon = {
+								name = "sigil"
+								visible = "[Character.HasSealCoA]"
+								size = { 56 56 }
+								gfxtype = coatofarmsgfx
+								shaderfile = "gfx/FX/gui_coatofarms.shader"
+								effectname = PdxGuiSeal
+								alwaystransparent = yes
+								datacontext = "[Character.GetSealCoA]"
+								coat_of_arms_slot = "[CoatOfArms.GetSlot('(int32)88','(int32)88')]"
+								coat_of_arms = "[CoatOfArms.GetTexture('(int32)88','(int32)88')]"
+								coat_of_arms_mask = "gfx/interface/window_event/sigil_center.dds"
+								parentanchor = center
+							}
+
+							icon = {
+								name = "sigil_lowborn"
+								visible = "[Not( Character.HasSealCoA )]"
+								size = { 34 34 }
+								texture = "gfx/interface/window_event/sigil_center_lowborn.dds"
+								alwaystransparent = yes
+								parentanchor = center
+							}
+
+						}
+
+						expand = {}
+
+						text_single = {
+							name = "vassal_signature"
+							max_width = 430
+							align = left
+							layoutpolicy_horizontal = expanding
+							default_format = "#light_background"
+
+							text = "CONTRACT_VASSAL_SIGNATURE"
+							using = Font_Type_Flavor
+							using = Font_Size_Medium
+							format_override = { high light_background }
+						}
+					}
+				}
+
+				button_standard = {
+					name = "reset_button"
+					onclick = "[ModifyVassalContractInteractionWindow.ResetToCurrent]"
+					enabled = "[Not( ModifyVassalContractInteractionWindow.IsPreviewSameAsCurrent )]"
+					text = "RESET_CONTRACT_CHANGES"
+					using = tooltip_above
+				}
+			}
+
+			vbox = {
+				spacing = 10
+				layoutpolicy_vertical = expanding
+				margin = { 10 0 }
+				margin_top = 5
+
+				hbox = {
+					margin_right = 10
+					layoutpolicy_horizontal = expanding
+					datacontext = "[VassalContract.GetVassal]"
+					background = {
+						using = Background_Area
+					}
+
+					portrait_head = {
+						blockoverride "opinion_box" {}
+					}
+
+					expand = {}
+
+					text_multi = {
+						text = "VASSAL_CONTRACT_VASSAL_TITLE"
+						using = Font_Size_Medium
+						using = Font_Type_Flavor
+						align = center
+						autoresize = yes
+						maximumsize = { 300 -1 }
+					}
+
+					expand = {}
+
+					coa_realm_medium_crown = {}
+				}
+
+				hbox = {
+					visible = "[CharacterInteractionConfirmationWindow.GetEffectsDescription.HasAnyAcceptEffect]"
+					layoutpolicy_horizontal = expanding
+					margin = { 10 0 }
+					
+					text_label_left = {
+						text = CONTRACT_EFFECTS_HEADER
+					}
+					expand = {}
+				}
+
+				vbox_character_interaction_effects_simple = {
+					visible = "[CharacterInteractionConfirmationWindow.GetEffectsDescription.HasAnyAcceptEffect]"
+					layoutpolicy_horizontal = expanding
+					layoutpolicy_vertical = expanding
+					datacontext = "[CharacterInteractionConfirmationWindow.GetEffectsDescription]"
+				}
+
+				vbox = {
+					visible = "[Not( CharacterInteractionConfirmationWindow.GetEffectsDescription.HasAnyAcceptEffect )]"
+					layoutpolicy_horizontal = expanding
+					layoutpolicy_vertical = expanding
+					
+					text_single = {
+						visible = "[Not( CharacterInteractionConfirmationWindow.GetEffectsDescription.HasAnyAcceptEffect )]"
+						text = "VASSAL_CONTRACT_OBLIGATION_NO_EFFECT"
+						using = Font_Size_Medium
+					}
+				}
+
+				vbox = {
+					spacing = 10
+
+					vbox = {
+						name = "tax_levy_opinion_info"
+						layoutpolicy_horizontal = expanding
+						spacing = 15
+						margin_top = 10
+
+						hbox = {
+							layoutpolicy_horizontal = expanding
+							spacing = 40
+
+							vbox = {
+								spacing = 5
+
+								text_label_center = {
+									text = "VASSAL_CONTRACT_OBLIGATIONS_TITLE"
+								}
+
+								hbox = {
+									layoutpolicy_horizontal = expanding
+									spacing = 5
+
+									highlight_icon = {
+										size = { 25 25 }
+										texture = "gfx/interface/icons/icon_gold.dds"
+									}
+
+									progressbar_standard = {
+										size = { 90 25 }
+										value = "[FixedPointToProgressbarValue(VassalContract.GetTaxRatioForLiege)]"
+
+										text_single = {
+											parentanchor = center
+											position = { 0 -2 }
+											text = "[ModifyVassalContractInteractionWindow.GetContractPreviewCachedTax|=1]"
+											default_format = "#high"
+										}
+
+										tooltipwidget = {
+											my_realm_window_contribution_tooltip = {
+												datacontext = "[ModifyVassalContractInteractionWindow.GetContractPreviewTaxBreakdown]"
+												blockoverride "levy_info_visible"
+												{
+													visible = no
+												}
+												blockoverride "contribution_tooltip_header"
+												{
+													text = "[SelectLocalization(VassalContract.GetVassal.IsLocalPlayer, 'MRW_TT_TAXES_TO_MY_LIEGE', 'MRW_TT_TAXES_TO_ME')]"
+												}
+											}
+										}
+										using = tooltip_ws
+									}
+
+									expand = {}
+
+								}
+							}
+
+							expand = {}
+
+							vbox = {
+								spacing = 5
+
+								text_label_center = {
+									text = "VASSAL_CONTRACT_OBLIGATIONS_TITLE_LEVIES"
+								}
+
+								hbox = {
+									layoutpolicy_horizontal = expanding
+									spacing = 5
+
+									expand = {}
+
+									highlight_icon = {
+										size = { 25 25 }
+										texture = "gfx/interface/icons/icon_soldier.dds"
+									}
+
+									progressbar_standard = {
+										size = { 90 25 }
+										value = "[FixedPointToProgressbarValue(VassalContract.GetLevyRatioForLiege)]"
+
+										text_single = {
+											parentanchor = center
+											position = { 0 -2 }
+											text = "[ModifyVassalContractInteractionWindow.GetContractPreviewCachedLeviesFormatted]"
+											default_format = "#high"
+										}
+
+										tooltipwidget = {
+											my_realm_window_contribution_tooltip = {
+												datacontext = "[ModifyVassalContractInteractionWindow.GetContractPreviewLeviesBreakdown]"
+												blockoverride "tax_info_visible"
+												{
+													visible = no
+												}
+												blockoverride "contribution_tooltip_header"
+												{
+													text = "[SelectLocalization(VassalContract.GetVassal.IsLocalPlayer, 'MRW_TT_LEVIES_TO_MY_LIEGE', 'MRW_TT_LEVIES_TO_ME')]"
+												}
+											}
+										}
+										using = tooltip_ws
+									}
+								}
+							}
+						}
+					}
+				}
+
+				expand = {}
+
+				vbox = {
+					layoutpolicy_horizontal = expanding
+
+					# [StA]
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						text_single = {
+							datacontext = "[ModifyVassalContractInteractionWindow.GetContractPreviewOpinionBreakdown]"
+
+							visible = "[Not(VassalContract.GetVassal.IsLocalPlayer)]"
+							text = "VASSAL_CONTRACT_OPINION_MODIFICATION"
+							using = Font_Size_Medium
+
+							tooltip_enabled = "[ValueBreakdown.HasTooltip]"
+
+							tooltipwidget = {
+								widget_value_breakdown_tooltip = {}
+							}
+						}
+					}
+					expand = {}
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						text_label_center = {
+							visible = "[GetScriptedGui('StA_is_loaded_sgui').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+							text = "Submission impact : [Subtract_int32(Subtract_int32('(int32)45',VassalContract.GetVassalOpinionModification),FixedPointToInt(GuiScope.SetRoot(VassalContract.GetVassal.MakeScope ).ScriptValue('feudal_submission')))|+=]"
+							using = Font_Size_Medium
+							
+							tooltip_enabled = "[ValueBreakdown.HasTooltip]"
+							
+							tooltipwidget = {
+								widget_value_breakdown_tooltip = {}
+							}
+						}
+					}
+					# [/StA]
+
+					## Options
+					vbox_interaction_options = {
+						name = "tutorial_highlight_modify_contract_hook_button"
+						visible = "[CharacterInteractionConfirmationWindow.HasOptions]"
+					}
+
+					hbox = {
+						name = "change_only_once_text"
+						visible = "[ObjectsEqual( GetPlayer, VassalContract.GetLiege )]"
+
+						text_single = {
+							text = "VASSAL_CONTRACT_OBLIGATION_ONLY_ONCE"
+						}
+					}
+				}
+
+				button_primary = {
+					name = "send_offer_button"
+					size = { 350 45 }
+
+					text = "[CharacterInteractionConfirmationWindow.GetSendName]"
+					default_format = "#high"
+					enabled = "[CharacterInteractionConfirmationWindow.CanSend]"
+					onclick = "[ModifyVassalContractInteractionWindow.Send]"
+					tooltip = "[CharacterInteractionConfirmationWindow.GetCanSendDescription]"
+					clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_advance"
+				}
+			}
+		}
+	}
+}

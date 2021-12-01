@@ -1,0 +1,14 @@
+﻿GetRepublicOrFeudalUNIUI = {
+	type = character
+	text = {
+		trigger = { liege = { holds_valid_merchant_republic = yes } house = { exists = var:titular_republic } has_government = feudal_government }
+		localization_key = REPUBLIC_AND_FEUDAL_UNIUI
+	}
+	text = {
+		trigger = { OR = { liege = { holds_valid_merchant_republic = yes } holds_valid_merchant_republic = yes } house = { exists = var:titular_republic } NOT = { has_government = feudal_government } }
+		localization_key = REPUBLIC_ONLY_UNIUI
+	}
+	text = {
+		localization_key = FEUDAL_ONLY_UNIUI
+	}
+}

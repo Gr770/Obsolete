@@ -1,0 +1,6 @@
+﻿l_english:
+ TITLE_WIND_UNIUI_TITLE_NAME: "[TitleViewWindow.GetTitle.GetNameNoTooltip|U]"
+ TITLE_WIND_UNIUI_HOLD_PROVINCE_NAME: " [Holding.GetProvince.GetNameNoTooltip]"
+ TITLE_WIND_UNIUI_TITLE_BUTTON_NAME: "[Title.GetNameNoTooltip|U]"
+ TITLE_WIND_UNIUI_HOLDER_NAME: "[Character.GetNameNoTooltip]"
+ TITLE_WIND_UNIUI_TITLE_CAPITAL_NAME: "[Title.GetName]"

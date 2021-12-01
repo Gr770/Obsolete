@@ -1,0 +1,3 @@
+﻿l_english:
+ OUTLINER_UNIUI_PLAYER_NAME: "[OutlinerPlayer.GetName]"
+ OUTLINER_UNIUI_PROVINCE_NAME: "[Holding.GetProvince.GetNameNoTooltip]"
