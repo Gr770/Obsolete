@@ -1,0 +1,6 @@
+﻿KoH_is_load_sgui = {
+    scope = character
+    is_shown = {
+        exists = global_var:KoH_is_loaded
+    }
+}
