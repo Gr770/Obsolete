@@ -83,7 +83,7 @@ window = {
 
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "[HoldingView.GetCountyTitle.GetNameNoTooltip]"
+						text = "HOLD_WINDOW_UNIUI_COUNTY_NAME"
 						margin_bottom = 4
 						using = Font_Size_Big
 						font = TitleFont
@@ -379,7 +379,7 @@ window = {
 							datacontext = "[HoldingView.GetCountyTitle.GetHolder]"
 							layoutpolicy_horizontal = expanding
 							max_width = 190
-							text = "[Character.GetShortUINameNoTooltip|U]"
+							text = "HOLD_WINDOW_UNIUI_COUNT_NAME"
 							default_format = "#high"
 							autoresize = yes
 						}
@@ -805,8 +805,8 @@ window = {
 						ignoreinvisible = yes
 
 						text_single = {
-							text = "[HoldingView.GetProvince.GetTitle.GetNameNoTierNoTooltip]"
-							tooltip = "[HoldingView.GetProvince.GetTitle.GetNameNoTierNoTooltip]"
+							text = "HOLD_WINDOW_UNIUI_BARONY_NAME"
+							tooltip = "HOLD_WINDOW_UNIUI_BARONY_NAME_TOOLTIP"
 							default_format = "#high"
 							align = nobaseline
 							using = Font_Size_Big
@@ -882,7 +882,7 @@ window = {
 
 					text_single = {
 						visible = "[Not(HoldingView.GetTitle.HasHolder)]"
-						text = "[HoldingView.GetProvince.GetTitle.GetNameNoTierNoTooltip]"
+						text = "HOLD_WINDOW_UNIUI_BARONY_NAME"
 						default_format = "#medium"
 						using = Font_Size_Big
 					}
@@ -1069,7 +1069,7 @@ window = {
 
 							text_single = {
 								layoutpolicy_horizontal = expanding
-								text = "[Character.GetShortUIName]"
+								text = "HOLD_WINDOW_UNIUI_BARON_NAME"
 								format_override = { high medium }
 							}
 						}
