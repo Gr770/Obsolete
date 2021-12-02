@@ -1020,7 +1020,7 @@ types IntrigueWindow
 
 							text_single = {
 								layoutpolicy_horizontal = expanding
-								text = "INTRIGUE_WIND_UNIUI_CHAR_NAME"
+								text = "SHARED_UNIUI_CHAR_NAMENOTT"
 								using = Font_Size_Medium
 							}
 

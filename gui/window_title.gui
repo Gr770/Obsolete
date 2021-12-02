@@ -126,7 +126,7 @@ window = {
 									spacing = 5
 
 									text_multi = {
-										text = "TITLE_WIND_UNIUI_TITLE_NAME"
+										text = "[TitleViewWindow.GetTitle.GetNameNoTooltip|U]"
 										default_format = "#high"
 										max_width = 380
 										autoresize = yes
@@ -342,7 +342,7 @@ window = {
 									tooltip = "TITLE_VIEW_GO_TO_HOLDING"
 									onclick = "[TitleViewWindow.GoToHolding]"
 									size = { 120 30 }
-									text = "TITLE_WIND_UNIUI_HOLD_PROVINCE_NAME"
+									text = "[Holding.GetProvince.GetNameNoTooltip]"
 								}
 							}
 						}
@@ -446,7 +446,7 @@ window = {
 
 														text_single = {
 															layoutpolicy_horizontal = expanding
-															text = "TITLE_WIND_UNIUI_TITLE_BUTTON_NAME"
+															text = "[Title.GetNameNoTooltip|U]"
 															default_format = "#high"
 															margin = { 10 0 }
 															max_width = 1000
@@ -531,7 +531,7 @@ window = {
 											coa_realm_tiny_crown = {}
 
 											text_single = {
-												text = "TITLE_WIND_UNIUI_HOLDER_NAME"
+												text = "SHARED_UNIUI_CHAR_NAMENOTT"
 												layoutpolicy_horizontal = expanding
 												margin = { 10 0 }
 											}
@@ -562,7 +562,7 @@ window = {
 
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "TITLE_WIND_UNIUI_TITLE_CAPITAL_NAME"
+						text = "[Title.GetName]"
 					}
 				}
 

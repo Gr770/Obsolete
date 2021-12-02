@@ -823,7 +823,7 @@ window = {
 								layoutpolicy_horizontal = expanding
 
 								text_multi = {
-									text = "FAITH_WIND_UNIUI_HOF_TITLE"
+									text = "[Title.GetNameNoTooltip|U]"
 									layoutpolicy_horizontal = expanding
 									autoresize = yes
 									max_width = 160

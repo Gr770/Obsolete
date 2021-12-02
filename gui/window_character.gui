@@ -724,7 +724,7 @@ window = {
 								fontsize_min = 14
 								align = nobaseline
 								default_format = "#medium"
-								tooltip = "CHAR_WINDOW_UNIUI_CHAR_NAME_TOOLTIP"
+								tooltip = "SHARED_UNIUI_CHAR_UINAMENOTMENOTT"
 							}
 
 							text_single = {
@@ -1512,7 +1512,7 @@ window = {
 						text_multi = {
 							autoresize = yes
 							maximumsize = { 118 50 }
-							text = "CHAR_WINDOW_UNIUI_CHAR_DYNASTY_NAME"
+							text = "[DynastyHouse.GetBaseNameNoTooltip]"
 							default_format = "#high"
 							align = top|hcenter
 						}
@@ -1700,7 +1700,7 @@ window = {
 								text_single = {
 									name = "character_title"
 									layoutpolicy_horizontal = expanding
-									text = "CHAR_WINDOW_UNIUI_PRIMARY_TITLE"
+									text = "[Title.GetNameNoTooltip|U]"
 									autoresize = no
 									max_width = 280
 									default_format = "#low"
@@ -3084,7 +3084,7 @@ window = {
 										position = { 0 -5 }
 										autoresize = yes
 										max_width = 80
-										text = "CHAR_WINDOW_UNIUI_TRAIT_NAME"
+										text = "[Trait.GetNameNoTooltip(Character.Self)]"
 										default_format = "#high"
 										align = hcenter
 									}
@@ -3156,7 +3156,7 @@ window = {
 								}
 
 								text_multi = {
-									text = "CHAR_WINDOW_UNIUI_TITLES_NAME"
+									text = "[Title.GetNameNoTooltip]"
 									parentanchor = vcenter
 									autoresize = yes
 									default_format = "#high"
@@ -3209,7 +3209,7 @@ window = {
 									ignoreinvisible = yes
 
 									text_single = {
-										text = "CHAR_WINDOW_UNIUI_CLAIMS_NAME"
+										text = "[Claim.GetTitle.GetNameNoTooltip]"
 										default_format = "#high"
 										using = Font_Size_Big
 									}
@@ -3469,7 +3469,7 @@ window = {
                                         }
 
                                         text_multi = {
-                                            text = "CHAR_WINDOW_UNIUI_CORE_TITLE_NAME"
+                                            text = "[Title.GetNameNoTooltip]"
                                             parentanchor = vcenter
                                             autoresize = yes
                                             default_format = "#high"

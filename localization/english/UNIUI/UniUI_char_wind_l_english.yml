@@ -1,9 +1,2 @@
 ﻿l_english:
  CHAR_WINDOW_UNIUI_CHAR_NAME: "[Character.GetUINameNotMeNoTooltip], "
- CHAR_WINDOW_UNIUI_CHAR_NAME_TOOLTIP: "[Character.GetUINameNotMeNoTooltip]"
- CHAR_WINDOW_UNIUI_CHAR_DYNASTY_NAME: "[DynastyHouse.GetBaseNameNoTooltip]"
- CHAR_WINDOW_UNIUI_PRIMARY_TITLE: "[Title.GetNameNoTooltip|U]"
- CHAR_WINDOW_UNIUI_TRAIT_NAME: "[Trait.GetNameNoTooltip(Character.Self)]"
- CHAR_WINDOW_UNIUI_TITLES_NAME: "[Title.GetNameNoTooltip]"
- CHAR_WINDOW_UNIUI_CLAIMS_NAME: "[Claim.GetTitle.GetNameNoTooltip]"
- CHAR_WINDOW_UNIUI_CORE_TITLE_NAME: "[Title.GetNameNoTooltip]"

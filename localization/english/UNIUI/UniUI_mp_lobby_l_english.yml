@@ -1,0 +1,4 @@
+﻿l_english: 
+ MP_LOBBY_UNIUI_CHAR_NAME_AGE: "[Character.GetUINameNotMeNoTooltip], #low [Character.GetAge]#!"
+ MP_LOBBY_UNIUI_CHARVIEW_NAME: "[Character.GetCharacterViewNameNicknamedNoTooltipRegnal]"
+ MP_LOBBY_UNIUI_CHAR_NAME: "[Character.GetName]"

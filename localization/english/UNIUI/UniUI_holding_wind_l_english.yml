@@ -1,6 +1,2 @@
 ﻿l_english:
- HOLD_WINDOW_UNIUI_COUNTY_NAME: "[HoldingView.GetCountyTitle.GetNameNoTooltip]"
  HOLD_WINDOW_UNIUI_COUNT_NAME: "[Character.GetShortUINameNoTooltip|U]"
- HOLD_WINDOW_UNIUI_BARONY_NAME: "[HoldingView.GetProvince.GetTitle.GetNameNoTierNoTooltip]"
- HOLD_WINDOW_UNIUI_BARONY_NAME_TOOLTIP: "[HoldingView.GetProvince.GetTitle.GetNameNoTierNoTooltip]"
- HOLD_WINDOW_UNIUI_BARON_NAME: "[Character.GetShortUIName]"

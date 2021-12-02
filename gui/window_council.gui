@@ -563,7 +563,7 @@ types CouncilWindow
 
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "COUNCIL_WINDOW_UNIUI_COUNCILOR_NAME"
+						text = "SHARED_UNIUI_CHAR_SHORTUINAMENOTT"
 						default_format = "#high"
 						align = nobaseline
 						autoresize = no
