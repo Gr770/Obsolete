@@ -121,7 +121,7 @@ window = {
 								name = "crown_authority"
 								ignoreinvisible = yes
 								
-								vbox = {
+								hbox = {
 									datacontext = "[GetScriptedGui('StA_is_loaded_sgui')]"
 									visible = "[Not(ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ))]"
 									datamodel = "[MyRealmWindow.GetRealmLaws]"
