@@ -724,7 +724,7 @@ window = {
 								fontsize_min = 14
 								align = nobaseline
 								default_format = "#medium"
-								tooltip = "SHARED_UNIUI_CHAR_UINAMENOTMENOTT"
+								tooltip = "CHAR_WINDOW_UNIUI_CHAR_NAME_TT"
 							}
 
 							text_single = {
