@@ -233,7 +233,7 @@ window = {
 						layoutpolicy_horizontal = expanding
 						layoutpolicy_vertical = expanding
 						onclick = "[MyRealmWindow.ShowDomain]"
-						down = "[And(MyRealmWindow.IsShowingDomain,Not(GetVariableSystem.Exists('show_governors')))]"
+						down = "[And(MyRealmWindow.IsShowingDomain, Not(GetVariableSystem.Exists('show_governors')))]"
 						onclick = "[GetVariableSystem.Clear('show_governors')]"
 						text = "MY_REALM_WINDOW_DOMAIN_TAB"
 					}
@@ -243,7 +243,7 @@ window = {
 						layoutpolicy_horizontal = expanding
 						layoutpolicy_vertical = expanding
 						onclick = "[MyRealmWindow.ShowVassals]"
-						down = "[And(MyRealmWindow.IsShowingVassals,Not(GetVariableSystem.Exists('show_governors')))]"
+						down = "[And(MyRealmWindow.IsShowingVassals, Not(GetVariableSystem.Exists('show_governors')))]"
 						onclick = "[GetVariableSystem.Clear('show_governors')]"
 						text = "MY_REALM_WINDOW_VASSALS_TAB"
 					}
@@ -253,7 +253,7 @@ window = {
 						layoutpolicy_horizontal = expanding
 						layoutpolicy_vertical = expanding
 						onclick = "[MyRealmWindow.ShowSuccession]"
-						down = "[And(MyRealmWindow.IsShowingSuccession,Not(GetVariableSystem.Exists('show_governors')))]"
+						down = "[And(MyRealmWindow.IsShowingSuccession, Not(GetVariableSystem.Exists('show_governors')))]"
 						onclick = "[GetVariableSystem.Clear('show_governors')]"
 						text = "MY_REALM_WINDOW_SUCCESSION_TAB_REPUBLIC"
 					}
@@ -1853,28 +1853,13 @@ window = {
 							}
 						}
 
-						hbox = {
-							name = "vassal_contract"
-							datacontext = "[MyRealmWindow.GetCharacter.GetLiege]"
-							datacontext = "[MyRealmWindow.GetCharacter.GetVassalContract]"
-							visible = "[Character.IsPlayerInteractionShown('vassal_modify_vassal_contract_interaction')]"
-							margin_left = 3
-							spacing = 10
-
-							button_replace = {
-								enabled = "[Character.IsPlayerInteractionValid('vassal_modify_vassal_contract_interaction')]"
-								onclick = "[Character.OpenPlayerInteraction('vassal_modify_vassal_contract_interaction')]"
-								tooltip = "[Character.GetPlayerInteractionTooltip('vassal_modify_vassal_contract_interaction')]"
-							}
-
-							text_single = {
-								visible = "[VassalContract.UsesObligationLevels]"
-								layoutpolicy_horizontal = expanding
-								align = center
-								text = "MY_REALM_WINDOW_MY_OBLIGATIONS"
-							}
-
-							vassal_contract_not_default_icon = {}
+						window_my_realm_modify_contract_liege_vanilla = {
+							datacontext = "[GetScriptedGui('TCMA_is_loaded_sgui')]"
+							visible = "[Not(ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ))]"
+						}
+						window_my_realm_modify_contract_liege_TCMA = {
+							datacontext = "[GetScriptedGui('TCMA_is_loaded_sgui')]"
+							visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 						}
 					}
 				}

@@ -154,3 +154,15 @@ StA_KoH_is_loaded_sgui = {
         exists = global_var:KoH_is_loaded
     } 
 }
+PoW_is_loaded_sgui = {
+    scope = character
+    is_shown = {
+        exists = global_var:mod_PoW_loaded
+    } 
+}
+TCMA_is_loaded_sgui = {
+    scope = character
+    is_shown = {
+        exists = global_var:mod_TCMA_loaded
+    } 
+}
