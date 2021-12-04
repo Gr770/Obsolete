@@ -129,7 +129,7 @@ window = {
 										window_my_realm_authority_header_vanilla = {}
 									}
 								}
-								hbox = {
+								vbox = {
 									datacontext = "[GetScriptedGui('StA_KoH_is_loaded_sgui')]"
 									visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 									datamodel = "[MyRealmWindow.GetRealmLaws]"
