@@ -76,10 +76,42 @@ window = {
 					hbox = {
 						button_pin = {
 							name = "button_pin"
+							visible = "[Not(GetScriptedGui('IMHO_is_loaded_sgui').IsShown(GuiScope.SetRoot(Character.MakeScope).End))]"
 							visible = "[Not(Character.IsPinned)]"
 							onclick = "[Character.ToggleCharacterPinned]"
 							size = { 25 25 }
 
+							tooltip = "PIN_TT"
+							using = tooltip_se
+						}
+						button_pin = {
+							name = "button_pin"
+							visible = "[GetScriptedGui('IMHO_is_loaded_sgui').IsShown(GuiScope.SetRoot(Character.MakeScope).End)]"
+							visible = "[And(Not(Character.IsPinned),Not(ObjectsEqual( Character.Self, GetPlayer.Self )))]"
+							onclick = "[Character.ToggleCharacterPinned]"
+							onclick = "[GetScriptedGui('sgui_imho_set_character').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'character', Character.MakeScope ).End)]"
+							size = { 25 25 }
+							tooltip = "PIN_TT"
+							using = tooltip_se
+						}
+
+						button_unpin = {
+							name = "button_unpin"
+							visible = "[GetScriptedGui('IMHO_is_loaded_sgui').IsShown(GuiScope.SetRoot(Character.MakeScope).End)]"
+							visible = "[And(Character.IsPinned, Not(ObjectsEqual( Character.Self, GetPlayer.Self )))]"
+							onclick = "[Character.ToggleCharacterPinned]"
+							onclick = "[GetScriptedGui('sgui_imho_reset_character').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+							size = { 25 25 }
+							tooltip = "PIN_TT"
+							using = tooltip_se
+						}
+
+						button_unpin = {
+							name = "button_unpin_player"
+							visible = "[GetScriptedGui('IMHO_is_loaded_sgui').IsShown(GuiScope.SetRoot(Character.MakeScope).End)]"
+							visible = "[And(ObjectsEqual( Character.Self, GetPlayer.Self ), GetPlayer.MakeScope.Var('imho_character_PoV').IsSet)]"
+							onclick = "[GetScriptedGui('sgui_imho_reset_character').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+							size = { 25 25 }
 							tooltip = "PIN_TT"
 							using = tooltip_se
 						}
@@ -120,6 +152,31 @@ window = {
 				}
 			}
 
+			widget = {
+				datacontext = "[CharacterInteractionMenuWindow.GetCharacter]"
+				size = { 317 40 }
+				visible = "[GetScriptedGui('IMHO_is_loaded_sgui').IsShown(GuiScope.SetRoot(Character.MakeScope).End)]"
+				visible = "[And(Not(CharacterInteractionMenuWindow.OutsideDiplomaticRange), GetPlayer.MakeScope.Var('imho_character_PoV').IsSet)]"
+				# tooltip = character_opinion_tooltip_PoV
+
+				hbox = {
+					margin = { 10 0 }
+					layoutpolicy_horizontal = expanding
+					text_single = {
+						name = "imho_character_PoV"
+						text = "IMHO_UNIUI_CHAR_NAME_OP"
+					}
+					expand = {}
+					text_label_center = {
+						name = "imho_character_PoV_value"
+						tooltipwidget = character_opinion_tooltip_PoV
+						using = tooltip_es
+						text = "[GetPlayer.MakeScope.Var('imho_character_PoV').Char.GetOpinionOf( Character.Self )|=]"
+						fonttintcolor = "[GetPlayer.MakeScope.Var('imho_character_PoV').Char.GetOpinionOfTint( Character.Self )]"
+						default_format = "#true_white"
+					}
+				}
+			}
 
 			dynamicgridbox = {
 				name = "category_interaction_list"
