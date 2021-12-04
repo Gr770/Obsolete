@@ -200,6 +200,10 @@ window = {
 										expand = {}
 
 									}
+									window_my_realm_liege_header_StA = {
+										datacontext = "[GetScriptedGui('StA_is_loaded_sgui')]"
+										visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+									}
 								}
 
 								expand = {}
