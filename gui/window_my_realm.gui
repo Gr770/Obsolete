@@ -790,6 +790,30 @@ window = {
 								datacontext = "[MyRealmWindow.GetPowerfulVassals]"
 								datamodel = "[CharacterSelectionList.GetList]"
 								visible = "[Not(CharacterSelectionList.IsBuildingList)]"
+								visible = "[Not(GetScriptedGui('StA_is_loaded_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End))]"
+								addcolumn = 545
+								addrow = 185
+								setitemsizefromcell = yes
+
+								item = {
+									widget_vassal_list_item_vanilla = {
+										datacontext = "[CharacterListItem.GetCharacter]"
+										datacontext = "[MyRealmWindow.GetVassalInfo( Character.Self )]"
+										datacontext = "[MyRealmWindowVassalItem.GetContract]"
+
+										blockoverride "vassal_portrait"
+										{
+											portrait_shoulders = {}
+										}
+									}
+								}
+							}
+							fixedgridbox = {
+								layoutpolicy_horizontal = expanding
+								datacontext = "[MyRealmWindow.GetPowerfulVassals]"
+								datamodel = "[CharacterSelectionList.GetList]"
+								visible = "[Not(CharacterSelectionList.IsBuildingList)]"
+								visible = "[GetScriptedGui('StA_is_loaded_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
 								addcolumn = 545
 								addrow = 185
 								setitemsizefromcell = yes
@@ -813,6 +837,26 @@ window = {
 								datacontext = "[MyRealmWindow.GetRegularVassals]"
 								datamodel = "[CharacterSelectionList.GetList]"
 								visible = "[Not(CharacterSelectionList.IsBuildingList)]"
+								visible = "[Not(GetScriptedGui('StA_is_loaded_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End))]"
+								addcolumn = 545
+								addrow = 185
+								setitemsizefromcell = yes
+
+								item = {
+									widget_vassal_list_item_vanilla = {
+										datacontext = "[CharacterListItem.GetCharacter]"
+										datacontext = "[MyRealmWindow.GetVassalInfo( Character.Self )]"
+										datacontext = "[MyRealmWindowVassalItem.GetContract]"
+									}
+								}
+							}
+
+							fixedgridbox = {
+								layoutpolicy_horizontal = expanding
+								datacontext = "[MyRealmWindow.GetRegularVassals]"
+								datamodel = "[CharacterSelectionList.GetList]"
+								visible = "[Not(CharacterSelectionList.IsBuildingList)]"
+								visible = "[GetScriptedGui('StA_is_loaded_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
 								addcolumn = 545
 								addrow = 185
 								setitemsizefromcell = yes

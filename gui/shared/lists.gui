@@ -1436,7 +1436,7 @@ types Lists
 		}
 	}
 
-	type widget_vassal_list_item = widget {
+	type widget_vassal_list_item_vanilla = widget {
 		datacontext = "[CharacterListItem.GetCharacter]"
 		size = { 200 180 }
 

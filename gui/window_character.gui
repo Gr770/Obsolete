@@ -2995,6 +2995,25 @@ window = {
 							name = "characters_grid"
 							datamodel = "[CharacterSelectionList.GetList]"
 							visible = "[Not(CharacterSelectionList.IsBuildingList)]"
+							visible = "[Not(GetScriptedGui('StA_is_loaded_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End))]"
+							addcolumn = 590
+							addrow = 90
+							setitemsizefromcell = yes
+
+							item = {
+								widget_vassal_list_item_vanilla = {
+									datacontext = "[CharacterListItem.GetCharacter]"
+									layoutpolicy_horizontal = expanding
+
+									blockoverride "own_vassal" {}
+								}
+							}
+						}
+						fixedgridbox = {
+							name = "characters_grid"
+							datamodel = "[CharacterSelectionList.GetList]"
+							visible = "[Not(CharacterSelectionList.IsBuildingList)]"
+							visible = "[GetScriptedGui('StA_is_loaded_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
 							addcolumn = 590
 							addrow = 90
 							setitemsizefromcell = yes
