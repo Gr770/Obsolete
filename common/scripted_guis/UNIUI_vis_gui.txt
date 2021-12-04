@@ -147,3 +147,10 @@ StA_is_loaded_sgui = {
         exists = global_var:mod_StA_active
     } 
 }
+StA_KoH_is_loaded_sgui = {
+    scope = character
+    is_shown = {
+        exists = global_var:mod_StA_active
+        exists = global_var:KoH_is_loaded
+    } 
+}

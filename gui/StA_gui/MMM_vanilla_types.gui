@@ -5,7 +5,7 @@ types MMM_vanilla_types {
 
 		layoutpolicy_vertical = expanding
 		datacontext = "[GuiLawGroup.GetLawGroup]"
-		visible = "[And( GuiLawGroup.GetLawGroup.HasFlag( 'realm_law' ), GuiLawGroup.IsAvailable )]"
+		visible = "[And( Or(GuiLawGroup.GetLawGroup.HasFlag( 'realm_law' ), GuiLawGroup.GetLawGroup.HasFlag( 'investiture_law' )), GuiLawGroup.IsAvailable )]"
 		ignoreinvisible = yes
 
 		text_label_center = {
