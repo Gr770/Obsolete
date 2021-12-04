@@ -1753,7 +1753,7 @@ window = {
 						layoutpolicy_horizontal = expanding
 						text_label_center = {
 							visible = "[GetScriptedGui('StA_is_loaded_sgui').IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
-							text = "Submission impact : [Subtract_int32(Subtract_int32('(int32)45',VassalContract.GetVassalOpinionModification),FixedPointToInt(GuiScope.SetRoot(VassalContract.GetVassal.MakeScope ).ScriptValue('feudal_submission')))|+=]"
+							text = "Submission Impact : [Subtract_int32(Subtract_int32('(int32)45',VassalContract.GetVassalOpinionModification),FixedPointToInt(GuiScope.SetRoot(VassalContract.GetVassal.MakeScope ).ScriptValue('feudal_submission')))|+=]"
 							using = Font_Size_Medium
 							
 							tooltip_enabled = "[ValueBreakdown.HasTooltip]"
