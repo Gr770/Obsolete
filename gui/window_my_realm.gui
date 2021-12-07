@@ -1292,6 +1292,7 @@ window = {
 											coa_title_tiny_crown = {
 												datacontext = "[TitleItem.GetTitle]"
 												using = tooltip_ne
+												using = CTFA_hide_if_vanity_title
 											}
 										}
 									}
