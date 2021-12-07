@@ -19,6 +19,7 @@ window = {
 		position_x = 0
 
 		on_start = "[GetVariableSystem.Set( 'hide_bottom_left_HUD', 'true' )]"
+		using = CTFA_character_window_show_state_actions
 	}
 
 	state = {
@@ -30,6 +31,9 @@ window = {
 		on_start = "[GetVariableSystem.Clear( 'hide_bottom_left_HUD' )]"
 		on_start = "[GetVariableSystem.Clear( 'cv_expanded_core_titles_tab' )]"
 	}
+	
+	using = CTFA_character_window_refresh_state
+	using = CTFA_character_window_mouse_hierarchy_enter_state
 
 	vbox = {
 		name = "main_content"
