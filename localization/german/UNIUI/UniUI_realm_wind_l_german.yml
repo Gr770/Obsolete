@@ -1,0 +1,7 @@
+﻿l_german:
+ MY_REALM_WINDOW_SUCCESSION_TAB_REPUBLIC: "[GetPlayer.Custom('GetRepublicOrFeudalUNIUI')]"
+ REPUBLIC_AND_FEUDAL_UNIUI: "Republic/Succession"
+ REPUBLIC_ONLY_UNIUI: "Republic"
+ FEUDAL_ONLY_UNIUI: "Succession"
+ MY_REALM_WINDOW_UNIUI_LIEGE_NAME: "[Character.GetUIName]"
+ MY_REALM_WINDOW_UNIUI_PLAYER_HEIR_NAME: "[MyRealmWindow.GetCharacter.GetPlayerHeir.GetUINameNoTooltip]"

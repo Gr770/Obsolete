@@ -1,0 +1,3 @@
+﻿l_french:
+ GHW_UNIUI_BENE_NAME: "[GetPlayer.GetBeneficiary.GetFullName]"
+ GHW_UNIUI_CHAR_NAME: "[Character.GetUINameNoTooltip|U]"

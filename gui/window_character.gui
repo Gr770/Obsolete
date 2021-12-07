@@ -3021,7 +3021,7 @@ window = {
 			# TRAITS EXPANDED
 			scrollbox = {
 				name = "traits_expanded"
-				visible = "[And(CharacterWindow.AreTraitsExpanded, Not(GetScriptedGui('CTI_is_loaded_sgui').IsShown( GuiScope.SetRoot(CharacterWindow.GetCharacter.MakeScope).End )))]"
+				visible = "[And(CharacterWindow.AreTraitsExpanded, Not(GetScriptedGui('CTI_is_loaded_sgui').IsShown( GuiScope.SetRoot(CharacterWindow.GetCharacter.MakeScope).End)))]"
 				layoutpolicy_vertical = expanding
 				layoutpolicy_horizontal = expanding
 
