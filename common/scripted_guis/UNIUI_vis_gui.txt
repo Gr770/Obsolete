@@ -172,3 +172,9 @@ IMHO_is_loaded_sgui = {
         exists = global_var:mod_IMHO_loaded
     } 
 }
+KM_is_loaded_sgui = {
+    scope = character
+    is_shown = {
+        exists = global_var:KM_is_loaded
+    } 
+}
