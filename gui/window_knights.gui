@@ -73,6 +73,174 @@ window = {
 			visible = "[Decision.IsShownForPlayer]"
 			onclick = "[OpenDecisionDetailView( Decision.Self )]"
 		}
+		vbox = {
+			name = knight_manager_settings
+			layoutpolicy_horizontal = expanding
+			visible = "[GetScriptedGui('KM_is_loaded_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+			margin = { 20 10 }
+			text_label_center = {
+					text = "Knight Manager"
+			  tooltip = "Uncheck the checkboxes to disallow certain character groups from serving as knight. When unchecked, all characters of that group will no longer be knights and also will not show up in the list anymore. If you want to manually allow a specific character of that group to serve as knight, uncheck his K.M checkbox before disallowing his groups from serving as knight."
+					default_format = "#medium"
+				}
+			hbox = {
+			  name = knight_manager_first_row
+			  layoutpolicy_horizontal = expanding
+			  button_checkbox_label = {
+				max_width = 150
+				layoutpolicy_horizontal = expanding
+				datacontext = "[GetScriptedGui('knight_manager_toggle_kin_cannot_be_knight')]"
+				onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+				onclick = "[MilitaryView.SetKnightDefault( GetPlayer.Self )]"
+				tooltip = "If checked, characters of my dynasty can serve as knight."
+	  
+				blockoverride "checkbox"
+				{
+				  checked = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+				}
+	  
+				blockoverride "text"
+				{
+				  text = "My Dynasty"
+				}
+			  }
+			  button_checkbox_label = {
+				max_width = 150
+				layoutpolicy_horizontal = expanding
+				datacontext = "[GetScriptedGui('knight_manager_toggle_children_cannot_be_knight')]"
+				onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+				onclick = "[MilitaryView.SetKnightDefault( GetPlayer.Self )]"
+				tooltip = "If checked, my children can serve as knights."
+	  
+				blockoverride "checkbox"
+				{
+				  checked = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+				}
+	  
+				blockoverride "text"
+				{
+				  text = "My Offspring"
+				}
+			  }
+			  button_checkbox_label = {
+				max_width = 150
+				layoutpolicy_horizontal = expanding
+				datacontext = "[GetScriptedGui('knight_manager_toggle_family_spouses_cannot_be_knight')]"
+				onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+				onclick = "[MilitaryView.SetKnightDefault( GetPlayer.Self )]"
+				tooltip = "If checked, my spouse and the spouses of my offspring can serve as knights."
+	  
+				blockoverride "checkbox"
+				{
+				  checked = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+				}
+	  
+				blockoverride "text"
+				{
+				  text = "Family Spouses"
+				}
+			  }
+			}
+			hbox = {
+			  name = knight_manager_second_row
+			  layoutpolicy_horizontal = expanding
+			  button_checkbox_label = {
+				max_width = 150
+				layoutpolicy_horizontal = expanding
+				datacontext = "[GetScriptedGui('knight_manager_toggle_councillors_cannot_be_knight')]"
+				onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+				onclick = "[MilitaryView.SetKnightDefault( GetPlayer.Self )]"
+				tooltip = "If checked, my councillors and my physician can serve as knights."
+	  
+				blockoverride "checkbox"
+				{
+				  checked = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+				}
+	  
+				blockoverride "text"
+				{
+				  text = "My Council"
+				}
+			  }
+			  button_checkbox_label = {
+				max_width = 150
+				layoutpolicy_horizontal = expanding
+				datacontext = "[GetScriptedGui('knight_manager_toggle_lover_cannot_be_knight')]"
+				onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+				onclick = "[MilitaryView.SetKnightDefault( GetPlayer.Self )]"
+				tooltip = "If checked, my lovers can serve as knight."
+	  
+				blockoverride "checkbox"
+				{
+				  checked = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+				}
+	  
+				blockoverride "text"
+				{
+				  text = "My Lovers"
+				}
+			  }
+					  button_checkbox_label = {
+						  max_width = 150
+						  layoutpolicy_horizontal = expanding
+						  datacontext = "[GetScriptedGui('knight_manager_toggle_player_heir_cannot_be_knight')]"
+						  onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+						  onclick = "[MilitaryView.SetKnightDefault( GetPlayer.Self )]"
+						  tooltip = "If checked, my player heir can serve as knight."
+	  
+						  blockoverride "checkbox"
+						  {
+							  checked = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+						  }
+	  
+						  blockoverride "text"
+						  {
+							  text = "My Heir"
+						  }
+					  }
+	  
+			}
+				  hbox = {
+					  name = knight_manager_third_row
+					  layoutpolicy_horizontal = expanding
+					  button_checkbox_label = {
+						  max_width = 150
+						  layoutpolicy_horizontal = expanding
+						  datacontext = "[GetScriptedGui('knight_manager_toggle_awful_fighters_cannot_be_knight')]"
+						  onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+						  onclick = "[MilitaryView.SetKnightDefault( GetPlayer.Self )]"
+						  tooltip = "If checked, bad fighters (prowess below 6) can serve as knights."
+	  
+						  blockoverride "checkbox"
+						  {
+							  checked = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+						  }
+	  
+						  blockoverride "text"
+						  {
+							  text = "Bad Fighters"
+						  }
+					  }
+					  button_checkbox_label = {
+						  max_width = 150
+						  layoutpolicy_horizontal = expanding
+						  datacontext = "[GetScriptedGui('knight_manager_toggle_bad_fighters_cannot_be_knight')]"
+						  onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+						  onclick = "[MilitaryView.SetKnightDefault( GetPlayer.Self )]"
+						  tooltip = "If checked, not that great fighters (prowess below 13) can serve as knights."
+	  
+						  blockoverride "checkbox"
+						  {
+							  checked = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+						  }
+	  
+						  blockoverride "text"
+						  {
+							  text = "Average Fighters"
+						  }
+					  }
+				  }
+		  }
 
 		spacer = {
 			size = { 10 10 }
@@ -228,6 +396,24 @@ window = {
 											tooltip = "KNIGHTS_VIEW_TITLE_FORBID_TT"
 											using = tooltip_se
 										}
+										button_checkbox_label = {
+										  layoutpolicy_horizontal = expanding
+										  datacontext = "[GetScriptedGui('knight_manager_toggle_manually_allowed')]"
+										  visible = "[GetScriptedGui('KM_is_loaded_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+										  onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( Character.MakeScope ).End)]"
+										  onclick = "[MilitaryView.SetKnightDefault( GetPlayer.Self )]"
+										  tooltip = "If unchecked, the character is excluded from the Knight Manager Settings and can be a knight."
+					
+										  blockoverride "checkbox"
+										  {
+											checked = "[ScriptedGui.IsShown( GuiScope.SetRoot( Character.MakeScope ).End)]"
+										  }
+					
+										  blockoverride "text"
+										  {
+											text = "K.M."
+										  }
+										}
 
 										expand = {}
 									}
@@ -265,4 +451,3 @@ window = {
 		}
 	}
 }
-
