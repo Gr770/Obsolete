@@ -1,4 +1,4 @@
-######################################################
+﻿######################################################
 ################# SUCCESSION EVENT ###################
 ######################################################
 
@@ -593,7 +593,7 @@ window = {
 											layoutpolicy_horizontal = expanding
 											margin_bottom = 15
 
-											fixedgridbox = { # hbox doesn't work with datamodel_wrap
+											#fixedgridbox = { # hbox doesn't work with datamodel_wrap
 											dynamicgridbox = {
 												name = "inherited"
 												datamodel = "[SuccessionEventWindow.GetInheritedTitles]"
