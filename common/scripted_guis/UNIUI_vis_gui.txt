@@ -172,3 +172,9 @@ IMHO_is_loaded_sgui = {
         exists = global_var:mod_IMHO_loaded
     } 
 }
+Biography_is_loaded = {
+    scope = character
+    is_shown = {
+        exists = global_var:chronicle_mod_version
+    }
+}

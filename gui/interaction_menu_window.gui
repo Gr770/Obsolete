@@ -74,6 +74,18 @@ window = {
 					expand = {}
 
 					hbox = {
+						button_history = {
+							name = "show_chronicle"
+							visible = [GetScriptedGui('Biography_is_loaded').IsShown(GuiScope.SetRoot(Character.MakeScope).End)]
+							datacontext = "[GetScriptedGui( 'chronicle_scripted_gui_show_chronicle' )]"
+							onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( Character.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).End )]"
+							onclick = "[CharacterInteractionMenuWindow.Close]"
+							size = { 25 25 }
+
+							tooltip = "chronicle_shortcut_text"
+							using = tooltip_ne
+						}
+
 						button_pin = {
 							name = "button_pin"
 							visible = "[Not(And(Character.IsPinned, GetScriptedGui('IMHO_is_loaded_sgui').IsShown(GuiScope.SetRoot(Character.MakeScope).End)))]"
