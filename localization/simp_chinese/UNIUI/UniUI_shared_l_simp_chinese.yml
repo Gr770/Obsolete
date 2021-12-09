@@ -1,0 +1,6 @@
+﻿l_simp_chinese:
+ SHARED_UNIUI_CHAR_SHORTUINAME: "[Character.GetShortUIName]"
+ SHARED_UNIUI_CHAR_SHORTUINAMENOTT: "[Character.GetShortUINameNoTooltip]"
+ SHARED_UNIUI_CHAR_UINAMENOTT: "[Character.GetUINameNoTooltip]"
+ SHARED_UNIUI_CHAR_NAMENOTT: "[Character.GetNameNoTooltip]"
+ SHARED_UNIUI_CHAR_UINAMENOTMENOTT: "[Character.GetUINameNotMeNoTooltip]"
