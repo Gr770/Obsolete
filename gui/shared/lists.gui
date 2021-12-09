@@ -1484,7 +1484,7 @@ types Lists
 									text = "SHARED_UNIUI_CHAR_UINAMENOTT"
 									using = Font_Size_Medium
 									autoresize = no
-									fontsize_min = 13
+									fontsize_min = 8
 									align = nobaseline
 								}
 							}
