@@ -1233,7 +1233,7 @@ icon = {
 					onclick = "[ToggleEncyclopedia]"
 					shortcut = "encyclopedia"
 					using = tooltip_ne
-					visible = "[Not ( GetScriptedGui('acs_is_loaded').IsShown(GuiScope.End) ) ]"
+					visible = "[Not( GetScriptedGui('acs_is_loaded').IsShown(GuiScope.End) ) ]"
 				}
 
 				acs_button_character_search_small = {
