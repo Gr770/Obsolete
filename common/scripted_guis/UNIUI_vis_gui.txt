@@ -178,3 +178,9 @@ Biography_is_loaded = {
         exists = global_var:chronicle_mod_version
     }
 }
+
+acs_is_loaded = {
+    is_shown = {
+        exists = global_var:mod_acs_active
+    } 
+}
