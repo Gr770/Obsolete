@@ -206,3 +206,9 @@ Biography_is_loaded = {
         exists = global_var:chronicle_mod_version
     }
 }
+is_title_federation = {
+	scope = character
+	is_shown = {
+		has_variable_list = federation_members
+	}
+}
