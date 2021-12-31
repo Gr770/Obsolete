@@ -14,7 +14,11 @@ KoH_is_load_can_see_investure = {
 KoH_is_load_qualifies_for_governorships = {
     scope = character
     is_shown = {
-        exists = global_var:KoH_is_loaded
+        OR = {
+            exists = global_var:KoH_is_loaded
+            exists = global_var:play_republic_leaders
+            exists = global_var:play_house_heads
+        }
 		exists = primary_title
 		is_independent_ruler = yes
 		holds_valid_merchant_republic = yes
@@ -23,7 +27,11 @@ KoH_is_load_qualifies_for_governorships = {
 KoH_is_load_has_republic_government = {
     scope = character
     is_shown = {
-        exists = global_var:KoH_is_loaded
+        OR = {
+            exists = global_var:KoH_is_loaded
+            exists = global_var:play_republic_leaders
+            exists = global_var:play_house_heads
+        }
 		OR = {
 			holds_valid_merchant_republic = yes
 			liege = {
@@ -35,7 +43,11 @@ KoH_is_load_has_republic_government = {
 KoH_is_load_has_republic_elected_ruler_government = {
     scope = character
     is_shown = {
-        exists = global_var:KoH_is_loaded
+        OR = {
+            exists = global_var:KoH_is_loaded
+            exists = global_var:play_republic_leaders
+            exists = global_var:play_house_heads
+        }
 		OR = {
 			AND = {
 				holds_valid_merchant_republic = yes
@@ -53,7 +65,11 @@ KoH_is_load_has_republic_elected_ruler_government = {
 KoH_is_load_has_republic_senate_government = {
     scope = character
     is_shown = {
-        exists = global_var:KoH_is_loaded
+        OR = {
+            exists = global_var:KoH_is_loaded
+            exists = global_var:play_republic_leaders
+            exists = global_var:play_house_heads
+        }
 		OR = {
 			AND = {
 				holds_valid_merchant_republic = yes
@@ -71,7 +87,11 @@ KoH_is_load_has_republic_senate_government = {
 KoH_is_load_has_republic_council_government = {
     scope = character
     is_shown = {
-        exists = global_var:KoH_is_loaded
+        OR = {
+            exists = global_var:KoH_is_loaded
+            exists = global_var:play_republic_leaders
+            exists = global_var:play_house_heads
+        }
 		OR = {
 			AND = {
 				holds_valid_merchant_republic = yes
@@ -89,7 +109,11 @@ KoH_is_load_has_republic_council_government = {
 KoH_is_load_has_republic_bicameral_government = {
     scope = character
     is_shown = {
-        exists = global_var:KoH_is_loaded
+        OR = {
+            exists = global_var:KoH_is_loaded
+            exists = global_var:play_republic_leaders
+            exists = global_var:play_house_heads
+        }
 		OR = {
 			AND = {
 				holds_valid_merchant_republic = yes
@@ -107,7 +131,11 @@ KoH_is_load_has_republic_bicameral_government = {
 KoH_is_load_personally_has_republic_government = {
     scope = character
     is_shown = {
-        exists = global_var:KoH_is_loaded
+        OR = {
+            exists = global_var:KoH_is_loaded
+            exists = global_var:play_republic_leaders
+            exists = global_var:play_house_heads
+        }
 		NOT = {
             holds_valid_merchant_republic = yes
         }
@@ -177,4 +205,10 @@ Biography_is_loaded = {
     is_shown = {
         exists = global_var:chronicle_mod_version
     }
+}
+is_title_federation = {
+	scope = character
+	is_shown = {
+		has_variable_list = federation_members
+	}
 }

@@ -5,6 +5,7 @@ window = {
 	movable = no
 	allow_outside = yes
 	layer = windows_layer
+	federations_view = {}
 
 	using = Window_Size_Sidebar
 	using = Window_Background_Sidebar
@@ -139,7 +140,7 @@ window = {
 										using = CTFA_hide_if_vanity_title
 										# Note no closing brace here - this block is closed later
 									button_edit_text = {
-										visible = "[TitleViewWindow.GetTitle.CanPlayerRenameTitle]"
+										visible = "[And(TitleViewWindow.GetTitle.CanPlayerRenameTitle,Not(GetScriptedGui('is_title_federation').IsShown(GuiScope.SetRoot(TitleViewWindow.GetTitle.MakeScope).End)))]"
 										onclick = "[OpenTitleRenamePopup(TitleViewWindow.GetTitle)]"
 										tooltip = "EDIT_TITLE_NAME"
 									}
@@ -175,6 +176,7 @@ window = {
 										onclick = "[TitleViewWindow.Close]"
 										onclick = "[TitleViewWindow.CloseHistory]"
 										onclick = "[TitleViewWindow.CloseClaimants]"
+										onclick = "[GetVariableSystem.Clear('window_federations_view')]"
 									}
 
 									blockoverride "button_back"
@@ -872,14 +874,14 @@ window = {
 							button_tertiary = {
 								name = "open_laws"
 								text = "TITLE_VIEW_SHOW_ADD_LAWS"
-								visible = "[And( Character.IsLocalPlayer, TitleViewWindow.CanAddLaws )]"
+								visible = "[And(And( Character.IsLocalPlayer, TitleViewWindow.CanAddLaws ),Not(GetScriptedGui('is_title_federation').IsShown(GuiScope.SetRoot(TitleViewWindow.GetTitle.MakeScope).End)))]"
 								onclick = "[TitleViewWindow.ToggleLaws]"
 							}
 
 							button_standard = {
 								name = "toggle_find_vassal"
 								text = "FIND_VASSAL_HEADER"
-								visible = "[And( And( And( ObjectsEqual( Title.GetHolder, GetPlayer ), TitleViewWindow.GetTitle.CanUseFindVassal( GetPlayer ) ), Not( Title.IsBarony ) ), Not( Title.IsLeasedOut))]"
+								visible = "[And(And( And( And( ObjectsEqual( Title.GetHolder, GetPlayer ), TitleViewWindow.GetTitle.CanUseFindVassal( GetPlayer ) ), Not( Title.IsBarony ) ), Not( Title.IsLeasedOut)),Not(GetScriptedGui('is_title_federation').IsShown(GuiScope.SetRoot(TitleViewWindow.GetTitle.MakeScope).End)))]"
 
 								onclick = "[TitleViewWindow.ToggleFindVassalListWindow]"
 								tooltip = "FIND_VASSAL_BUTTON_TOOLTIP"
@@ -903,7 +905,7 @@ window = {
 							button_tertiary = {
 								name = "destroy_title"
 								text = "TITLE_VIEW_DESTROY_TITLE"
-								visible = "[TitleViewWindow.ShowDestroy]"
+								visible = "[And(TitleViewWindow.ShowDestroy,Not(GetScriptedGui('is_title_federation').IsShown(GuiScope.SetRoot(TitleViewWindow.GetTitle.MakeScope).End)))]"
 								enabled = "[TitleViewWindow.CanTitleBeDestroyed]"
 								onclick = "[TitleViewWindow.DestroyTitle]"
 								tooltip = "[TitleViewWindow.GetDestroyTitleButtonTooltip]"
@@ -912,7 +914,7 @@ window = {
 							button_tertiary = {
 								name = "make_primary_title"
 								text = "TITLE_VIEW_MAKE_PRIMARY"
-								visible = "[And(And( Character.IsLocalPlayer, TitleViewWindow.CanMakePrimary ), GetScriptedGui('KoH_is_load_personally_has_republic_government').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End))]"
+								visible = "[And(And(And( Character.IsLocalPlayer, TitleViewWindow.CanMakePrimary ),Not(GetScriptedGui('is_title_federation').IsShown(GuiScope.SetRoot(TitleViewWindow.GetTitle.MakeScope).End))),Not(GetScriptedGui('KoH_is_load_personally_has_republic_government').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)))]"
 								onclick = "[TitleViewWindow.MakePrimary]"
 								using = CTFA_onclick_handle_primary_title_change
 								tooltip = "TITLE_MAKE_PRIMARY_TOOLTIP"
