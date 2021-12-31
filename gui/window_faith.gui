@@ -735,6 +735,8 @@ window = {
 								expand = {}
 							}
 
+							PTHF_override_primary_title_checkbox = {}
+
 							expand = {}
 
 						}
