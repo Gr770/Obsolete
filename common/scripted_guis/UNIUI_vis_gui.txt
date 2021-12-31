@@ -144,32 +144,32 @@ CTI_is_loaded_sgui_de_designate_core_button = {
 StA_is_loaded_sgui = {
     scope = character
     is_shown = {
-        exists = global_var:mod_StA_active
+        exists = global_var:StA_is_loaded
     } 
 }
 StA_KoH_is_loaded_sgui = {
     scope = character
     is_shown = {
-        exists = global_var:mod_StA_active
+        exists = global_var:StA_is_loaded
         exists = global_var:KoH_is_loaded
     } 
 }
 PoW_is_loaded_sgui = {
     scope = character
     is_shown = {
-        exists = global_var:mod_PoW_loaded
+        exists = global_var:PoW_is_loaded
     } 
 }
 TCMA_is_loaded_sgui = {
     scope = character
     is_shown = {
-        exists = global_var:mod_TCMA_loaded
+        exists = global_var:TCMA_is_loaded
     } 
 }
 IMHO_is_loaded_sgui = {
     scope = character
     is_shown = {
-        exists = global_var:mod_IMHO_loaded
+        exists = global_var:IMHO_is_loaded
     } 
 }
 Biography_is_loaded = {
