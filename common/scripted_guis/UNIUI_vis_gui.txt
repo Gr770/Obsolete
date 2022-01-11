@@ -212,3 +212,9 @@ is_title_federation = {
 		has_variable_list = federation_members
 	}
 }
+FCI_is_loaded = {
+    scope = character
+    is_shown = {
+        exists = global_var:fci_is_loaded
+    }
+}
