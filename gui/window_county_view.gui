@@ -882,7 +882,7 @@ window = {
 
 					text_single = {
 						visible = "[Not(HoldingView.GetTitle.HasHolder)]"
-						text = "HOLD_WINDOW_UNIUI_BARONY_NAME"
+						text = "[HoldingView.GetProvince.GetTitle.GetNameNoTierNoTooltip]"
 						default_format = "#medium"
 						using = Font_Size_Big
 					}
@@ -1040,6 +1040,22 @@ window = {
 										size = { 30 30 }
 									}
 
+									hbox = {
+										visible = "[Title.GetHolder.IsLocalPlayer]"
+										ignoreinvisible = yes
+
+										icon = {
+											name = "icon"
+											size = { 28 28 }
+											texture = "[Title.GetHolder.GetPietyLevelTexture]"
+										}
+
+										text_single = {
+											name = "value"
+											text = "[HoldingView.GetHolderModifierFromBuildingsValue('monthly_piety')|^+=]"
+										}
+									}
+
 									expand = {}
 								}
 							}
@@ -1079,6 +1095,31 @@ window = {
 				}
 			}
 
+			### IT COURT ###
+			widget = {
+				allow_outside = yes
+				parentanchor = center
+				position = { 78 20 }
+
+				button_round  = {
+					datacontext = "[HoldingView.GetGUIHoldingBuilding]"
+					datacontext = "[HoldingView.GetTitle]"
+					datacontext = "[HoldingView.GetHolder]"
+					visible = "[AND(HoldingView.PotentialSetRealmCapital, GetScriptedGui('FCI_is_loaded').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End))]"
+					tooltip = "[Character.GetPlayerInteractionWithTargetTitleTooltip('itcourt_interaction', Title.Self)]"
+					oversound = "event:/SFX/UI/Generic/sfx_ui_generic_pointer_over"
+					clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_select"
+					onclick = "[Character.OpenPlayerInteractionWithTargetTitle('itcourt_interaction', Title.Self)]"
+
+					button_itinerant_court = {
+						size = { 25 25 }
+						texture = "gfx/interface/buttons/button_icons/court.dds"
+						parentanchor = center
+						alwaystransparent = yes
+					}
+				}
+			}
+
 			### FEUDALIZE A TRIBAL HOLDING ###
 			widget = {
 				allow_outside = yes
@@ -1104,13 +1145,478 @@ window = {
 				}
 			}
 
-			### BOTTOM LEFT
+			### EXPELL ###
+			widget = {
+				allow_outside = yes
+				parentanchor = center
+				position = { 57 0 }
+
+				button_round_small  = {
+					datacontext = "[HoldingView.GetGUIHoldingBuilding]"
+					datacontext = "[HoldingView.GetTitle]"
+					datacontext = "[HoldingView.GetHolder]"
+					datacontext = "[Province.GetCounty.GetCulture]"
+					visible = "[And(HoldingView.PotentialSetRealmCapital, GetScriptedGui('FCI_is_loaded').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End))]"
+					enabled = "[Not( ObjectsEqual( Culture.Self, GetPlayer.GetCulture ) )]"
+					tooltip = "[Character.GetPlayerInteractionWithTargetTitleTooltip('expell_culture_interaction', Title.Self)]"
+					oversound = "event:/SFX/UI/Generic/sfx_ui_generic_pointer_over"
+					clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_select"
+					onclick = "[Character.OpenPlayerInteractionWithTargetTitle('expell_culture_interaction', Title.Self)]"
+
+					button_expell_culture = {
+						size = { 25 25 }
+						texture = "gfx/interface/buttons/button_icons/expell.dds"
+						parentanchor = center
+						alwaystransparent = yes
+					}
+				}
+			}
+
+			### HERESY ###
+			widget = {
+				allow_outside = yes
+				parentanchor = center
+				position = { 88 -10}
+
+				button_round_small  = {
+					datacontext = "[HoldingView.GetGUIHoldingBuilding]"
+					datacontext = "[HoldingView.GetTitle]"
+					datacontext = "[HoldingView.GetHolder]"
+					datacontext = "[Province.GetCounty.GetFaith]"
+					visible = "[And(HoldingView.PotentialSetRealmCapital, GetScriptedGui('FCI_is_loaded').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End))]"
+					enabled = "[Not( ObjectsEqual( Faith.Self, GetPlayer.GetFaith ) )]"
+					tooltip = "[Character.GetPlayerInteractionWithTargetTitleTooltip('expell_religion_interaction', Title.Self)]"
+					oversound = "event:/SFX/UI/Generic/sfx_ui_generic_pointer_over"
+					clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_select"
+					onclick = "[Character.OpenPlayerInteractionWithTargetTitle('expell_religion_interaction', Title.Self)]"
+
+					button_expell_culture = {
+						size = { 25 25 }
+						texture = "gfx/interface/buttons/button_icons/heresy.dds"
+						parentanchor = center
+						alwaystransparent = yes
+					}
+				}
+			}
+
+			### TOLERATION ###
+			widget = {
+				allow_outside = yes
+				parentanchor = center
+				position = { 48 30 }
+
+				button_round_small  = {
+					datacontext = "[HoldingView.GetGUIHoldingBuilding]"
+					datacontext = "[HoldingView.GetTitle]"
+					datacontext = "[HoldingView.GetHolder]"
+					datacontext = "[Province.GetCounty.GetFaith]"
+					datacontext = "[Province.GetCounty.GetCulture]"
+					enabled = "[Not( ObjectsEqual( Faith.Self, GetPlayer.GetFaith ))]"
+					enabled = "[Not( ObjectsEqual( Culture.Self, GetPlayer.GetCulture ))]"
+					visible = "[And(HoldingView.PotentialSetRealmCapital, GetScriptedGui('FCI_is_loaded').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End))]"
+					tooltip = "[Character.GetPlayerInteractionWithTargetTitleTooltip('toleration_interaction', Title.Self)]"
+					oversound = "event:/SFX/UI/Generic/sfx_ui_generic_pointer_over"
+					clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_select"
+					onclick = "[Character.OpenPlayerInteractionWithTargetTitle('toleration_interaction', Title.Self)]"
+
+					button_expell_culture = {
+						size = { 25 25 }
+						texture = "gfx/interface/buttons/button_icons/toleration.dds"
+						parentanchor = center
+						alwaystransparent = yes
+					}
+				}
+			}
+
+			widget = { #C1
+				allow_outside = yes
+				parentanchor = center
+				position = { -205 -63 }
+
+				button_round_small  = {
+					datacontext = "[HoldingView.GetGUIHoldingBuilding]"
+					datacontext = "[HoldingView.GetTitle]"
+					datacontext = "[HoldingView.GetCountyTitle]"
+					datacontext = "[HoldingView.GetHolder]"
+					visible = "[And(And(HoldingView.GetCountyTitle.CanPlayerRenameTitle,EqualTo_string(HoldingView.GetHolding.GetType.GetKey,'castle_holding')), GetScriptedGui('FCI_is_loaded').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End))]"
+					#enabled = "[ObjectsEqual( Character.Self, GetPlayer ),Not(Character.IsOtherLiegeOrAbove( GetPlayer ))]"
+					tooltip = "[Character.GetPlayerInteractionWithTargetTitleTooltip('joust_interaction', Title.Self)]"
+					oversound = "event:/SFX/UI/Generic/sfx_ui_generic_pointer_over"
+					clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_select"
+					onclick = "[Character.OpenPlayerInteractionWithTargetTitle('joust_interaction', Title.Self)]"
+
+					button_joust = {
+						size = { 22 22 }
+						texture = "gfx/interface/buttons/button_icons/joust1.dds"
+						parentanchor = center
+						alwaystransparent = yes
+					}
+				}
+			}
+
+			widget = { #C2
+				allow_outside = yes
+				parentanchor = center
+				position = { -173 -63 }
+
+				button_round_small  = {
+					datacontext = "[HoldingView.GetGUIHoldingBuilding]"
+					datacontext = "[HoldingView.GetTitle]"
+					datacontext = "[HoldingView.GetHolder]"
+					visible = "[And(And(HoldingView.GetCountyTitle.CanPlayerRenameTitle,EqualTo_string(HoldingView.GetHolding.GetType.GetKey,'castle_holding')), GetScriptedGui('FCI_is_loaded').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End))]"
+					#enabled = "[ObjectsEqual( Character.Self, GetPlayer ),Not(Character.IsOtherLiegeOrAbove( GetPlayer ))]"
+					tooltip = "[Character.GetPlayerInteractionWithTargetTitleTooltip('tournament_interaction', Title.Self)]"
+					oversound = "event:/SFX/UI/Generic/sfx_ui_generic_pointer_over"
+					clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_select"
+					onclick = "[Character.OpenPlayerInteractionWithTargetTitle('tournament_interaction', Title.Self)]"
+
+					button_expell_culture = {
+						size = { 22 22 }
+						texture = "gfx/interface/buttons/button_icons/tournament1.dds"
+						parentanchor = center
+						alwaystransparent = yes
+					}
+				}
+			}
+
+			widget = { #C3
+				allow_outside = yes
+				parentanchor = center
+				position = { -143 -63 }
+
+				button_round_small  = {
+					datacontext = "[HoldingView.GetGUIHoldingBuilding]"
+					datacontext = "[HoldingView.GetTitle]"
+					datacontext = "[HoldingView.GetHolder]"
+					datacontext = "[HoldingView.GetHolding]"
+					datacontext = "[HoldingView.GetProvince]"
+					datacontext = "[Province.GetCounty]"
+					visible = "[And(And(HoldingView.GetCountyTitle.CanPlayerRenameTitle,EqualTo_string(HoldingView.GetHolding.GetType.GetKey,'castle_holding')), GetScriptedGui('FCI_is_loaded').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End))]"
+					#enabled = "[ObjectsEqual( Character.Self, GetPlayer ),Not(Character.IsOtherLiegeOrAbove( GetPlayer ))]"
+					tooltip = "[Character.GetPlayerInteractionWithTargetTitleTooltip('pasdarmes_interaction', Title.Self)]"
+					oversound = "event:/SFX/UI/Generic/sfx_ui_generic_pointer_over"
+					clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_select"
+					onclick = "[Character.OpenPlayerInteractionWithTargetTitle('pasdarmes_interaction', Title.Self)]"
+
+					button_expell_culture = {
+						size = { 22 22 }
+						texture = "gfx/interface/buttons/button_icons/pasdarmes1.dds"
+						parentanchor = center
+						alwaystransparent = yes
+					}
+				}
+			}
+
+			widget = { #CH1
+				allow_outside = yes
+				parentanchor = center
+				position = { -205 -63 }
+
+				button_round_small  = {
+					datacontext = "[HoldingView.GetGUIHoldingBuilding]"
+					datacontext = "[HoldingView.GetHolding]"
+					datacontext = "[HoldingView.GetProvince]"
+					datacontext = "[HoldingView.GetTitle]"
+					datacontext = "[HoldingView.GetHolder]"
+					datacontext = "[HoldingView.GetCountyTitle]"
+					datacontext = "[Province.GetCounty]"
+					visible = "[And(And(HoldingView.GetCountyTitle.CanPlayerRenameTitle,EqualTo_string(HoldingView.GetHolding.GetType.GetKey,'church_holding')), GetScriptedGui('FCI_is_loaded').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End))]"
+					tooltip = "[Character.GetPlayerInteractionWithTargetTitleTooltip('trial_interaction', Title.Self)]"
+					oversound = "event:/SFX/UI/Generic/sfx_ui_generic_pointer_over"
+					clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_select"
+					onclick = "[Character.OpenPlayerInteractionWithTargetTitle('trial_interaction', Title.Self)]"
+
+					button_expell_culture = {
+						size = { 22 22 }
+						texture = "gfx/interface/buttons/button_icons/witchtrial1.dds"
+						parentanchor = center
+						alwaystransparent = yes
+					}
+				}
+			}
+
+			widget = { #CH2
+				allow_outside = yes
+				parentanchor = center
+				position = { -173 -63 }
+
+				button_round_small  = {
+				datacontext = "[HoldingView.GetGUIHoldingBuilding]"
+				datacontext = "[HoldingView.GetHolding]"
+				datacontext = "[HoldingView.GetProvince]"
+				datacontext = "[HoldingView.GetTitle]"
+				datacontext = "[HoldingView.GetHolder]"
+				datacontext = "[HoldingView.GetCountyTitle]"
+				datacontext = "[Province.GetCounty]"
+					visible = "[And(And(HoldingView.GetCountyTitle.CanPlayerRenameTitle,EqualTo_string(HoldingView.GetHolding.GetType.GetKey,'church_holding')), GetScriptedGui('FCI_is_loaded').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End))]"
+					tooltip = "[Character.GetPlayerInteractionWithTargetTitleTooltip('procession_interaction', Title.Self)]"
+					oversound = "event:/SFX/UI/Generic/sfx_ui_generic_pointer_over"
+					clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_select"
+					onclick = "[Character.OpenPlayerInteractionWithTargetTitle('procession_interaction', Title.Self)]"
+
+					button_expell_culture = {
+						size = { 22 22 }
+						texture = "gfx/interface/buttons/button_icons/procession1.dds"
+						parentanchor = center
+						alwaystransparent = yes
+					}
+				}
+			}
+
+			widget = { #CH3
+				allow_outside = yes
+				parentanchor = center
+				position = { -143 -63 }
+
+				button_round_small  = {
+					datacontext = "[HoldingView.GetGUIHoldingBuilding]"
+					datacontext = "[HoldingView.GetHolding]"
+					datacontext = "[HoldingView.GetProvince]"
+					datacontext = "[GUICountyHolding.GetHolding]"
+					datacontext = "[HoldingView.GetTitle]"
+					datacontext = "[HoldingView.GetHolder]"
+					datacontext = "[HoldingView.GetCountyTitle]"
+					datacontext = "[Province.GetCounty]"
+					visible = "[And(And(HoldingView.GetCountyTitle.CanPlayerRenameTitle,EqualTo_string(HoldingView.GetHolding.GetType.GetKey,'church_holding')), GetScriptedGui('FCI_is_loaded').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End))]"
+					tooltip = "[Character.GetPlayerInteractionWithTargetTitleTooltip('enshrine_interaction', Title.Self)]"
+					oversound = "event:/SFX/UI/Generic/sfx_ui_generic_pointer_over"
+					clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_select"
+					onclick = "[Character.OpenPlayerInteractionWithTargetTitle('enshrine_interaction', Title.Self)]"
+
+					button_expell_culture = {
+						size = { 22 22 }
+						texture = "gfx/interface/buttons/button_icons/enshrine1.dds"
+						parentanchor = center
+						alwaystransparent = yes
+					}
+				}
+			}
+
+			widget = { #CI1
+				allow_outside = yes
+				parentanchor = center
+				position = { -205 -63 }
+
+				button_round_small  = {
+					datacontext = "[HoldingView.GetGUIHoldingBuilding]"
+					datacontext = "[HoldingView.GetHolding]"
+					datacontext = "[HoldingView.GetProvince]"
+					datacontext = "[HoldingView.GetTitle]"
+					datacontext = "[HoldingView.GetHolder]"
+					datacontext = "[HoldingView.GetCountyTitle]"
+					datacontext = "[Province.GetCounty]"
+					visible = "[And(And(HoldingView.GetCountyTitle.CanPlayerRenameTitle,EqualTo_string(HoldingView.GetHolding.GetType.GetKey,'city_holding')), GetScriptedGui('FCI_is_loaded').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End))]"
+					#enabled = "[ObjectsEqual( Character.Self, GetPlayer ),Not(Character.IsOtherLiegeOrAbove( GetPlayer ))]"
+					tooltip = "[Character.GetPlayerInteractionWithTargetTitleTooltip('bowtourney_interaction', Title.Self)]"
+					oversound = "event:/SFX/UI/Generic/sfx_ui_generic_pointer_over"
+					clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_select"
+					onclick = "[Character.OpenPlayerInteractionWithTargetTitle('bowtourney_interaction', Title.Self)]"
+
+					button_expell_culture = {
+						size = { 22 22 }
+						texture = "gfx/interface/buttons/button_icons/bowtourney1.dds"
+						parentanchor = center
+						alwaystransparent = yes
+					}
+				}
+			}
+
+			widget = { #CI2
+				allow_outside = yes
+				parentanchor = center
+				position = { -173 -63 }
+
+				button_round_small  = {
+					datacontext = "[HoldingView.GetGUIHoldingBuilding]"
+					datacontext = "[HoldingView.GetHolding]"
+					datacontext = "[HoldingView.GetProvince]"
+					datacontext = "[HoldingView.GetTitle]"
+					datacontext = "[HoldingView.GetHolder]"
+					datacontext = "[HoldingView.GetCountyTitle]"
+					datacontext = "[Province.GetCounty]"
+					visible = "[And(And(HoldingView.GetCountyTitle.CanPlayerRenameTitle,EqualTo_string(HoldingView.GetHolding.GetType.GetKey,'city_holding')), GetScriptedGui('FCI_is_loaded').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End))]"
+					#enabled = "[ObjectsEqual( Character.Self, GetPlayer ),Not(Character.IsOtherLiegeOrAbove( GetPlayer ))]"
+					tooltip = "[Character.GetPlayerInteractionWithTargetTitleTooltip('fair_interaction', Title.Self)]"
+					oversound = "event:/SFX/UI/Generic/sfx_ui_generic_pointer_over"
+					clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_select"
+					onclick = "[Character.OpenPlayerInteractionWithTargetTitle('fair_interaction', Title.Self)]"
+
+					button_expell_culture = {
+						size = { 22 22 }
+						texture = "gfx/interface/buttons/button_icons/fair1.dds"
+						parentanchor = center
+						alwaystransparent = yes
+					}
+				}
+			}
+
+			widget = { #CI3
+				allow_outside = yes
+				parentanchor = center
+				position = { -143 -63 }
+
+				button_round_small  = {
+				datacontext = "[HoldingView.GetGUIHoldingBuilding]"
+				datacontext = "[HoldingView.GetHolding]"
+				datacontext = "[HoldingView.GetProvince]"
+				datacontext = "[HoldingView.GetTitle]"
+				datacontext = "[HoldingView.GetHolder]"
+				datacontext = "[HoldingView.GetCountyTitle]"
+				datacontext = "[Province.GetCounty]"
+				visible = "[And(And(HoldingView.GetCountyTitle.CanPlayerRenameTitle,EqualTo_string(HoldingView.GetHolding.GetType.GetKey,'city_holding')), GetScriptedGui('FCI_is_loaded').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End))]"
+				#enabled = "[ObjectsEqual( Character.Self, GetPlayer ),Not(Character.IsOtherLiegeOrAbove( GetPlayer ))]"
+				tooltip = "[Character.GetPlayerInteractionWithTargetTitleTooltip('juggler_interaction', Title.Self)]"
+				oversound = "event:/SFX/UI/Generic/sfx_ui_generic_pointer_over"
+				clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_select"
+				onclick = "[Character.OpenPlayerInteractionWithTargetTitle('juggler_interaction', Title.Self)]"
+
+				button_expell_culture = {
+					size = { 22 22 }
+					texture = "gfx/interface/buttons/button_icons/juggler1.dds"
+					parentanchor = center
+					alwaystransparent = yes
+					}
+				}
+			}
 			hbox = {
 				parentanchor = top|right
 				margin_top = 5
 				ignoreinvisible = yes
 
 				expand = {}
+				#BEGIN FLEXIBLE_HOLDING_TYPES
+				vbox = {
+					layoutpolicy_vertical = expanding
+					margin = { 0 3 }
+
+					flowcontainer = {
+						direction = horizontal
+						ignoreinvisible = yes
+						visible = "[And(ObjectsEqual( HoldingView.GetCountyTitle.GetHolder, GetPlayer ), GetScriptedGui('FCI_is_loaded').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End))]"
+						button = {
+							name = "show submenu"
+							texture = "gfx/interface/buttons/button_icons/activitybutton.dds"
+							visible = "[HoldingView.HasHolding]"
+							onclick = "[PdxGuiWidget.AccessParent.FindChild('submenu').Show]"
+							onclick = "[PdxGuiWidget.AccessParent.FindChild('hide submenu').Show]"
+							onclick = "[PdxGuiWidget.Hide]"
+							size = {35 35}
+						}
+
+						button = {
+							name = "hide submenu"
+							texture = "gfx/interface/buttons/button_icons/activitybutton.dds"
+							enabled = "[HoldingView.HasHolding]"
+							visible = "[Not(HoldingView.HasHolding)]"
+							onclick = "[PdxGuiWidget.AccessParent.FindChild('submenu').Hide]"
+							onclick = "[PdxGuiWidget.AccessParent.FindChild('show submenu').Show]"
+							onclick = "[PdxGuiWidget.Hide]"
+							size = {35 35}
+						}
+						flowcontainer = {
+							direction = vertical
+							ignoreinvisible = yes
+							name = "submenu"
+							visible = no
+							button = {
+								name = "gui_gl_castle_activity1_button"
+								datacontext = "[GetScriptedGui('gl_castle_activity1_button')]"
+								texture = "gfx/interface/buttons/button_icons/joust.dds"
+								visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								enabled = "[ScriptedGui.IsValid( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								tooltip = "[ScriptedGui.BuildTooltip( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								size = {35 35}
+							}
+							button = {
+								name = "gui_gl_castle_activity2_button"
+								datacontext = "[GetScriptedGui('gl_castle_activity2_button')]"
+								texture = "gfx/interface/buttons/button_icons/tournament.dds"
+								visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								enabled = "[ScriptedGui.IsValid( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								tooltip = "[ScriptedGui.BuildTooltip( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								size = {35 35}
+							}
+							button = {
+								name = "gui_gl_castle_activity3_button"
+								datacontext = "[GetScriptedGui('gl_castle_activity3_button')]"
+								texture = "gfx/interface/buttons/button_icons/pasdarmes.dds"
+								visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								enabled = "[ScriptedGui.IsValid( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								tooltip = "[ScriptedGui.BuildTooltip( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								size = {35 35}
+							}
+							button = {
+								name = "gui_gl_church_activity1_button"
+								datacontext = "[GetScriptedGui('gl_church_activity1_button')]"
+								texture = "gfx/interface/buttons/button_icons/witchtrial.dds"
+								visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								enabled = "[ScriptedGui.IsValid( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								tooltip = "[ScriptedGui.BuildTooltip( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								size = {35 35}
+							}
+							button = {
+								name = "gui_gl_church_activity2_button"
+								datacontext = "[GetScriptedGui('gl_church_activity2_button')]"
+								texture = "gfx/interface/buttons/button_icons/procession.dds"
+								visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								enabled = "[ScriptedGui.IsValid( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								tooltip = "[ScriptedGui.BuildTooltip( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								size = {35 35}
+							}
+							button = {
+								name = "gui_gl_church_activity3_button"
+								datacontext = "[GetScriptedGui('gl_church_activity3_button')]"
+								texture = "gfx/interface/buttons/button_icons/enshrine.dds"
+								visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								enabled = "[ScriptedGui.IsValid( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								tooltip = "[ScriptedGui.BuildTooltip( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								size = {35 35}
+							}
+							button = {
+								name = "gui_gl_village_activity1_button"
+								datacontext = "[GetScriptedGui('gl_village_activity1_button')]"
+								texture = "gfx/interface/buttons/button_icons/bowtourney.dds"
+								visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								enabled = "[ScriptedGui.IsValid( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								tooltip = "[ScriptedGui.BuildTooltip( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								size = {35 35}
+							}
+							button = {
+								name = "gui_gl_village_activity2_button"
+								datacontext = "[GetScriptedGui('gl_village_activity2_button')]"
+								texture = "gfx/interface/buttons/button_icons/fair.dds"
+								visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								enabled = "[ScriptedGui.IsValid( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								tooltip = "[ScriptedGui.BuildTooltip( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								size = {35 35}
+							}
+							button = {
+								name = "gui_gl_village_activity3_button"
+								datacontext = "[GetScriptedGui('gl_village_activity3_button')]"
+								texture = "gfx/interface/buttons/button_icons/juggler.dds"
+								visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								enabled = "[ScriptedGui.IsValid( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								tooltip = "[ScriptedGui.BuildTooltip( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).AddScope('builder', GetPlayer .MakeScope ).End )]"
+								size = {35 35}
+							}
+						}
+
+
+					 }
+
+
+					expand = {}
+				}
+				#END FLEXIBLE_HOLDING_TYPES
 
 				vbox = {
 					layoutpolicy_vertical = expanding
