@@ -8,10 +8,10 @@ window = {
 	movable = no
 	layer = confirmation
 	alwaystransparent = yes
-	
-	window_succession_event_show_state_PoW = {
-		trigger_when = "[GetScriptedGui('window_succession_event_show_state_Inherichance).IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).End]"
-	}
+
+	# [UniUI] [Inherichance]
+	using = UniUI_Inherichance_window_succession_event_show_state
+	# [/Inherichance] [/UniUI]
 
 	state = {
 		name =_show
@@ -470,37 +470,26 @@ window = {
 											layoutpolicy_vertical = expanding
 											layoutpolicy_horizontal = expanding
 
-											# [UniUI]
-											# [Vanilla]
-											coa_title_small_crown_vanilla = {
-												datacontext = "[GetScriptedGui('window_succession_event_vanilla')]"
-												visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+											# [UniUI] [Vanilla] NOT Inherichance
+											UniUI_vanilla_coa_title_small_crown = {
+												datacontext = "[GetScriptedGui('Inherichance_is_loaded_sgui')]"
+												visible = "[Not(ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ))]"
 											}
-											# [/Vanilla]
-											# [Inherichance]
-											coa_title_small_crown_Inherichance = {
-												datacontext = "[GetScriptedGui('window_succession_event_Inherichance')]"
-												visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+											# [/Vanilla] [Inherichance]
+											UniUI_Inherichance_coa_title_small_crown = {
 											}
-											# [/Inherichance]
-											# [/UniUI]
+											# [/Inherichance] [/UniUI]
 										}
 									}
 
-									# [UniUI]
-									# [Vanilla]
-									window_succession_event_text_vanilla = {
-										datacontext = "[GetScriptedGui('window_succession_event_text_vanilla')]"
-										visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+									# [UniUI] [Vanilla] NOT Inherichance
+									UniUI_vanilla_window_succession_event_text = {
+										datacontext = "[GetScriptedGui('Inherichance_is_loaded_sgui')]"
+										visible = "[Not(ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ))]"
 									}
-									# [/Vanilla]
-									# [Inherichance]
-									window_succession_event_text_Inherichance = {
-										datacontext = "[GetScriptedGui('window_succession_event_text_Inherichance')]"
-										visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-									}
-									# [/Inherichance]
-									# [/UniUI]
+									# [/Vanilla] [Inherichance]
+									UniUI_Inherichance_window_succession_event_text = {}
+									# [/Inherichance] [/UniUI]
 
 									expand = {
 										layoutpolicy_vertical = expanding
@@ -508,35 +497,15 @@ window = {
 								}
 
 								### Right Character
-								vbox = {
-									layoutpolicy_vertical = expanding
-									spacing = 5
-
-									text_label_center = {
-										visible = "[SuccessionEventWindow.GetPlayerHeir.IsValid]"
-										text = "LEGACY_CONTINUE_PLAYING"
-									}
-
-									vbox_heir = {
-										name = "right"
-										datacontext = "[SuccessionEventWindow.GetPlayerHeirLegacy]"
-										visible = "[SuccessionEventWindow.GetPlayerHeir.IsValid]"
-										layoutpolicy_vertical = expanding
-
-										blockoverride "portrait_glow" {}
-
-										background = {
-											using = Background_Area
-										}
-									}
-
-									vbox_dynasty = {
-										name = "dynasty_right"
-										datacontext = "[SuccessionEventWindow.GetDeadCharacter.GetDynasty]"
-										visible = "[Not(SuccessionEventWindow.GetPlayerHeir.IsValid)]"
-										layoutpolicy_vertical = expanding
-									}
+								# [UniUI] [Vanilla] NOT Inherichance
+								UniUI_vanilla_window_succession_event_right_character = {
+									datacontext = "[GetScriptedGui('Inherichance_is_loaded_sgui')]"
+									visible = "[Not(ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ))]"
 								}
+								# [/Vanilla] [Inherichance]
+								# [/Vanilla] [Inherichance]
+								UniUI_Inherichance_window_succession_event_right_character = {}
+								# [/Inherichance] [/UniUI]
 							}
 						}
 					}
@@ -573,20 +542,14 @@ window = {
 
 								blockoverride "scrollbox_content" {
 
-									# [UniUI]
-									# [Vanilla]
-									window_succession_event_titles_vanilla = {
-										datacontext = "[GetScriptedGui('window_succession_event_titles_vanilla')]"
-										visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+									# [UniUI] [Vanilla] NOT Inherichance
+									UniUI_vanilla_window_succession_event_titles = {
+										datacontext = "[GetScriptedGui('Inherichance_is_loaded_sgui')]"
+										visible = "[Not(ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ))]"
 									}
-									# [/Vanilla]
-									# [Inherichance]
-									window_succession_event_titles_Inherichance = {
-										datacontext = "[GetScriptedGui('window_succession_event_titles_Inherichance')]"
-										visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-									}
-									# [/Inherichance]
-									# [/UniUI]
+									# [/Vanilla] [Inherichance]
+									UniUI_Inherichance_window_succession_event_titles = {}
+									# [/Inherichance] [/UniUI]
 								}
 							}
 						}
@@ -631,27 +594,22 @@ window = {
 										spacing = 60
 
 										item = {
-											# [UniUI]
-											# [Vanilla]
-											window_succession_event_legacy_item_vanilla = {
-												datacontext = "[GetScriptedGui('window_succession_event_legacy_item_vanilla')]"
-												visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+											vbox_legacy_item = {
+												# [UniUI] [Inherichance]
+												using = UniUI_Inherichance_reign_duration_visibility
+												# [/UniUI] [/Inherichance]
 											}
-											# [/Vanilla]
-											# [Inherichance]
-											window_succession_event_legacy_item_Inherichance = {
-												datacontext = "[GetScriptedGui('window_succession_event_legacy_item_vanilla')]"
-												visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-											}
-											# [/Inherichance]
-											# [/UniUI]
 										}
 									}
 
-									vbox_current_lineage = {
-										visible = "[SuccessionEventWindow.GetPlayerHeir.IsValid]"
-										datacontext = "[SuccessionEventWindow.GetPlayerHeirLegacy]"
+									# [UniUI] [Vanilla] NOT Inherichance
+									UniUI_vanilla_window_succession_event_vbox_current_lineage = {
+										datacontext = "[GetScriptedGui('Inherichance_is_loaded_sgui')]"
+										visible = "[Not(ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ))]"
 									}
+									# [/Vanilla] [Inherichance]
+									UniUI_Inherichance_window_succession_event_vbox_current_lineage = {}
+									# [/Inherichance] [/UniUI]
 
 									vbox_dynasty = {
 										name = "dynasty_right"
@@ -676,20 +634,14 @@ window = {
 					using = Background_Area_Dark
 				}
 
-				# [UniUI]
-				# [Vanilla]
-				window_succession_event_buttons_vanilla = {
-					datacontext = "[GetScriptedGui('window_succession_event_buttons_vanilla')]"
-					visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				# [UniUI] [Vanilla] NOT Inherichance
+				UniUI_vanilla_window_succession_event_buttons = {
+					datacontext = "[GetScriptedGui('Inherichance_is_loaded_sgui')]"
+					visible = "[Not(ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ))]"
 				}
-				# [/Vanilla]
-				# [Inherichance]
-				window_succession_event_buttons_Inherichance = {
-					datacontext = "[GetScriptedGui('window_succession_event_buttons_Inherichance')]"
-					visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				}
-				# [/Inherichance]
-				# [/UniUI]
+				# [/Vanilla] [Inherichance]
+				UniUI_Inherichance_window_succession_event_buttons_Inherichance = {}
+				# [/Inherichance] [/UniUI]
 			}
 		}
 	}

@@ -1,12 +1,3 @@
-types window_lineage_reign_duration {
-	
-	type window_lineage_reign_duration_vanilla = item {
-		vbox_legacy_item = {}
-	}
-
-	type window_lineage_reign_duration_Inherichance = item {
-		vbox_legacy_item = {
-			visible = "[Not(EqualTo_string(LegacyItem.GetEndDate.GetString,LegacyItem.GetStartDate.GetString))]"
-		}
-	}
+template UniUI_Inherichance_reign_duration_visibility {
+	visible = "[Not(EqualTo_string(LegacyItem.GetEndDate.GetString,LegacyItem.GetStartDate.GetString))]"
 }

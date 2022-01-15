@@ -84,13 +84,10 @@ window = {
 								datamodel = "[SuccessionEventWindow.GetLegacy]"
 								spacing = 60
 
-								window_lineage_reign_duration_vanilla = {
-									datacontext = "[GetScriptedGui('window_lineage_reign_duration_vanilla')]"
-									visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-								}
-								window_lineage_reign_duration_Inherichance = {
-									datacontext = "[GetScriptedGui('window_lineage_reign_duration_Inherichance')]"
-									visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								vbox_legacy_item = {
+									# [UniUI] [Inherichance]
+									using = UniUI_Inherichance_reign_duration_visibility
+									# [/Inherichance] [/UniUI]
 								}
 							}
 

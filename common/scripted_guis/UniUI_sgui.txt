@@ -1,4 +1,11 @@
-﻿KoH_is_load_sgui = {
+﻿Inherichance_is_loaded_sgui = {
+    scope = character
+    is_shown = {
+        exists = global_var:Inherichance_is_loaded
+    }
+}
+
+KoH_is_load_sgui = {
     scope = character
     is_shown = {
         exists = global_var:KoH_is_loaded
