@@ -1,0 +1,47 @@
+﻿widget_courtier_item_vanilla = {
+    scope = character
+    is_shown = {
+        NOR = {
+            exists = global_var:PoW_is_loaded
+        }
+    } 
+}
+
+widget_courtier_item_PoW = {
+    scope = character
+    is_shown = {
+        exists = global_var:PoW_is_loaded
+    } 
+}
+
+window_court_prisoner_list_vanilla = {
+    scope = character
+    is_shown = {
+        NOR = {
+            exists = global_var:PoW_is_loaded
+        }
+    } 
+}
+
+window_court_prisoner_list_PoW = {
+    scope = character
+    is_shown = {
+        exists = global_var:PoW_is_loaded
+    } 
+}
+
+window_court_prisoner_short_list_vanilla = {
+    scope = character
+    is_shown = {
+        NOR = {
+            exists = global_var:PoW_is_loaded
+        }
+    }
+}
+
+window_court_prisoner_short_list_PoW = {
+    scope = character
+    is_shown = {
+        exists = global_var:PoW_is_loaded
+    }
+}

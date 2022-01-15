@@ -1618,11 +1618,11 @@ types Lists
 							using = Background_Area
 						}
 						widget_vassal_list_modify_contract_vassal_vanilla = {
-							datacontext = "[GetScriptedGui('StA_is_loaded_sgui')]"
-							visible = "[Not(ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ))]"
+							datacontext = "[GetScriptedGui('widget_vassal_list_modify_contract_vassal_vanilla')]"
+							visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 						}
-						widget_vassal_list_modify_contract_vassal_MMM = {
-							datacontext = "[GetScriptedGui('StA_is_loaded_sgui')]"
+						widget_vassal_list_modify_contract_vassal_StA = {
+							datacontext = "[GetScriptedGui('widget_vassal_list_modify_contract_vassal_StA')]"
 							visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 						}
 	

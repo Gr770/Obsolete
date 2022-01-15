@@ -1,0 +1,22 @@
+﻿window_army_PoW_in_army = {
+    scope = character
+    is_shown = {
+        exists = global_var:PoW_is_loaded
+    } 
+}
+
+window_army_button_army_disband_vanilla = {
+    scope = character
+    is_shown = {
+        NOR = {
+            exists = global_var:PoW_is_loaded
+        }
+    }
+}
+
+window_army_button_army_disband_PoW = {
+    scope = character
+    is_shown = {
+        exists = global_var:PoW_is_loaded
+    } 
+}

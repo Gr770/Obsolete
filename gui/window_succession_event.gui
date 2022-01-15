@@ -8,6 +8,10 @@ window = {
 	movable = no
 	layer = confirmation
 	alwaystransparent = yes
+	
+	window_succession_event_show_state_PoW = {
+		trigger_when = "[GetScriptedGui('window_succession_event_show_state_Inherichance).IsShown(GuiScope.SetRoot( GetPlayer.MakeScope ).End]"
+	}
 
 	state = {
 		name =_show
@@ -466,45 +470,37 @@ window = {
 											layoutpolicy_vertical = expanding
 											layoutpolicy_horizontal = expanding
 
-											coa_title_small_crown = {
-												datacontext = "[SuccessionEventWindow.GetPlayerHeir.GetPrimaryTitle]"
-												visible = "[Title.IsValid]"
-												parentanchor = bottom|hcenter
+											# [UniUI]
+											# [Vanilla]
+											coa_title_small_crown_vanilla = {
+												datacontext = "[GetScriptedGui('window_succession_event_vanilla')]"
+												visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 											}
+											# [/Vanilla]
+											# [Inherichance]
+											coa_title_small_crown_Inherichance = {
+												datacontext = "[GetScriptedGui('window_succession_event_Inherichance')]"
+												visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+											}
+											# [/Inherichance]
+											# [/UniUI]
 										}
 									}
 
-									vbox = {
-										margin = { 10 10 }
-
-										text_multi = {
-											name = "dead_description"
-											size = { 384 150 }
-											text = "[SuccessionEventWindow.GetDeadDesc]"
-											visible = "[And(Not(SuccessionEventWindow.IsEndDateReached), Not(SuccessionEventWindow.GetDeadCharacter.IsAlive))]"
-											using = Font_Size_Medium
-										}
-
-										text_multi = {
-											name = "heir_description"
-											size = { 384 120 }
-											text = "[SuccessionEventWindow.GetHeirDesc]"
-											using = Font_Size_Medium
-											visible = "[Not(SuccessionEventWindow.IsEndDateReached)]"
-											autoresize = yes
-											max_width = 380
-										}
-
-										text_multi = {
-											name = "end_date_description"
-											size = { 384 120 }
-											text = "SUCCESSION_EVENT_WINDOW_END_DATE_DESC"
-											using = Font_Size_Medium
-											visible = "[SuccessionEventWindow.IsEndDateReached]"
-											autoresize = yes
-											max_width = 380
-										}
+									# [UniUI]
+									# [Vanilla]
+									window_succession_event_text_vanilla = {
+										datacontext = "[GetScriptedGui('window_succession_event_text_vanilla')]"
+										visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 									}
+									# [/Vanilla]
+									# [Inherichance]
+									window_succession_event_text_Inherichance = {
+										datacontext = "[GetScriptedGui('window_succession_event_text_Inherichance')]"
+										visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+									}
+									# [/Inherichance]
+									# [/UniUI]
 
 									expand = {
 										layoutpolicy_vertical = expanding
@@ -577,123 +573,20 @@ window = {
 
 								blockoverride "scrollbox_content" {
 
-									vbox = {
-										name = "titles"
-										layoutpolicy_vertical = expanding
-										layoutpolicy_horizontal = expanding
-										margin = { 6 6 }
-										spacing = 6
-
-										text_single = {
-											layoutpolicy_horizontal = expanding
-											text = "SUCCESSION_INHERITED_TITLES"
-										}
-
-										hbox = {
-											layoutpolicy_horizontal = expanding
-											margin_bottom = 15
-
-											#fixedgridbox = { # hbox doesn't work with datamodel_wrap
-											dynamicgridbox = {
-												name = "inherited"
-												datamodel = "[SuccessionEventWindow.GetInheritedTitles]"
-												datamodel_wrap = 11
-												#addcolumn = 56
-												#addrow = 56
-												flipdirection = yes
-
-												item = {
-													coa_title_small_crown = {
-														using = CTFA_hide_if_vanity_title
-													}
-												}
-											}
-
-											expand = {}
-										}
-
-										hbox = {
-											visible = "[SuccessionEventWindow.HasLostTitles]"
-											layoutpolicy_horizontal = expanding
-
-											text_single = {
-												text = "SUCCESSION_LOST_TITLES"
-											}
-
-											button_expand = {
-												name = "show_lost_titles"
-												frame = "[Select_int32( SuccessionEventWindow.ShowLostTitles, '(int32)2', '(int32)1' )]"
-												onclick = "[SuccessionEventWindow.ToggleLostTitles]"
-												using = tooltip_ws
-											}
-
-											expand = {}
-										}
-
-										divider = {
-											visible = "[SuccessionEventWindow.HasLostTitles]"
-											layoutpolicy_horizontal = expanding
-										}
-
-										vbox = {
-											name = "lost_titles"
-											visible = "[And( SuccessionEventWindow.ShowLostTitles, SuccessionEventWindow.HasLostTitles )]"
-											layoutpolicy_horizontal = expanding
-											margin_top = 5
-
-											vbox = {
-												datamodel = "[SuccessionEventWindow.GetLostTitles]"
-												layoutpolicy_horizontal = expanding
-												spacing = 8
-
-												item = {
-													vbox = {
-														layoutpolicy_horizontal = expanding
-														spacing = 5
-
-														text_single = {
-															layoutpolicy_horizontal = expanding
-															text = "SUCCESSION_LOST_TITLE_SHARE"
-															margin_left = 5
-														}
-
-														hbox = {
-															layoutpolicy_horizontal = expanding
-															spacing = 20
-
-															portrait_head_small = {
-																name = "portrait"
-																datacontext = "[SuccessionEventWindowLostTitlesItem.GetHeir]"
-
-																blockoverride "portrait_transformation"
-																{
-																	portrait_scale = { -1 1 }
-																	portrait_offset = { 1 0 }
-																}
-															}
-
-															hbox = {
-																name = "title_member_grid"
-																datamodel = "[SuccessionEventWindowLostTitlesItem.GetTitles]"
-																datamodel_wrap = 10
-
-																item = {
-																	coa_title_tiny_crown = {
-																	}
-																}
-															}
-
-															expand = {}
-														}
-													}
-												}
-											}
-										}
-
-										expand = {
-											layoutpolicy_vertical = expanding
-										}
+									# [UniUI]
+									# [Vanilla]
+									window_succession_event_titles_vanilla = {
+										datacontext = "[GetScriptedGui('window_succession_event_titles_vanilla')]"
+										visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 									}
+									# [/Vanilla]
+									# [Inherichance]
+									window_succession_event_titles_Inherichance = {
+										datacontext = "[GetScriptedGui('window_succession_event_titles_Inherichance')]"
+										visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+									}
+									# [/Inherichance]
+									# [/UniUI]
 								}
 							}
 						}
@@ -738,7 +631,20 @@ window = {
 										spacing = 60
 
 										item = {
-											vbox_legacy_item = {}
+											# [UniUI]
+											# [Vanilla]
+											window_succession_event_legacy_item_vanilla = {
+												datacontext = "[GetScriptedGui('window_succession_event_legacy_item_vanilla')]"
+												visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+											}
+											# [/Vanilla]
+											# [Inherichance]
+											window_succession_event_legacy_item_Inherichance = {
+												datacontext = "[GetScriptedGui('window_succession_event_legacy_item_vanilla')]"
+												visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+											}
+											# [/Inherichance]
+											# [/UniUI]
 										}
 									}
 
@@ -770,42 +676,20 @@ window = {
 					using = Background_Area_Dark
 				}
 
-				hbox = {
-					spacing = 15
-
-					button_primary = {
-						name = "close_button"
-						visible = "[SuccessionEventWindow.GetPlayerHeir.IsValid]"
-						onclick = "[PdxGuiTriggerAllAnimations('ruler_transition_reset')]"
-						text = "SUCCESSION_EVENT_WINDOW_CLOSE"
-						min_width = 330
-					}
-
-					button_standard = {
-						name = "observer_button"
-						visible = "[And( Not(SuccessionEventWindow.GetPlayerHeir.IsValid), SuccessionEventWindow.CanChangeCharacter)]"
-						text = "SUCCESSION_EVENT_WINDOW_OBSERVER"
-						onclick = "[SuccessionEventWindow.GoToObserver]"
-						default_format = "#high"
-					}
-
-					button_standard  = {
-						name = "change_button"
-						visible = "[And( Not(SuccessionEventWindow.GetPlayerHeir.IsValid), SuccessionEventWindow.CanChangeCharacter)]"
-						text = "SUCCESSION_EVENT_WINDOW_CHANGE_CHARACTER"
-						onclick = "[SuccessionEventWindow.ChooseNewCharacter]"
-						default_format = "#high"
-					}
-
-					button_standard  = {
-						name = "menu_button"
-						visible = "[Not(SuccessionEventWindow.GetPlayerHeir.IsValid)]"
-						text = "[SuccessionEventWindow.GetExitName]"
-						tooltip = "[SuccessionEventWindow.GetExitTooltip]"
-						onclick = "[SuccessionEventWindow.GoToMenu]"
-						default_format = "#high"
-					}
+				# [UniUI]
+				# [Vanilla]
+				window_succession_event_buttons_vanilla = {
+					datacontext = "[GetScriptedGui('window_succession_event_buttons_vanilla')]"
+					visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				}
+				# [/Vanilla]
+				# [Inherichance]
+				window_succession_event_buttons_Inherichance = {
+					datacontext = "[GetScriptedGui('window_succession_event_buttons_Inherichance')]"
+					visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				}
+				# [/Inherichance]
+				# [/UniUI]
 			}
 		}
 	}

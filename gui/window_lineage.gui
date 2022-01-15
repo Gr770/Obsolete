@@ -1,0 +1,115 @@
+######################################################
+################# LINEAGE VIEW #######################
+######################################################
+# Lineage View and Succession Event Window share the same backend
+
+window = {
+	name = "lineage_window"
+	size = { 100% 100% }
+	movable = no
+	layer = confirmation
+	alwaystransparent = yes
+
+	using = Animation_ShowHide_Standard
+
+	widget = {
+		parentanchor = center
+		size = { 1000 750 }
+		filter_mouse = all
+
+		widget = {
+			size = { 100% 100% }
+
+			using = Window_Background
+			using = Window_Decoration_Spike
+		}
+
+		vbox = {
+			using = Window_Margins
+
+			header_pattern = {
+				layoutpolicy_horizontal = expanding
+
+				blockoverride "header_text"
+				{
+					text = "SUCCESSION_EVENT_WINDOW_HEADING_LINEAGE"
+				}
+
+				blockoverride "button_close"
+				{
+					onclick = "[SuccessionEventWindow.Close]"
+				}
+			}
+
+			### LINEAGE
+				scrollarea = {
+					layoutpolicy_horizontal = expanding
+					layoutpolicy_vertical = expanding
+
+					background = {
+						using = Background_Bottom_Fade
+					}
+
+					background = {
+						texture = "gfx/interface/illustrations/event_scenes/temple.dds"
+						fittype = centercrop
+						alpha = 0.2
+						margin_top = 10
+						
+						using = Mask_Rough_Edges
+					}
+
+					scrollbarpolicy_vertical = always_off
+
+					scrollbar_horizontal = {
+						using = Scrollbar_Horizontal
+						blockoverride "name"
+						{
+							name = legacy_scroll
+						}
+					}
+
+					scrollwidget = {
+						hbox = {
+							name = "info"
+							parentanchor = vcenter|right
+							margin = { 30 0 }
+							margin_top = 70
+
+							expand = {}
+
+							hbox = {
+								margin_right = 60
+
+								datamodel = "[SuccessionEventWindow.GetLegacy]"
+								spacing = 60
+
+								window_lineage_reign_duration_vanilla = {
+									datacontext = "[GetScriptedGui('window_lineage_reign_duration_vanilla')]"
+									visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								}
+								window_lineage_reign_duration_Inherichance = {
+									datacontext = "[GetScriptedGui('window_lineage_reign_duration_Inherichance')]"
+									visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								}
+							}
+
+							vbox_current_lineage = {
+								visible = "[SuccessionEventWindow.GetPlayerHeir.IsValid]"
+								datacontext = "[SuccessionEventWindow.GetPlayerHeirLegacy]"
+							}
+
+							vbox_dynasty = {
+								name = "dynasty_right"
+								datacontext = "[SuccessionEventWindow.GetDeadCharacter.GetDynasty]"
+								visible = "[Not(SuccessionEventWindow.GetPlayerHeir.IsValid)]"
+							}
+
+							expand = {}
+						}
+					}
+				}
+			
+		}
+	}
+}

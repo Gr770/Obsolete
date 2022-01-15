@@ -1,0 +1,7 @@
+types window_army_button_army_disband {
+    type window_army_button_army_disband_vanilla = button_army_disband {
+		parentanchor = center
+		onclick = [ArmyWindow.DisbandSelected]
+		shortcut = army_disband
+	}
+}

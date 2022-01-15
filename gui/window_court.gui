@@ -157,7 +157,9 @@ window = {
 											text_single = {
 												layoutpolicy_horizontal = expanding
 												visible = "[Character.IsValid]"
+												# [UniUI]
 												text = "COURT_WIND_UNIUI_PHYSICIAN_NAME"
+												# [/UniUI]
 												autoresize = no
 											}
 
@@ -209,7 +211,11 @@ window = {
 											layoutpolicy_horizontal = expanding
 
 											item = {
+												# [UniUI]
+												# [Vanilla]
 												widget_courtier_item = {
+													datacontext = "[GetScriptedGui('widget_courtier_item_vanilla')]"
+													visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 													layoutpolicy_horizontal = expanding
 													datacontext = "[CharacterListItem.GetCharacter]"
 
@@ -221,6 +227,23 @@ window = {
 														text = "[Character.GetRelationToString( GetPlayer.Self )]"
 													}
 												}
+												# [Vanilla]
+												# [PoW]
+												widget_courtier_item_PoW = {
+													datacontext = "[GetScriptedGui('widget_courtier_item_PoW')]"
+													visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+													layoutpolicy_horizontal = expanding
+													datacontext = "[CharacterListItem.GetCharacter]"
+
+													blockoverride "relation_text" {
+														text = "[Character.GetRelationToString( GetPlayer.Self )]"
+													}
+
+													blockoverride "description_relation_text" {
+														text = "[Character.GetRelationToString( GetPlayer.Self )]"
+													}
+												}
+												# [/PoW]
 											}
 										}
 									}
@@ -424,101 +447,21 @@ window = {
 											blockoverride "character_relation" {}
 										}
 
-										hbox = {
-											name = "prisoner_data"
-											layoutpolicy_horizontal = expanding
-											margin = { 10 10 }
-											spacing = 5
-
-											background = {
-												using = Background_Area_Dark
-											}
-
-											vbox = {
-												name = "info_text"
-												layoutpolicy_horizontal = expanding
-												layoutpolicy_vertical = expanding
-
-												text_single = {
-													visible = "[CharacterListItem.GetCharacter.IsImprisoned]"
-													name = "type"
-													layoutpolicy_horizontal = expanding
-													text = "[CharacterListItem.GetText('tooltip')]"
-													default_format = "#low"
-													autoresize = no
-												}
-
-												hbox = {
-													layoutpolicy_horizontal = expanding
-													spacing = 5
-													visible = "[CharacterListItem.GetCharacter.IsImprisoned]"
-
-													icon = {
-														texture = "gfx/interface/icons/portraits/punishment.dds"
-														size = { 30 30 }
-													}
-
-													text_single = {
-														name = "imprisoned_time"
-														layoutpolicy_horizontal = expanding
-														text = "[CharacterListItem.GetText('imprisoned_time')]"
-														autoresize = no
-													}
-												}
-
-												expand = {}
-											}
-
-											button_checkbox = {
-												name = "lock_from_mass_actions"
-												checked = "[CharacterListItem.GetBool('is_mass_action_locked')]"
-												onclick = "[CharacterListItem.OnClick('mass_action_lock')]"
-												tooltip = "[CharacterListItem.GetText('mass_action_lock_tooltip')]"
-											}
-
-											hbox = {
-												spacing = 3
-
-												button_round  = {
-													name = "ransom"
-													enabled = "[CharacterListItem.GetBool('can_ransom')]"
-
-													button_prison_ransom = {
-														parentanchor = center
-														onclick = "[CharacterListItem.OnClick('ransom')]"
-														enabled = "[CharacterListItem.GetBool('can_ransom')]"
-														tooltip = "[CharacterListItem.GetText('ransom_tooltip')]"
-														using = tooltip_se
-													}
-												}
-
-												button_round  = {
-													name = "release"
-													enabled = "[CharacterListItem.GetBool('can_release')]"
-
-													button_prison_release = {
-														parentanchor = center
-														onclick = "[CharacterListItem.OnClick('release')]"
-														enabled = "[CharacterListItem.GetBool('can_release')]"
-														tooltip = "[CharacterListItem.GetText('release_tooltip')]"
-														using = tooltip_se
-													}
-												}
-
-												button_round  = {
-													name = "execute"
-													enabled = "[CharacterListItem.GetBool('can_execute')]"
-
-													button_prison_execute = {
-														parentanchor = center
-														onclick = "[CharacterListItem.OnClick('execute')]"
-														enabled = "[CharacterListItem.GetBool('can_execute')]"
-														tooltip = "[CharacterListItem.GetText('execute_tooltip')]"
-														using = tooltip_se
-													}
-												}
-											}
+										# [UniUI]
+										# [Vanilla]
+										window_court_prisoner_list_vanilla = {
+											datacontext = "[GetScriptedGui('window_court_prisoner_list_vanilla')]"
+											visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 										}
+										# [/Vanilla]
+										# [PoW]
+										window_court_prisoner_list_PoW = {
+											datacontext = "[GetScriptedGui('window_court_prisoner_list_PoW')]"
+											visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										}
+										# [/PoW]
+										# [/UniUI]
+
 									}
 								}
 							}
@@ -597,178 +540,19 @@ window = {
 							#setitemsizefromcell = yes
 
 							item = {
-								widget = {
-									size = { 262 395}
-									datacontext = "[CharacterListItem.GetCharacter]"
-
-									background = {
-										texture = "gfx/interface/skinned/illustrations/dungeon.dds"
-										margin = { -5 0 }
-										fittype = centercrop
-										alpha = 0.3
-
-										using = Mask_Rough_Edges
-									}
-
-									background = {
-										using = Background_Frame
-										alpha = 0.5
-									}
-
-									widget = {
-										size = { 100% 100% }
-										scissor = yes
-
-										portrait_body = {
-											parentanchor = bottom|hcenter
-											position = { 0 -70 }
-
-											blockoverride "coa" {}
-											blockoverride "opinion_box" {}
-											blockoverride "status_icons" {}
-										}
-									}
-
-									vbox = {
-										expand = {}
-
-										hbox = {
-											layoutpolicy_horizontal = expanding
-											margin = { 5 5 }
-
-											expand = {}
-
-											hbox = {
-												spacing = 5
-
-												background = {
-													using = Background_Area
-												}
-
-												vbox = {
-													margin_bottom = 3
-
-													expand = {}
-
-													portrait_status_icons = {}
-												}
-
-												vbox = {
-													layoutpolicy_vertical = expanding
-
-													expand = {}
-
-													coa_realm_tiny_crown = {
-														visible = "[Character.HasLandedTitles]"
-													}
-
-													portrait_opinion = {}
-												}
-											}
-										}
-
-
-										vbox = {
-											layoutpolicy_horizontal = expanding
-											margin = { 5 5 }
-
-											background = {
-												using = Background_Area
-												margin_bottom = 3
-											}
-
-											text_single = {
-												text = "SHARED_UNIUI_CHAR_SHORTUINAMENOTT"
-												default_format = "#high"
-												using = Font_Size_Medium
-											}
-
-											text_single = {
-												visible = "[Character.IsImprisoned]"
-												name = "type"
-												text = "[CharacterListItem.GetText('tooltip')]"
-											}
-										}
-
-										spacer = {
-											size = { 3 3 }
-										}
-
-										### Actions
-										vbox = {
-											name = "actions"
-											layoutpolicy_horizontal = expanding
-											visible = "[And( CharacterListItem.GetCharacter.IsAlive, CharacterListItem.GetCharacter.IsImprisoned )]"
-											spacing = 10
-											margin = { 10 5 }
-											margin_bottom = 15
-
-											background = {
-												using = Background_Area_Dark
-											}
-
-											hbox = {
-												spacing = 5
-
-												icon = {
-													texture = "gfx/interface/icons/portraits/punishment.dds"
-													size = { 20 20 }
-												}
-
-												text_single = {
-													name = "imprisoned_time"
-													layoutpolicy_horizontal = expanding
-													text = "[CharacterListItem.GetText('imprisoned_time')]"
-												}
-											}
-
-											hbox = {
-												spacing = 8
-
-												button_round  = {
-													name = "ransom"
-													enabled = "[CharacterListItem.GetBool('can_ransom')]"
-
-													button_prison_ransom = {
-														parentanchor = center
-														onclick = "[CharacterListItem.OnClick('ransom')]"
-														enabled = "[CharacterListItem.GetBool('can_ransom')]"
-														tooltip = "[CharacterListItem.GetText('ransom_tooltip')]"
-														using = tooltip_se
-
-													}
-												}
-
-												button_round  = {
-													name = "release"
-													enabled = "[CharacterListItem.GetBool('can_release')]"
-
-													button_prison_release = {
-														parentanchor = center
-														onclick = "[CharacterListItem.OnClick('release')]"
-														enabled = "[CharacterListItem.GetBool('can_release')]"
-														tooltip = "[CharacterListItem.GetText('release_tooltip')]"
-														using = tooltip_se
-
-													}
-												}
-
-												button_round  = {
-													name = "execute"
-													enabled = "[CharacterListItem.GetBool('can_execute')]"
-
-													button_prison_execute = {
-														parentanchor = center
-														onclick = "[CharacterListItem.OnClick('execute')]"
-														enabled = "[CharacterListItem.GetBool('can_execute')]"
-														tooltip = "[CharacterListItem.GetText('execute_tooltip')]"
-														using = tooltip_se
-													}
-												}
-											}
-										}
-									}
+								# [UniUI]
+								# [Vanilla]
+								window_court_prisoner_short_list_vanilla = {
+									datacontext = "[GetScriptedGui('window_court_prisoner_short_list_vanilla')]"
+									visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 								}
+								# [/Vanilla]
+								# [PoW]
+								window_court_prisoner_short_list_PoW = {
+									datacontext = "[GetScriptedGui('window_court_prisoner_short_list_PoW')]"
+									visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								}
+								# [/PoW]
 							}
 						}
 					}

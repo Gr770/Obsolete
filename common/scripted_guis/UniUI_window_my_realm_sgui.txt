@@ -1,0 +1,68 @@
+﻿window_my_realm_authority_header_vanilla = {
+    scope = character
+    is_shown = {
+        NOR = {
+            exists = global_var:StA_is_loaded
+            exists = global_var:KoH_is_loaded
+        }
+    } 
+}
+
+window_my_realm_liege_header_StA = {
+    scope = character
+    is_show = {
+        exists = global_var:StA_is_loaded
+    }
+}
+
+window_my_realm_authority_header_StA = {
+    scope = character
+    is_shown = {
+        exists = global_var:StA_is_loaded
+    } 
+}
+
+window_my_realm_authority_header_KoH = {
+    scope = character
+    is_shown = {
+        exists = global_var:KoH_is_loaded
+    } 
+}
+
+window_my_realm_authority_header_StA_KoH = {
+    scope = character
+    is_shown = {
+        exists = global_var:StA_is_loaded
+        exists = global_var:KoH_is_loaded       
+    }
+}
+
+window_my_realm_modify_contract_liege_vanilla = {
+    scope = character
+    is_shown = {
+        NOR = {
+            exists = global_var:TCMA_is_loaded
+        }
+    }
+}
+
+window_my_realm_modify_contract_liege_TCMA = {
+    scope = character
+    is_shown = {
+        exists = global_var:TCMA_is_loaded
+    }
+}
+
+window_my_realm_KoH = {
+    scope = character
+    is_shown = {
+        exists = global_var:KoH_is_loaded
+    }
+}
+
+window_my_realm_Res_Publica = {
+    scope = character
+    is_shown = {
+        exists = global_var:Res_Publica_is_loaded
+    }
+}
