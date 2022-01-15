@@ -4,10 +4,13 @@
         exists = global_var:KoH_is_loaded
     }
 }
-KoH_is_load_can_see_investure = {
+KoH_Trinity_is_load_can_see_investure = {
     scope = character
     is_shown = {
-        exists = global_var:KoH_is_loaded
+        OR = {
+            exists = global_var:KoH_is_loaded
+            exists = global_var:Trinity_is_loaded
+        }
 		has_faith = faith:catholic
     }
 }
@@ -179,7 +182,10 @@ StA_KoH_is_loaded_sgui = {
     scope = character
     is_shown = {
         exists = global_var:StA_is_loaded
-        exists = global_var:KoH_is_loaded
+        OR = {
+            exists = global_var:KoH_is_loaded
+            exists = global_var:Trinity_is_loaded
+        }
     } 
 }
 PoW_is_loaded_sgui = {
@@ -216,5 +222,20 @@ FCI_is_loaded = {
     scope = character
     is_shown = {
         exists = global_var:fci_is_loaded
+    }
+}
+Trinity_is_loaded = {
+    scope = character
+    is_shown = {
+        exists = global_var:Trinity_is_loaded
+    }
+}
+KoH_trinity_is_loaded = {
+    scope = character
+    is_shown = {
+        OR = {
+            exists = global_var:KoH_is_loaded
+            exists = global_var:Trinity_is_loaded
+        }
     }
 }

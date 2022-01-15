@@ -232,7 +232,7 @@ window = {
 
 							}
 							button_sidepanel_right = {
-								visible = "[GetScriptedGui('KoH_is_load_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+								visible = "[GetScriptedGui('KoH_trinity_is_loaded').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
 								name = "saints_information"
 								tooltip = "View Saints"
 								onclick = "[GetVariableSystem.Toggle('window_sainthood')]"
@@ -303,7 +303,7 @@ window = {
 
 			button_tab = {
 				layoutpolicy_horizontal = expanding
-				visible = "[GetScriptedGui('KoH_is_load_can_see_investure').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+				visible = "[GetScriptedGui('KoH_Trinity_is_load_can_see_investure').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
 				onclick = "[GetVariableSystem.Set( 'faith_view_tabs', 'investiture' )]"
 				onclick = "[GetScriptedGui('get_all_realm_theocracies').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
 				down = "[GetVariableSystem.HasValue( 'faith_view_tabs', 'investiture' )]"
@@ -738,6 +738,41 @@ window = {
 							PTHF_override_primary_title_checkbox = {}
 
 							expand = {}
+							vbox = { #ROT
+								layoutpolicy_horizontal = expanding
+								#layoutpolicy_vertical = expanding
+								visible = "[GetScriptedGui('Trinity_is_loaded').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+								margin_bottom = 5
+								
+								visible = "[Faith.HasDoctrineByKey('doctrine_independent_papacy_head')]"
+								text_single = {
+									visible = "[Faith.GetReligiousHead.IsValid]"
+									text = "rot_antipopes_title"
+									default_format = "#medium"
+									layoutpolicy_horizontal = expanding
+									fontsize_min = 10
+								}
+								
+								datamodel = "[Faith.MakeScope.GetList('rot_antipopes')]"
+								item = {
+									text_single = {
+										visible = "[Faith.GetReligiousHead.IsValid]"
+										text = "rot_antipopes_name"
+										default_format = "#high"
+										layoutpolicy_horizontal = expanding
+										fontsize_min = 14
+										max_width = 245
+									}
+								}
+								text_single = {
+									visible = "[GetScriptedGui( 'rot_no_antipopes' ).IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'faith', Faith.MakeScope ).End )]"
+									text = "rot_no_antipopes"
+									default_format = "#weak"
+									layoutpolicy_horizontal = expanding
+									fontsize_min = 14
+									max_width = 245
+								}
+							}
 
 						}
 					}
@@ -894,11 +929,11 @@ window = {
 				button_standard = {
 					name = "college_of_cardinals"
 					minimumsize = { 240 0 }
-					visible = "[And( GetScriptedGui('KoH_is_load_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End), EqualTo_string(FaithWindow.GetFaith.GetNameNoTooltip,Localize('catholic')))]"
+					visible = "[And( GetScriptedGui('KoH_trinity_is_loaded').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End), EqualTo_string(FaithWindow.GetFaith.GetNameNoTooltip,Localize('catholic')))]"
 					text = "collegeofcardinals"
 					tooltip = "[collegeofcardinals|E]"
 					onclick = "[GetVariableSystem.Toggle('window_cardinals')]"
-					onclick = "[GetScriptedGui('refresh_cardinal_characters').Execute(GuiScope.SetRoot(GetDummyMale.MakeScope).End)]"
+					onclick = "[GetScriptedGui('refresh_cardinal_characters').Execute(GuiScope.SetRoot(Religion.MakeScope).End)]"
 					onclick = "[GetScriptedGui('cardinal_music').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
 
 					using = tooltip_nw
