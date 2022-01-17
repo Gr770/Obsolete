@@ -84,10 +84,12 @@ window = {
 								datamodel = "[SuccessionEventWindow.GetLegacy]"
 								spacing = 60
 
-								vbox_legacy_item = {
-									# [UniUI] [Inherichance]
-									using = UniUI_Inherichance_reign_duration_visibility
-									# [/Inherichance] [/UniUI]
+								item = {
+									vbox_legacy_item = {
+										# [UniUI] [Inherichance]
+										using = UniUI_Inherichance_reign_duration_visibility
+										# [/Inherichance] [/UniUI]
+									}
 								}
 							}
 
