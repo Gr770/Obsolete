@@ -1,3 +1,0 @@
-template UniUI_Inherichance_reign_duration_visibility {
-	visible = "[Not(EqualTo_string(LegacyItem.GetEndDate.GetString,LegacyItem.GetStartDate.GetString))]"
-}
