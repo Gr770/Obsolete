@@ -469,15 +469,19 @@ window = {
 											layoutpolicy_vertical = expanding
 											layoutpolicy_horizontal = expanding
 
-											coa_title_small_crown = {
-												# [UniUI] [Vanilla] NOT Inherichance
+											# [UniUI] [Vanilla] NOT Inherichance
+											# container added to trigger visibility
+											container = {
 												datacontext = "[GetScriptedGui('Inherichance_is_loaded_sgui')]"
 												visible = "[Not(ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ))]"
+											# [/Vanilla]
+											coa_title_small_crown = {
 												datacontext = "[SuccessionEventWindow.GetPlayerHeir.GetPrimaryTitle]"
 												visible = "[Title.IsValid]"
 												parentanchor = bottom|hcenter
 											}
-											# [/Vanilla] [Inherichance]
+											# [Inherichance]
+											}
 											UniUI_Inherichance_coa_title_small_crown = {}
 											# [/Inherichance] [/UniUI]
 										}
