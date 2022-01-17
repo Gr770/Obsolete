@@ -1,0 +1,21 @@
+template UniUI_ResPublica_window_my_realm_windows {
+	state = {
+		name = _show
+		on_start = "[GetVariableSystem.Clear('show_governors')]"
+		on_start = "[GetVariableSystem.Set( 'bicameral_view_tabs', 'maintab' )]"
+	}
+	republic_bicameral_view = {}
+	republic_council_view = {}
+	republic_term_limits_window = {}
+	republic_families_window = {}
+	window_appoint_governor = {}
+}
+
+template UniUI_ResPublica_window_my_realm_button_close_on_click {
+	onclick = "[GetVariableSystem.Clear( 'window_republic_family' )]"
+	onclick = "[GetVariableSystem.Clear( 'window_republic_council_form' )]"
+	onclick = "[GetVariableSystem.Clear( 'window_republic_families' )]"
+	onclick = "[GetVariableSystem.Clear( 'window_republic_senate_form' )]"
+	onclick = "[GetVariableSystem.Clear( 'window_republic_elected_ruler_form' )]"
+	onclick = "[GetVariableSystem.Clear( 'window_republic_bicameral_form' )]"
+}

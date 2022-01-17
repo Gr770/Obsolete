@@ -136,7 +136,9 @@ types Lists
 									using = Font_Size_Medium
 									autoresize = no
 
+									# [UniUI]
 									text = "SHARED_UNIUI_CHAR_UINAMENOTT"
+									# [/UniUI]
 								}
 
 								hbox = {
@@ -448,7 +450,9 @@ types Lists
 									using = Font_Size_Medium
 									layoutpolicy_horizontal = expanding
 									align = nobaseline
+									# [UniUI]
 									text = "SHARED_UNIUI_CHAR_UINAMENOTT"
+									# [/UniUI]
 									autoresize = no
 									fontsize_min = 14
 								}
@@ -1178,7 +1182,9 @@ types Lists
 				using = Background_Area_With_Header
 			}
 
+			# [UniUI] [EPE]
 			portrait_head_cached = {}
+			# [/EPE] [/UniUI]
 
 			vbox = {
 				layoutpolicy_horizontal = expanding
@@ -1192,7 +1198,9 @@ types Lists
 						name = "name"
 						layoutpolicy_horizontal = expanding
 						autoresize = no
+						# [UniUI]
 						text = "SHARED_UNIUI_CHAR_UINAMENOTT"
+						# [/UniUI]
 						using = Font_Size_Medium
 						align = nobaseline
 						fontsize_min = 14
@@ -1439,56 +1447,60 @@ types Lists
 	type widget_vassal_list_item = widget {
 		datacontext = "[CharacterListItem.GetCharacter]"
 		size = { 200 180 }
-	
+
 		vbox = {
 			layoutpolicy_horizontal = expanding
 			layoutpolicy_vertical = expanding
 			margin = { 10 5 }
-	
+
 			hbox = {
 				layoutpolicy_horizontal = expanding
 				spacing = 10
-	
+
 				background = {
 					using = Background_Area
 				}
-	
+
+				# [UniUI] [EPE]
 				portrait_head_small_cached = {}
-	
+				# [/EPE] [/UniUI]
+
 				vbox = {
 					layoutpolicy_horizontal = expanding
 					layoutpolicy_vertical = expanding
 					margin_right = 10
-	
+
 					hbox = {
 						layoutpolicy_horizontal = expanding
-	
+
 						vbox = {
 							layoutpolicy_horizontal = expanding
 							spacing = 5
-	
+
 							hbox = {
 								layoutpolicy_horizontal = expanding
 								minimumsize = { 0 30 }
-	
+
 								background = {
 									using = Background_Area_Characterlist
 									margin = { 8 0 }
 									margin_left = 15
-	
+
 									using = Mask_Rough_Edges
 								}
-	
+
 								text_single = {
 									layoutpolicy_horizontal = expanding
+									# [UniUI]
 									text = "SHARED_UNIUI_CHAR_UINAMENOTT"
 									using = Font_Size_Medium
 									autoresize = no
 									fontsize_min = 8
+									# [/UniUI]
 									align = nobaseline
 								}
 							}
-	
+
 							text_single = {
 								name = "character_relation"
 								visible = "[Character.GetLiege.IsLocalPlayer]"
@@ -1500,13 +1512,13 @@ types Lists
 								align = nobaseline
 							}
 						}
-	
+
 						block "own_vassal" {
 							vbox = {
 								layoutpolicy_vertical = expanding
 								margin_left = 10
 								visible = "[Character.GetLiege.IsLocalPlayer]"
-	
+
 								hbox = {
 									coa_title_tiny_crown = {
 										name = "allegiance_flag"
@@ -1515,30 +1527,30 @@ types Lists
 										tooltip = "MRW_TITLE_ALLEGIANCE"
 										blockoverride "coa_tooltip" {}
 									}
-	
+
 									vbox = {
 										layoutpolicy_vertical = expanding
 										margin_top = 5
-	
+
 										hbox = {
-	
+
 											icon = {
 												name = "hook"
 												visible = "[Character.PlayerHasHooksOrHookableSecrets]"
 												size = { 25 25 }
 												framesize = { 40 40 }
 												texture = "gfx/interface/icons/portraits/hook_secret.dds"
-	
+
 												frame = "[Character.GetHookOrHookableSecretsFrame]"
 												tooltip = "[Character.HookTooltip]"
 											}
-	
+
 											icon = {
 												name = "icon_non_dejure"
 												visible = "[Not( VassalContract.IsRightfulLiege )]"
 												size = { 30 30 }
 												texture = "gfx/interface/icons/levy_tax_reduction.dds"
-	
+
 												using = tooltip_ws
 												tooltip = "MRW_TT_NOT_RIGHTFUL_LIEGE"
 											}
@@ -1550,35 +1562,35 @@ types Lists
 							}
 						}
 					}
-	
+
 					expand = {}
-	
+
 					hbox = {
 						layoutpolicy_horizontal = expanding
 						spacing = 5
-	
+
 						text_single = {
 							text = "REALM_WINDOW_SIZE"
 							tooltip = "REALM_WINDOW_SIZE_TT"
 							align = nobaseline
 							visible = "[NotEqualTo_int32(Character.GetPrimaryTitle.GetTierFrame, '(int32)2')]" #nonbaron
-	
+
 						}
-	
+
 						hbox = {
 							spacing = 3
 							margin = { 5 0 }
-	
+
 							block "own_vassal"
 							{
 								visible = no
 							}
-	
+
 							icon = {
 								size = { 22 22 }
 								texture = "gfx/interface/icons/icon_soldier.dds"
 							}
-	
+
 							text_single = {
 								layoutpolicy_horizontal = expanding
 								text = "[Character.GetMilitaryStrengthText]"
@@ -1586,7 +1598,7 @@ types Lists
 								default_format = "#high"
 							}
 						}
-	
+
 						text_single = {
 							visible = "[Character.IsPowerfulVassal]"
 							text = "MY_REALM_WINDOW_POWERFUL_VASSAL"
@@ -1594,16 +1606,16 @@ types Lists
 							align = nobaseline
 							autoresize = no
 						}
-	
+
 						expand = {}
-	
+
 						hbox_skills_grid = {}
 					}
-	
+
 					expand = {}
 				}
 			}
-	
+
 			block "own_vassal"
 			{
 				block "feudal_contract"
@@ -1613,57 +1625,116 @@ types Lists
 						layoutpolicy_horizontal = expanding
 						margin = { 10 5 }
 						spacing = 10
-	
+
 						background = {
 							using = Background_Area
 						}
-						widget_vassal_list_modify_contract_vassal_vanilla = {
-							datacontext = "[GetScriptedGui('widget_vassal_list_modify_contract_vassal_vanilla')]"
-							visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+
+						# [UniUI] [Vanilla] adds an hbox for StA layout
+						hbox = {
+						layoutpolicy_horizontal = expanding
+						# [/Vanilla]
+						hbox = {
+							layoutpolicy_horizontal = expanding
+							visible = "[And( VassalContract.UsesObligationLevels, Not( Character.GetPrimaryTitle.IsBarony))]"
+							spacing = 10
+
+							button_round = {
+								# [UniUI] [Vanilla] NOT TCMA
+								datacontext = "[GetScriptedGui('TCMA_is_loaded_sgui')]"
+								visible = "[Not(ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ))]"
+								# [/Vanilla]
+								enabled = "[Character.IsPlayerInteractionValid('liege_modify_vassal_contract_interaction')]"
+								onclick = "[Character.OpenPlayerInteraction('liege_modify_vassal_contract_interaction')]"
+								tooltip = "[Character.GetPlayerInteractionTooltip('liege_modify_vassal_contract_interaction')]"
+
+								button_feudal_contract = {
+									alwaystransparent = yes
+									parentanchor = center
+								}
+							}
+
+							# [TCMA]
+							UniUI_TCMA_widget_vassal_list_modify_contract_vassal_button = {}
+							# [/TCMA] [/UniUI]
+
+							text_single = {
+								layoutpolicy_horizontal = expanding
+								text = "MY_REALM_WINDOW_VASSAL_OBLIGATION"
+								default_format = "#low"
+								align = nobaseline
+							}
+
+							# [Vanilla] switched expand and icon for StA layout
+							vassal_contract_not_default_icon = {}
+							
+							expand = {}
+							# [/Vanilla]
 						}
-						widget_vassal_list_modify_contract_vassal_StA = {
-							datacontext = "[GetScriptedGui('widget_vassal_list_modify_contract_vassal_StA')]"
-							visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+
+						hbox = {
+							layoutpolicy_horizontal = expanding
+							visible = "[Not(And( VassalContract.UsesObligationLevels, Not( Character.GetPrimaryTitle.IsBarony)))]"
+							spacing = 5
+
+							icon = {
+								size = { 42 42 }
+								texture = "gfx/interface/icons/symbols/icon_cross.dds"
+								tooltip = MY_REALM_WINDOW_NO_FEUDAL_CONTRACT_TT
+								enabled = no
+							}
+
+							text_single = {
+								text = "[Character.GetGovernment.GetName]"
+								align = nobaseline
+							}
+
+							expand = {}
 						}
-	
+
+						# [StA]
+						UniUI_StA_widget_vassal_list_submission = {}
+						}
+						# [/StA] [/UniUI]
+
 						hbox = {
 							layoutpolicy_horizontal = expanding
 							spacing = 10
-	
+
 							hbox = {
 								layoutpolicy_horizontal = expanding
 								spacing = 3
-	
+
 								icon = {
 									size = { 25 25 }
 									texture = "gfx/interface/icons/icon_gold.dds"
 								}
-	
+
 								widget = {
 									layoutpolicy_horizontal = expanding
-	
+
 									background = {
 										using = Background_Area
 										margin = { 3 2 }
 									}
-	
+
 									progressbar_standard_transparent = {
 										size = "[MyRealmWindowVassalItem.GetRelativeSizeForTax]"
 										minimumsize = { 10 0 }
 										value = "[FixedPointToProgressbarValue(VassalContract.GetTaxRatioForLiege)]"
 									}
-	
+
 									flowcontainer = {
 										parentanchor = center
 										position = { 0 -2 }
 										spacing = 4
-	
+
 										text_single = {
 											text = "[MyRealmWindowVassalItem.GetCachedTax|=1]"
 										}
 									}
 								}
-	
+
 								tooltipwidget = {
 									my_realm_window_contribution_tooltip = {
 										datacontext = "[MyRealmWindowVassalItem.GetTaxBreakdown]"
@@ -1672,7 +1743,7 @@ types Lists
 										{
 											text = "MRW_TT_TAXES_TO_ME"
 										}
-	
+
 										blockoverride "levy_info"
 										{
 											text_single = {
@@ -1685,42 +1756,42 @@ types Lists
 								}
 								using = tooltip_ws
 							}
-	
+
 							hbox = {
 								layoutpolicy_horizontal = expanding
 								spacing = 3
-	
+
 								icon = {
 									size = { 25 25 }
 									texture = "gfx/interface/icons/icon_soldier.dds"
 								}
-	
+
 								widget = {
 									layoutpolicy_horizontal = expanding
 									#	size = { 150 22 }
-	
+
 									background = {
 										using = Background_Area
 										margin = { 3 2 }
 									}
-	
+
 									progressbar_standard_transparent = {
 										size = "[MyRealmWindowVassalItem.GetRelativeSizeForLevies]"
 										minimumsize = { 10 0 }
 										value = "[FixedPointToProgressbarValue(VassalContract.GetLevyRatioForLiege)]"
 									}
-	
+
 									flowcontainer = {
 										parentanchor = center
 										position = { 0 -2 }
 										spacing = 4
-	
+
 										text_single = {
 											text =  "[MyRealmWindowVassalItem.GetCachedLeviesFormatted]"
 										}
 									}
 								}
-	
+
 								tooltipwidget = {
 									my_realm_window_contribution_tooltip = {
 										datacontext = "[MyRealmWindowVassalItem.GetLeviesBreakdown]"
@@ -1746,7 +1817,7 @@ types Lists
 					}
 				}
 			}
-	
+
 			expand = {}
 		}
 	}

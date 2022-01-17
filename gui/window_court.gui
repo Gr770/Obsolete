@@ -211,10 +211,10 @@ window = {
 											layoutpolicy_horizontal = expanding
 
 											item = {
-												# [UniUI]
-												container = {
+												# [UniUI] [Vanilla] NOT PoW
+												# container added because item only accepts 1 child
+												# widget = {
 												widget_courtier_item = {
-													# [Vanilla] NOT PoW
 													datacontext = "[GetScriptedGui('PoW_is_loaded')]"
 													visible = "[Not(ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ))]"
 													# [/Vanilla]
@@ -230,10 +230,9 @@ window = {
 													}
 												}
 												# [PoW]
-												widget_courtier_item_PoW = {}
-												# [/PoW]
-												}
-												# [/UniUI]
+												# widget_courtier_item_PoW = {}
+												# }
+												# [/PoW] [/UniUI]
 											}
 										}
 									}
@@ -619,10 +618,10 @@ window = {
 							#setitemsizefromcell = yes
 
 							item = {
-								# [UniUI]
+								# [UniUI] [Vanilla] NOT PoW
+								# container added because item only accepts 1 child
 								container = {
 								widget = {
-									# [Vanilla] NOT PoW
 									datacontext = "[GetScriptedGui('PoW_is_loaded')]"
 									visible = "[Not(ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ))]"
 									# [/Vanilla]

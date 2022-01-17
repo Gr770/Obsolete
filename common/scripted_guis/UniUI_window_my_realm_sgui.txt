@@ -1,4 +1,4 @@
-﻿window_my_realm_authority_header_vanilla = {
+﻿UniUI_vanilla_window_my_realm_authority_header_sgui = {
     scope = character
     is_shown = {
         NOR = {
@@ -8,28 +8,15 @@
     } 
 }
 
-window_my_realm_liege_header_StA = {
+UniUI_StA_window_my_realm_authority_header_sgui = {
     scope = character
-    is_show = {
+    is_shown = {
         exists = global_var:StA_is_loaded
+        NOT = { exists = global_var:KoH_is_loaded }
     }
 }
 
-window_my_realm_authority_header_StA = {
-    scope = character
-    is_shown = {
-        exists = global_var:StA_is_loaded
-    } 
-}
-
-window_my_realm_authority_header_KoH = {
-    scope = character
-    is_shown = {
-        exists = global_var:KoH_is_loaded
-    } 
-}
-
-window_my_realm_authority_header_StA_KoH = {
+UniUI_StA_KoH_window_my_realm_authority_header_sgui = {
     scope = character
     is_shown = {
         exists = global_var:StA_is_loaded
@@ -37,32 +24,3 @@ window_my_realm_authority_header_StA_KoH = {
     }
 }
 
-window_my_realm_modify_contract_liege_vanilla = {
-    scope = character
-    is_shown = {
-        NOR = {
-            exists = global_var:TCMA_is_loaded
-        }
-    }
-}
-
-window_my_realm_modify_contract_liege_TCMA = {
-    scope = character
-    is_shown = {
-        exists = global_var:TCMA_is_loaded
-    }
-}
-
-window_my_realm_KoH = {
-    scope = character
-    is_shown = {
-        exists = global_var:KoH_is_loaded
-    }
-}
-
-window_my_realm_Res_Publica = {
-    scope = character
-    is_shown = {
-        exists = global_var:Res_Publica_is_loaded
-    }
-}

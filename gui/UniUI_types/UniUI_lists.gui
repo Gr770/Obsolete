@@ -45,7 +45,7 @@ types widget_vassal_list_modify_contract_vassal {
 		expand = {}
 	}
 
-	type widget_vassal_list_modify_contract_vassal_StA = hbox {
+	type UniUI_StA_widget_vassal_list_modify_contract_vassal = hbox {
 		layoutpolicy_horizontal = expanding
 		hbox = {
 			layoutpolicy_horizontal = expanding

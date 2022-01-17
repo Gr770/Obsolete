@@ -110,10 +110,6 @@ window = {
 							}
 
 							hbox = {
-								# [UniUI] [Vanilla] NOR (StA KoH)
-								datacontext = "[GetScriptedGui('UniUI_vanilla_window_my_realm_authority_header_sgui')]"
-								visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-								# [/Vanilla]
 								name = "crown_authority"
 								datamodel = "[MyRealmWindow.GetRealmLaws]"
 								ignoreinvisible = yes
@@ -204,18 +200,6 @@ window = {
 									}
 								}
 							}
-							# [StA] NOT KoH
-							UniUI_StA_window_my_realm_authority_header = {
-								datacontext = "[GetScriptedGui('UniUI_StA_window_my_realm_authority_header')]"
-								visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-							}
-							# [/StA]
-							# [StA + KoH]
-							UniUI_StA_KoH_window_my_realm_authority_header = {
-								datacontext = "[GetScriptedGui('UniUI_StA_KoH_window_my_realm_authority_header_sgui')]"
-								visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-							}
-							# [/StA + KoH][/UniUI]
 
 							spacer = {
 								visible = "[GetPlayer.HasLiege]"
@@ -244,9 +228,7 @@ window = {
 
 									text_single = {
 										layoutpolicy_horizontal = expanding
-										# [UniUI]
-										text = "MY_REALM_WINDOW_UNIUI_LIEGE_NAME"
-										# [/UniUI]
+										text = "[Character.GetUIName]"
 										autoresize = no
 									}
 
@@ -273,10 +255,6 @@ window = {
 										expand = {}
 
 									}
-
-									# [UniUI] [StA]
-									UniUI_StA_window_my_realm_liege_header = {}
-									# [/StA] [/UniUI]
 								}
 
 								expand = {}
@@ -1172,9 +1150,7 @@ window = {
 											using = Font_Size_Medium
 											fontsize_min = 14
 
-											# [UniUI]
-											text = "MY_REALM_WINDOW_UNIUI_PLAYER_HEIR_NAME"
-											# [/UniUI]
+											text = "[MyRealmWindow.GetCharacter.GetPlayerHeir.GetUINameNoTooltip]"
 											default_format = "#low"
 										}
 									}
@@ -1233,9 +1209,6 @@ window = {
 											coa_title_tiny_crown = {
 												datacontext = "[TitleItem.GetTitle]"
 												using = tooltip_ne
-												# [UniUI] [CTFA]
-												using = CTFA_hide_if_vanity_title
-												# [/CTFA][/UniUI]
 											}
 										}
 									}
@@ -1312,9 +1285,7 @@ window = {
 
 												text_single = {
 													name = "heir_name"
-													# [UniUI]
-													text = "SHARED_UNIUI_CHAR_UINAMENOTT"
-													# [/UniUI]
+													text = "[Character.GetUINameNoTooltip]"
 													layoutpolicy_horizontal = expanding
 													using = Font_Size_Medium
 													max_width = 400
@@ -1801,11 +1772,6 @@ window = {
 							}
 						}
 
-						# [UniUI] [Vanilla] NOT TCMA
-						container = {
-						datacontext = "[GetScriptedGui('TCMA_is_loaded')]"
-						visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-						# [/Vanilla]
 						hbox = {
 							name = "vassal_contract"
 							datacontext = "[MyRealmWindow.GetCharacter.GetLiege]"
@@ -1829,10 +1795,6 @@ window = {
 
 							vassal_contract_not_default_icon = {}
 						}
-						# [TCMA]
-						}
-						UniUI_TCMA_window_my_realm_modify_contract_liege = {}
-						# [/TCMA] [/UniUI]
 					}
 				}
 

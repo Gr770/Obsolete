@@ -1,11 +1,4 @@
-﻿Inherichance_is_loaded_sgui = {
-    scope = character
-    is_shown = {
-        exists = global_var:Inherichance_is_loaded
-    }
-}
-
-KoH_is_load_sgui = {
+﻿KoH_is_loaded_sgui = {
     scope = character
     is_shown = {
         exists = global_var:KoH_is_loaded
@@ -16,136 +9,6 @@ KoH_is_load_can_see_investure = {
     is_shown = {
         exists = global_var:KoH_is_loaded
 		has_faith = faith:catholic
-    }
-}
-KoH_is_load_qualifies_for_governorships = {
-    scope = character
-    is_shown = {
-        OR = {
-            exists = global_var:KoH_is_loaded
-            exists = global_var:play_republic_leaders
-            exists = global_var:play_house_heads
-        }
-		exists = primary_title
-		is_independent_ruler = yes
-		holds_valid_merchant_republic = yes
-    }
-}
-KoH_is_load_has_republic_government = {
-    scope = character
-    is_shown = {
-        OR = {
-            exists = global_var:KoH_is_loaded
-            exists = global_var:play_republic_leaders
-            exists = global_var:play_house_heads
-        }
-		OR = {
-			holds_valid_merchant_republic = yes
-			liege = {
-				holds_valid_merchant_republic = yes
-			}
-		}
-    }
-}
-KoH_is_load_has_republic_elected_ruler_government = {
-    scope = character
-    is_shown = {
-        OR = {
-            exists = global_var:KoH_is_loaded
-            exists = global_var:play_republic_leaders
-            exists = global_var:play_house_heads
-        }
-		OR = {
-			AND = {
-				holds_valid_merchant_republic = yes
-				republic_has_elected_ruler_form = yes
-			}
-			liege = {
-				AND = {
-					holds_valid_merchant_republic = yes
-					republic_has_elected_ruler_form = yes
-				}
-			}
-		}
-    }
-}
-KoH_is_load_has_republic_senate_government = {
-    scope = character
-    is_shown = {
-        OR = {
-            exists = global_var:KoH_is_loaded
-            exists = global_var:play_republic_leaders
-            exists = global_var:play_house_heads
-        }
-		OR = {
-			AND = {
-				holds_valid_merchant_republic = yes
-				republic_has_senate_form = yes
-			}
-			liege = {
-				AND = {
-					holds_valid_merchant_republic = yes
-					republic_has_senate_form = yes
-				}
-			}
-		}
-    }
-}
-KoH_is_load_has_republic_council_government = {
-    scope = character
-    is_shown = {
-        OR = {
-            exists = global_var:KoH_is_loaded
-            exists = global_var:play_republic_leaders
-            exists = global_var:play_house_heads
-        }
-		OR = {
-			AND = {
-				holds_valid_merchant_republic = yes
-				republic_has_council_form = yes
-			}
-			liege = {
-				AND = {
-					holds_valid_merchant_republic = yes
-					republic_has_council_form = yes
-				}
-			}
-		}
-    }
-}
-KoH_is_load_has_republic_bicameral_government = {
-    scope = character
-    is_shown = {
-        OR = {
-            exists = global_var:KoH_is_loaded
-            exists = global_var:play_republic_leaders
-            exists = global_var:play_house_heads
-        }
-		OR = {
-			AND = {
-				holds_valid_merchant_republic = yes
-				republic_has_bicameral_form = yes
-			}
-			liege = {
-				AND = {
-					holds_valid_merchant_republic = yes
-					republic_has_bicameral_form = yes
-				}
-			}
-		}
-    }
-}
-KoH_is_load_personally_has_republic_government = {
-    scope = character
-    is_shown = {
-        OR = {
-            exists = global_var:KoH_is_loaded
-            exists = global_var:play_republic_leaders
-            exists = global_var:play_house_heads
-        }
-		NOT = {
-            holds_valid_merchant_republic = yes
-        }
     }
 }
 CTI_is_loaded_sgui = {
@@ -206,6 +69,12 @@ IMHO_is_loaded_sgui = {
     is_shown = {
         exists = global_var:IMHO_is_loaded
     } 
+}
+Inherichance_is_loaded_sgui = {
+    scope = character
+    is_shown = {
+        exists = global_var:Inherichance_is_loaded
+    }
 }
 Biography_is_loaded = {
     scope = character
