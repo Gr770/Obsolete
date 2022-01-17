@@ -333,15 +333,10 @@ types MapIcons {
 					spacing = 3
 					ignoreinvisible = yes
 
-					# [UniUI]
-					# [PoW]
+					# [UniUI] [PoW]
 					# Shows the prison icon when the army has var:story_PoW
-					map_icon_layer_templates_PoW_in_unit_icon = {
-						datacontext = "[GetScriptedGui('map_icon_layer_templates_PoW_in_unit_icon')]"
-						visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-					}
-					# [/PoW]
-					# [/UniUI]
+					UniUI_PoW_map_icon_layer_PoW_in_unit_icon = {}
+					# [/PoW] [/UniUI]
 					
 					block "unit_items" {
 
@@ -531,13 +526,10 @@ types MapIcons {
 					snap_to_pixels = no
 				}
 
-				# [PoW]
+				# [UniUI] [PoW]
 				# Shows the prison icon when the army has var:story_PoW
-				map_icon_layer_templates_PoW_in_unit_icon = {
-					datacontext = "[GetScriptedGui('map_icon_layer_templates_PoW_in_unit_icon')]"
-					visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				}
-				# [/PoW]
+				UniUI_PoW_map_icon_layer_PoW_in_unit_icon = {}
+				# [/PoW] [/UniUI]
 
 			}
 

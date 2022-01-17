@@ -291,12 +291,9 @@ window = {
 
 			expand = {}
 
-			# [PoW]
-			window_army_PoW_in_army = {
-				datacontext = "[GetScriptedGui('window_army_PoW_in_army')]"
-				visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-			}
-			# [/PoW]
+			# [UniUI] [PoW]
+			UniUI_PoW_window_army_PoW_in_army = {}
+			# [/PoW] [/UniUI]
 
 			hbox = {
 				name = "loot"
@@ -1220,35 +1217,19 @@ window = {
 					enabled = [ArmyWindow.CanDisband]
 					tooltip = [ArmyWindow.BuildDisbandTooltip]
 
-					# [UniUI]
-						# [Vanilla]
-						button_army_disband = {
-							datacontext = "[GetScriptedGui('window_army_button_army_disband_vanilla')]"
-							visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ))]"
-							parentanchor = center
-							onclick = [ArmyWindow.DisbandSelected]
-							shortcut = army_disband
-						}
-						# [/Vanilla]
-						# [PoW]
-						button_army_disband = {
-							datacontext = "[GetScriptedGui('window_army_button_army_disband_PoW')]"
-							visible = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ))]"
-							parentanchor = center
-							onclick = [ArmyWindow.DisbandSelected]
-							datacontext = "[GetScriptedGui('window_army_button_army_disband_PoW')]"
-							onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( Army.MakeScope ).End)]"
-							shortcut = army_disband
-						}
-						# [/PoW]
-					# [/UniUI]
+					button_army_disband = {
+						parentanchor = center
+						onclick = [ArmyWindow.DisbandSelected]
+						shortcut = army_disband
+						# [UniUI] [PoW]
+						using = UniUI_PoW_window_army_button_army_disband
+						# [/PoW] [/UniUI]
+					}
 				}
 			}
 		}
 	}
 }
-
-
 
 window = {
 	name = "army_reorganization_window"
