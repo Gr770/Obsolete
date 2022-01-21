@@ -18,7 +18,7 @@ window = {
 
 		using = Animation_FadeIn_Quick
 		using = Sound_WindowShow_Standard
-		using = CTFA_title_window_show_state_actions
+		using = UniUI_CTFA_title_window_show_state_actions
 	}
 
 	state = {
@@ -30,7 +30,7 @@ window = {
 		using = Sound_WindowHide_Standard
 	}
 
-	using = CTFA_title_window_mouse_hierarchy_enter_state
+	using = UniUI_CTFA_title_window_mouse_hierarchy_enter_state
 	vbox = {
 		layoutpolicy_horizontal = expanding
 		layoutpolicy_vertical = expanding
@@ -137,7 +137,7 @@ window = {
 									}
 									
 									hbox = {
-										using = CTFA_hide_if_vanity_title
+										using = UniUI_CTFA_hide_if_vanity_title
 										# Note no closing brace here - this block is closed later
 									button_edit_text = {
 										visible = "[And(TitleViewWindow.GetTitle.CanPlayerRenameTitle,Not(GetScriptedGui('is_title_federation').IsShown(GuiScope.SetRoot(TitleViewWindow.GetTitle.MakeScope).End)))]"
@@ -153,11 +153,11 @@ window = {
 								}
 
 								vbox_title_type_text = {
-									using = CTFA_hide_if_vanity_title
+									using = UniUI_CTFA_hide_if_vanity_title
 									layoutpolicy_horizontal = expanding
 								}
 
-								CTFA_vbox_title_type_text = {}
+								UniUI_CTFA_vbox_title_type_text = {}
 							}
 
 							watch_window_button = {
@@ -255,7 +255,7 @@ window = {
 										visible = "[And(NotEqualTo_uint32( Title.GetHolder.GetID, GetPlayer.GetID ), GetPlayer.HasClaimOnTitle(TitleViewWindow.GetTitle ))]"
 									}
 									
-									CTFA_flowcontainer_title_foa = {}
+									UniUI_CTFA_flowcontainer_title_foa = {}
 								}
 
 								expand = {}
@@ -603,7 +603,7 @@ window = {
 					}
 
 					vbox = {
-						using = CTFA_hide_if_vanity_title
+						using = UniUI_CTFA_hide_if_vanity_title
 						layoutpolicy_horizontal = expanding
 
 						hbox = {
@@ -684,12 +684,12 @@ window = {
 					}
 
 					text_single = {
-						using = CTFA_hide_if_vanity_title
+						using = UniUI_CTFA_hide_if_vanity_title
 						text = "[TitleViewWindow.GetPrestigeGainText]"
 					}
 
 					button_primary = {
-						using = CTFA_hide_if_vanity_title
+						using = UniUI_CTFA_hide_if_vanity_title
 						enabled = "[TitleViewWindow.CanTitleBeCreated]"
 						text = "TITLE_VIEW_CREATE_TITLE"
 						onclick = "[TitleViewWindow.CreateTitle]"
@@ -851,7 +851,7 @@ window = {
 				hbox = {
 					spacing = 5
 
-					using = CTFA_hide_if_vanity_title
+					using = UniUI_CTFA_hide_if_vanity_title
 					vbox = {
 						spacing = 5
 
@@ -916,7 +916,7 @@ window = {
 								text = "TITLE_VIEW_MAKE_PRIMARY"
 								visible = "[And(And(And( Character.IsLocalPlayer, TitleViewWindow.CanMakePrimary ),Not(GetScriptedGui('is_title_federation').IsShown(GuiScope.SetRoot(TitleViewWindow.GetTitle.MakeScope).End))),Not(GetScriptedGui('KoH_is_load_personally_has_republic_government').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)))]"
 								onclick = "[TitleViewWindow.MakePrimary]"
-								using = CTFA_onclick_handle_primary_title_change
+								using = UniUI_CTFA_onclick_handle_primary_title_change
 								tooltip = "TITLE_MAKE_PRIMARY_TOOLTIP"
 							}
 

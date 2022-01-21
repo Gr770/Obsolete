@@ -1234,7 +1234,7 @@ window = {
 												datacontext = "[TitleItem.GetTitle]"
 												using = tooltip_ne
 												# [UniUI] [CTFA]
-												using = CTFA_hide_if_vanity_title
+												using = UniUI_CTFA_hide_if_vanity_title
 												# [/CTFA][/UniUI]
 											}
 										}
