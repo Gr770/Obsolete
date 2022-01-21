@@ -626,16 +626,15 @@ window = {
 											layoutpolicy_horizontal = expanding
 											margin_bottom = 15
 
-											fixedgridbox = { # hbox doesn't work with datamodel_wrap
+											dynamicgridbox = { # hbox doesn't work with datamodel_wrap
 												name = "inherited"
 												datamodel = "[SuccessionEventWindow.GetInheritedTitles]"
 												datamodel_wrap = 11
-												addcolumn = 56
-												addrow = 56
 												flipdirection = yes
 
 												item = {
 													coa_title_small_crown = {
+														using = UniUI_CTFA_hide_if_vanity_title
 													}
 												}
 											}
