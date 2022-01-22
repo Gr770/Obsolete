@@ -19,7 +19,7 @@ window = {
 		position_x = 0
 
 		on_start = "[GetVariableSystem.Set( 'hide_bottom_left_HUD', 'true' )]"
-		using = CTFA_character_window_show_state_actions
+		using = UniUI_CTFA_character_window_show_state_actions
 	}
 
 	state = {
@@ -32,8 +32,8 @@ window = {
 		on_start = "[GetVariableSystem.Clear( 'cv_expanded_core_titles_tab' )]"
 	}
 
-	using = CTFA_character_window_refresh_state
-	using = CTFA_character_window_mouse_hierarchy_enter_state
+	using = UniUI_CTFA_character_window_refresh_state
+	using = UniUI_CTFA_character_window_mouse_hierarchy_enter_state
 
 	vbox = {
 		name = "main_content"
@@ -689,7 +689,7 @@ window = {
 				}
 			}
 			
-			CTFA_flowcontainer_edit_character_foa_offset = {}
+			UniUI_CTFA_flowcontainer_edit_character_foa_offset = {}
 		}
 
 		############################
@@ -1905,7 +1905,7 @@ window = {
 							layoutpolicy_horizontal = expanding
 						}
 
-						CTFA_vbox_titles_claims_box_1 = {}
+						UniUI_CTFA_vbox_titles_claims_box_1 = {}
 						vbox_titles_claims_box = {
 							visible = "[Not( Or( Character.GetPrimaryTitle.HasFaction, DataModelHasItems( CharacterWindow.GetDiplomacyItems )))]"
 							layoutpolicy_horizontal = expanding
@@ -1943,7 +1943,7 @@ window = {
 							layoutpolicy_vertical = expanding
 							margin_right = 2
 
-							CTFA_vbox_titles_claims_box_2 = {}
+							UniUI_CTFA_vbox_titles_claims_box_2 = {}
 							vbox_titles_claims_box = {
 								visible = "[And( Not( Character.GetPrimaryTitle.HasFaction ), LessThanOrEqualTo_int32(GetDataModelSize(CharacterWindow.GetDiplomacyItems), '(int32)4'))]"
 								layoutpolicy_horizontal = expanding
@@ -1975,7 +1975,7 @@ window = {
 								}
 							}
 
-							CTFA_vbox_titles_claims_box_3 = {}
+							UniUI_CTFA_vbox_titles_claims_box_3 = {}
 							vbox_titles_claims_box = {
 								visible = "[And( Not( Character.GetPrimaryTitle.HasFaction ), And(GreaterThan_int32(GetDataModelSize(CharacterWindow.GetDiplomacyItems), '(int32)4'), LessThanOrEqualTo_int32(GetDataModelSize(CharacterWindow.GetDiplomacyItems), '(int32)6')))]"
 								layoutpolicy_horizontal = expanding
@@ -2006,7 +2006,7 @@ window = {
 								}
 							}
 
-							CTFA_vbox_titles_claims_box_4 = {}
+							UniUI_CTFA_vbox_titles_claims_box_4 = {}
 							vbox_titles_claims_box = {
 								visible = "[And( Not( Character.GetPrimaryTitle.HasFaction ), And(GreaterThan_int32(GetDataModelSize(CharacterWindow.GetDiplomacyItems), '(int32)6'), LessThanOrEqualTo_int32(GetDataModelSize(CharacterWindow.GetDiplomacyItems), '(int32)8')))]"
 								layoutpolicy_horizontal = expanding
@@ -2037,7 +2037,7 @@ window = {
 								}
 							}
 
-							CTFA_vbox_titles_claims_box_5 = {}
+							UniUI_CTFA_vbox_titles_claims_box_5 = {}
 							vbox_titles_claims_box = {
 								visible = "[And( Not( Character.GetPrimaryTitle.HasFaction ), GreaterThan_int32(GetDataModelSize(CharacterWindow.GetDiplomacyItems), '(int32)8'))]"
 								layoutpolicy_horizontal = expanding
@@ -3151,7 +3151,7 @@ window = {
 						text = "CV_TITLES_NOCOUNT"
 					}
 
-					CTFA_fixedgridbox_titles_box_bishop = {}
+					UniUI_CTFA_fixedgridbox_titles_box_bishop = {}
 					fixedgridbox = {
 						name = "titles_box_bishop"
 						datacontext = "[CharacterWindow.GetCharacter]"
@@ -3160,7 +3160,7 @@ window = {
 						addcolumn = 270
 						datamodel_wrap = 2
 
-						using = CTFA_hide_if_has_vanity_title
+						using = UniUI_CTFA_hide_if_has_vanity_title
 						datamodel = "[CharacterWindow.GetTitles]"
 
 						item = {
@@ -3731,7 +3731,7 @@ window = {
 			layoutpolicy_horizontal = expanding
 			layoutpolicy_vertical = expanding
 
-			using = CTFA_hide_if_has_vanity_title
+			using = UniUI_CTFA_hide_if_has_vanity_title
 		}
 
 		type vbox_titles_claims_box = vbox {

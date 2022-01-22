@@ -157,7 +157,9 @@ window = {
 											text_single = {
 												layoutpolicy_horizontal = expanding
 												visible = "[Character.IsValid]"
+												# [UniUI]
 												text = "COURT_WIND_UNIUI_PHYSICIAN_NAME"
+												# [/UniUI]
 												autoresize = no
 											}
 
@@ -209,7 +211,13 @@ window = {
 											layoutpolicy_horizontal = expanding
 
 											item = {
+												# [UniUI] [Vanilla] NOT PoW
+												# container added because item only accepts 1 child
+												# widget = {
 												widget_courtier_item = {
+													datacontext = "[GetScriptedGui('PoW_is_loaded')]"
+													visible = "[Not(ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ))]"
+													# [/Vanilla]
 													layoutpolicy_horizontal = expanding
 													datacontext = "[CharacterListItem.GetCharacter]"
 
@@ -221,6 +229,10 @@ window = {
 														text = "[Character.GetRelationToString( GetPlayer.Self )]"
 													}
 												}
+												# [PoW]
+												# widget_courtier_item_PoW = {}
+												# }
+												# [/PoW] [/UniUI]
 											}
 										}
 									}
@@ -425,6 +437,10 @@ window = {
 										}
 
 										hbox = {
+											# [UniUI] [Vanilla] NOT PoW
+											datacontext = "[GetScriptedGui('PoW_is_loaded')]"
+											visible = "[Not(ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ))]"
+											# [/Vanilla]
 											name = "prisoner_data"
 											layoutpolicy_horizontal = expanding
 											margin = { 10 10 }
@@ -519,6 +535,11 @@ window = {
 												}
 											}
 										}
+
+										# [PoW]
+										UniUI_PoW_window_court_prisoner_list = {}
+										# [/PoW][/UniUI]
+
 									}
 								}
 							}
@@ -597,7 +618,13 @@ window = {
 							#setitemsizefromcell = yes
 
 							item = {
+								# [UniUI] [Vanilla] NOT PoW
+								# container added because item only accepts 1 child
+								container = {
 								widget = {
+									datacontext = "[GetScriptedGui('PoW_is_loaded')]"
+									visible = "[Not(ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ))]"
+									# [/Vanilla]
 									size = { 262 395}
 									datacontext = "[CharacterListItem.GetCharacter]"
 
@@ -678,7 +705,7 @@ window = {
 											}
 
 											text_single = {
-												text = "SHARED_UNIUI_CHAR_SHORTUINAMENOTT"
+												text = "[Character.GetShortUINameNoTooltip]"
 												default_format = "#high"
 												using = Font_Size_Medium
 											}
@@ -769,6 +796,11 @@ window = {
 										}
 									}
 								}
+								# [PoW]
+								UniUI_PoW_window_court_prisoner_short_list = {}
+								# [/PoW]
+								}
+								# [/UniUI]
 							}
 						}
 					}

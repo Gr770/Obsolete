@@ -14,6 +14,9 @@ window = {
 		#trigger_on_create = yes
 		on_finish = "[PdxGuiTriggerAllAnimations('ruler_transition_appear')]"
 		on_start = "[GetVariableSystem.Clear( 'ruler_transition_remove_fade')]"
+		# [UniUI] [Inherichance]
+		using = UniUI_Inherichance_window_succession_event_show_state
+		# [/Inherichance] [/UniUI]
 	}
 
 	state = {
@@ -466,15 +469,29 @@ window = {
 											layoutpolicy_vertical = expanding
 											layoutpolicy_horizontal = expanding
 
+											# [UniUI] [Vanilla] NOT Inherichance
+											# container added to trigger visibility
+											container = {
+												datacontext = "[GetScriptedGui('Inherichance_is_loaded_sgui')]"
+												visible = "[Not(ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ))]"
+											# [/Vanilla]
 											coa_title_small_crown = {
 												datacontext = "[SuccessionEventWindow.GetPlayerHeir.GetPrimaryTitle]"
 												visible = "[Title.IsValid]"
 												parentanchor = bottom|hcenter
 											}
+											# [Inherichance]
+											}
+											UniUI_Inherichance_coa_title_small_crown = {}
+											# [/Inherichance] [/UniUI]
 										}
 									}
 
 									vbox = {
+										# [UniUI] [Vanilla] NOT Inherichance
+										datacontext = "[GetScriptedGui('Inherichance_is_loaded_sgui')]"
+										visible = "[Not(ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ))]"
+										# [/Vanilla]
 										margin = { 10 10 }
 
 										text_multi = {
@@ -506,6 +523,10 @@ window = {
 										}
 									}
 
+									# [Inherichance]
+									UniUI_Inherichance_window_succession_event_text = {}
+									# [/Inherichance] [/UniUI]
+
 									expand = {
 										layoutpolicy_vertical = expanding
 									}
@@ -513,6 +534,10 @@ window = {
 
 								### Right Character
 								vbox = {
+									# [UniUI] [Vanilla] NOT Inherichance
+									datacontext = "[GetScriptedGui('Inherichance_is_loaded_sgui')]"
+									visible = "[Not(ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ))]"
+									# [/Vanilla]
 									layoutpolicy_vertical = expanding
 									spacing = 5
 
@@ -541,6 +566,10 @@ window = {
 										layoutpolicy_vertical = expanding
 									}
 								}
+
+								# [Inherichance]
+								UniUI_Inherichance_window_succession_event_right_character = {}
+								# [/Inherichance] [/UniUI]
 							}
 						}
 					}
@@ -578,6 +607,10 @@ window = {
 								blockoverride "scrollbox_content" {
 
 									vbox = {
+										# [UniUI] [Vanilla] NOT Inherichance
+										datacontext = "[GetScriptedGui('Inherichance_is_loaded_sgui')]"
+										visible = "[Not(ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ))]"
+										# [/Vanilla]
 										name = "titles"
 										layoutpolicy_vertical = expanding
 										layoutpolicy_horizontal = expanding
@@ -593,18 +626,15 @@ window = {
 											layoutpolicy_horizontal = expanding
 											margin_bottom = 15
 
-											#fixedgridbox = { # hbox doesn't work with datamodel_wrap
-											dynamicgridbox = {
+											dynamicgridbox = { # hbox doesn't work with datamodel_wrap
 												name = "inherited"
 												datamodel = "[SuccessionEventWindow.GetInheritedTitles]"
 												datamodel_wrap = 11
-												#addcolumn = 56
-												#addrow = 56
 												flipdirection = yes
 
 												item = {
 													coa_title_small_crown = {
-														using = CTFA_hide_if_vanity_title
+														using = UniUI_CTFA_hide_if_vanity_title
 													}
 												}
 											}
@@ -694,6 +724,10 @@ window = {
 											layoutpolicy_vertical = expanding
 										}
 									}
+									
+									# [Inherichance]
+									UniUI_Inherichance_window_succession_event_titles = {}
+									# [/Inherichance] [/UniUI]
 								}
 							}
 						}
@@ -738,14 +772,27 @@ window = {
 										spacing = 60
 
 										item = {
-											vbox_legacy_item = {}
+											vbox_legacy_item = {
+												# [UniUI] [Inherichance]
+												using = UniUI_Inherichance_reign_duration_visibility
+												# [/UniUI] [/Inherichance]
+											}
 										}
 									}
 
+									# [UniUI] [Vanilla] NOT Inherichance
+									container = {
+									datacontext = "[GetScriptedGui('Inherichance_is_loaded_sgui')]"
+									visible = "[Not(ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ))]"
+									# [/Vanilla]
 									vbox_current_lineage = {
 										visible = "[SuccessionEventWindow.GetPlayerHeir.IsValid]"
 										datacontext = "[SuccessionEventWindow.GetPlayerHeirLegacy]"
 									}
+									# [Inherichance]
+									}
+									UniUI_Inherichance_window_succession_event_vbox_current_lineage = {}
+									# [/Inherichance] [/UniUI]
 
 									vbox_dynasty = {
 										name = "dynasty_right"
@@ -771,6 +818,10 @@ window = {
 				}
 
 				hbox = {
+					# [UniUI] [Vanilla] NOT Inherichance
+					datacontext = "[GetScriptedGui('Inherichance_is_loaded_sgui')]"
+					visible = "[Not(ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ))]"
+					# [/Vanilla]
 					spacing = 15
 
 					button_primary = {
@@ -806,6 +857,10 @@ window = {
 						default_format = "#high"
 					}
 				}
+				
+				# [Inherichance]
+				UniUI_Inherichance_window_succession_event_buttons = {}
+				# [/Inherichance] [/UniUI]
 			}
 		}
 	}

@@ -1,0 +1,22 @@
+﻿namespace = UniUI_error_suppression
+
+UniUI_error_suppression.0001 = {
+	hidden = yes
+
+	trigger = {
+		
+	}
+
+	immediate = {
+		set_global_variable = ToT_is_loaded
+		set_global_variable = KoH_is_loaded
+		# set_global_variable = play_republic_leaders
+		# set_global_variable = play_house_heads
+		set_global_variable = CTI_is_loaded
+		set_global_variable = chronicle_mod_version
+		# set_global_variable = federation_members
+		set_global_variable = fci_is_loaded
+	}
+}
+
+

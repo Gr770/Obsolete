@@ -1,0 +1,31 @@
+﻿widget_vassal_list_modify_contract_vassal_button_vanilla = {
+    scope = character
+    is_shown = {
+        NOR = {
+            exists = global_var:TCMA_is_loaded
+        }
+    }
+}
+
+widget_vassal_list_modify_contract_vassal_button_TCMA = {
+    scope = character
+    is_shown = {
+        exists = global_var:TCMA_is_loaded
+    } 
+}
+
+widget_vassal_list_modify_contract_vassal_vanilla = {
+    scope = character
+    is_shown = {
+        NOR = {
+            exists = global_var:StA_is_loaded
+        }
+    }
+}
+
+widget_vassal_list_modify_contract_vassal_StA = {
+    scope = character
+    is_shown = {
+        exists = global_var:StA_is_loaded
+    }
+}

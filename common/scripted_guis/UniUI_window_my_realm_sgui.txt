@@ -1,0 +1,26 @@
+﻿UniUI_vanilla_window_my_realm_authority_header_sgui = {
+    scope = character
+    is_shown = {
+        NOR = {
+            exists = global_var:StA_is_loaded
+            exists = global_var:KoH_is_loaded
+        }
+    } 
+}
+
+UniUI_StA_window_my_realm_authority_header_sgui = {
+    scope = character
+    is_shown = {
+        exists = global_var:StA_is_loaded
+        NOT = { exists = global_var:KoH_is_loaded }
+    }
+}
+
+UniUI_StA_KoH_window_my_realm_authority_header_sgui = {
+    scope = character
+    is_shown = {
+        exists = global_var:StA_is_loaded
+        exists = global_var:KoH_is_loaded       
+    }
+}
+
